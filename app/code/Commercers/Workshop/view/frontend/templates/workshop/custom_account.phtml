@@ -1,0 +1,126 @@
+<!--load cms blocks from workshop-->
+<?php
+echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('fn_workshop_customer_workshoptasks')->toHTML();
+//get customer id from session
+$customer_id = $this->getIdCustomer();
+$page = $this->getRequest()->getParam('page'); 
+if ($page === NULL){
+     $page = 1;
+}
+// print_r($this->getTasksToCustomer($customer_id)[0]->getData());exit;
+$count = $this->getTasksToCustomer($customer_id)[1];
+$pagemax = $this->getTasksToCustomer($customer_id)[2];
+?>
+
+<?php if($count == 0): ?>
+     <div class="messages">
+          <?php echo __('no-workshoptasks'); ?>
+     </div>
+<?php else: ?>
+     <div class="amount"><?php echo __('task ') . ($page*10-9) . __(' to ')?>
+     <?php if($page<$pagemax){
+          echo $page*10;
+     }else{
+          echo $count; 
+     }
+     echo __(' of ').$count. __(' total')?></div>
+     <ul class="pagination pagination-comvn" aria-label="Pagination">
+          <?php if ($page>1): ?>
+               <li class="pagination-previous">
+                    <a href="<?php echo $this->getUrl('*/frontend/myworkshoptask/', array('page' => $page-1));?>" aria-label="<?php echo __('Previous') ?>">
+                         <span class="show-for-sr"><?php echo __('Previous') ?></span>
+                    </a>
+               </li>
+          <?php endif; ?>
+          
+          <?php for($i=1; $i <= $pagemax; $i++): ?>
+               <?php if ($i == $page): ?>
+                         <li class="current"><span><?php echo $i ?></span></li> 
+               <?php else: ?> 
+                         <li ><a href="<?php echo $this->getUrl('*/frontend/myworkshoptask/', array('page' => $i));?>">  <?php echo $i?></a></li> 
+               <?php endif;?>        
+          <?php endfor; ?>
+          
+          <?php if($page<$pagemax): ?>
+               <li class="pagination-next">  
+                    <a href="<?php echo $this->getUrl('*/frontend/myworkshoptask/', array('page' => $page+1));?>"aria-label="<?php echo __('Next') ?>">
+                         <span class="show-for-sr"><?php echo __('Next') ?></span>
+                    </a>
+               </li>
+          <?php endif; ?>
+     </ul>
+
+     <table class="data-table responsive">
+          <thead>
+               <tr>
+                    <th class="hide-for-small"></th>
+                    <th><?php echo __("Number") ?></th>
+                    <th><?php echo __("Type") ?></th>
+                    <th><?php echo __("Description") ?></th>
+                    <th><?php echo __("Status") ?></th>
+                    <th></th>
+               </tr>
+          </thead>
+          <tbody>
+               <?php foreach ($this->getTasksToCustomer($customer_id)[0] as $task):
+                    //get image of product
+                    $product = $this->getProduct()->load($task->getFkProductId());
+                    $imagewidth=200;
+                    $imageheight=200;
+                    $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+                    $imageHelper  = $objectManager->get('\Magento\Catalog\Helper\Image');
+                    $image = $imageHelper->init($product, 'product_page_image_small')->setImageFile($product->getFile())->resize($imagewidth, $imageheight)->getUrl();
+                    if ($task->getProductname() === Null) {
+                         $description = $task->getWeaponDescription();
+                    } else {
+                         $description = $task->getProductname();
+                    }
+                    $url = $this->getUrl('*/frontend/mytask/', array('id' => $task->getPkEntityId()));
+               ?>
+
+               <tr>
+                    <td class="hide-for-small" >
+                         <img src="<?php echo $image ?>" alt="" width="80" height="80">
+                    </td>
+                    <td data-label="<?php echo __("Number") ?>"><?php echo $task->getPkEntityId(); ?></td>
+                    <td data-label="<?php echo __("Type") ?>"><?php echo $this->getType()[$task->getType()]['label']; ?></td>
+                    <td data-label="<?php echo __("Description") ?>"><?php echo $description ?></td>
+                    <td data-label="<?php echo __("Status") ?>"><?php echo $this->getStatus()[$task->getStatus()]['label']; ?></td>
+                    <td data-label="">
+                         <a class="action tocart primary" href="<?php echo $url?>"><i class="fi-magnifying-glass"></i></a>                    
+                    </td>
+               </tr>
+                    
+               <?php endforeach; ?>
+          </tbody>
+     </table>
+     <ul class="pagination pagination-comvn" aria-label="Pagination">
+     <?php if ($page > 1):?>
+          <li class="pagination-previous">
+          <a href="<?php echo $this->getUrl('*/frontend/myworkshoptask/', array('page' => $page-1));?>" aria-label="<?php echo __('Previous') ?>">
+                         <span class="show-for-sr"><?php echo __('Previous') ?></span>
+                    </a>
+               </li>
+     <?php endif; ?>
+     
+     <?php for($i = 1; $i <= $pagemax; $i++) :?>
+          <?php if ($i == $page): ?>
+                    <li class="current"><span><?php echo $i ?></span></li> 
+          <?php else: ?> 
+                    <li ><a href="<?php echo $this->getUrl('*/frontend/myworkshoptask/', array('page' => $i));?>">  <?php echo $i?></a></li> 
+          <?php endif;?>        
+     <?php endfor; ?>
+     
+     <?php if($page < $pagemax):?>
+          <li class="pagination-next">  
+          <a href="<?php echo $this->getUrl('*/frontend/myworkshoptask/', array('page' => $page+1));?>"aria-label="<?php echo __('Next') ?>">
+                         <span class="show-for-sr"><?php echo __('Next') ?></span>
+                    </a>
+               </li>
+     <?php endif; ?>
+     </ul>
+
+     <div class="buttons-set">
+     <p class="back-link"><a href="<?php echo $this->getUrl('*/frontend/myworkshoptask/') ?>"><small>&laquo; </small><?php echo __('Back') ?></a></p>
+     </div>
+<?php endif; ?>

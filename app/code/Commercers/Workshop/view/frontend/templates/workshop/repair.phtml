@@ -1,0 +1,158 @@
+<script>
+     window.weapons = <?php echo $this->getWeaponArray(true); ?>;
+     window.ajaxUrlFrontNew = '<?php echo $this->getUrl("workshop/frontend/save");?>';
+     window.urlRedirect = '<?php echo $this->getUrl("workshop/frontend/myworkshoptask");?>';
+</script>
+<?php if ($this->countryWithJouleRestriction() === false){
+     ?><div class="workshop-error">
+          <?php echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('fn_workshop_not_allowed')->toHTML();
+     ?></div>
+<?php }else{?>
+<div class="std"><?php echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('fn_workshop_repair_tuning')->toHTML();?></div>
+
+<section class="workshop-search">    
+     <p><?php echo $this->getManufacturerHtmlSelect(); ?></p>
+     <form action="<?php echo $block->getUrl('*/frontend/getCustomerWeaponId/')?>" id="form-weaponSelect">            
+          <!-- <select id="weaponSelect" style="width: 100%;">
+               <option class="init" value=""><?php //echo __('Select a weapon') ?></option>
+          </select> -->
+          <ul class="select-ul">
+               <li class="init"><?php echo __('Select a weapon') ?></li>
+          </ul>
+          <span class="or"><?php echo __('OR') ?></span>
+          <input type="checkbox" name="weapon-not-exist" id="weapon-not-exist" value="weapon-not-exist">
+          <label for="weapon-not-exist"> <?php echo __("My weapon is not listed in Begadi-Shop") ?></label>
+     </form>    
+</section>
+<div class="form-workshop" id="weapon-choosed">
+     <h2>Ihre gewählte Waffe:</h2>        
+     <div id="weapon-result"><div class="product"><div class="product-image"></div><div class="name-product"></div><span><?php echo __('Tuning possible') ?></span></div></div>
+     <!--hidden input fields for sending request to controller-->
+     <input type="hidden" id="weapon-id" name="weapon-id" >
+     <input type="hidden" name="type" id="type" value="repair">
+     <label for="customer-order-number"><?php echo __("order-invoice-number") ?></label>
+     <input type="number" id="customer-order-number" name="customer-order-number" required>
+     <label for="notes-repair"><?php echo __("Notes") ?></label>
+     <textarea id="notes-repair" name="chat-message" cols="35" rows="4" placeholder="<?php echo __("Notes") ?>" required></textarea> 	
+          
+     <label style="display: block;"><?php echo __("chosen-parcel-service-text"); ?>:</label>
+     <input type="radio" value="dpd" id="chosen-parcel-service-dpd" name="chosen-parcel-service" required>
+     <label for="chosen-parcel-service-dpd"><?php echo __("chosen-parcel-service-dpd") ?></label>
+     <input type="radio" value="dhl" id="chosen-parcel-service-dhl" name="chosen-parcel-service" required>
+     <label for="chosen-parcel-service-dhl"><?php echo __("chosen-parcel-service-dhl") ?></label> 	
+
+     <div class="button-group text-right">              
+          <input type="submit" id="submit-form" class="button action primary" value="Anfrage stellen">
+     </div>    
+</div>
+<div class="form-workshop" id="no-weapon-choosed" style="display: none;">
+     <input type="hidden" name="type" value="repair">
+     <label for="customer-weapon-manufacturer"><?php echo __("Manufacturer") ?></label>
+     <input type="text" id="customer-weapon-manufacturer" name="customer-weapon-manufacturer" placeholder="<?php echo __("Manufacturer") ?>" required>
+     
+     <label for="customer-weapon-description"><?php echo __("Weapon Description") ?></label>        
+     <input id="customer-weapon-description" type="text" name="customer-weapon-description" placeholder="<?php echo __("Weaponname/type/number") ?>" required>
+
+     <label for="customer-order-number"><?php echo __("order-number") ?></label>        
+     <input type="number" id="customer-order-number" name="customer-order-number" required>
+     
+     <label for="notes-repair"><?php echo __("Notes") ?></label>
+     <textarea id="notes-repair" name="chat-message" cols="35" rows="4" placeholder="<?php echo __("Notes") ?>" required></textarea> 	
+     
+     <label style="display: block;"><?php echo __("chosen-parcel-service-text"); ?>:</label>
+     <input type="radio" value="dpd" id="chosen-parcel-service-dpd-2" name="chosen-parcel-service" required>
+     <label for="chosen-parcel-service-dpd-2"><?php echo __("chosen-parcel-service-dpd"); ?></label>
+     <input type="radio" value="dhl" id="chosen-parcel-service-dhl-2" name="chosen-parcel-service" required>
+     <label for="chosen-parcel-service-dhl-2"><?php echo __("chosen-parcel-service-dhl"); ?></label>
+
+     <div class="button-group text-right">              
+          <input type="submit" id="submit-form-2" class="button action primary" value="Anfrage stellen">
+     </div>  
+</div>
+<div class="buttons-set">
+     <p class="back-link"><a href="/workshop/frontend/index/"><?php echo __('back')?></a></p>        
+</div>
+<?php } ?>
+<script>
+require(['jquery', 'jquery/ui'],function($) {
+     jQuery(document).ready(function () {
+          var check = '<?php echo $this->getManufacturerHtmlSelect(); ?>';
+          if(check != ''){
+               jQuery('#form-weaponSelect').hide();
+          }    
+
+          jQuery('#manufacturer-select').on('change',function(){
+               jQuery('#form-weaponSelect').show();
+               var data = window.weapons;
+               $('.select-ul').empty().append('<li class="init"><?php echo __('Select a weapon') ?></li>');
+               jQuery.each(data, function(key,value){
+                    if( value.name && (jQuery('#manufacturer-select').val() == value.manufacturer)) {
+                         console.log(value);
+                         html = "<li data-id='"+value.id+"' data-img='"+value.img+"' data-name='"+value.name+"'>";
+                         html += value.img+"<span>"+value.name+"</span>"
+                         html += "</li>";
+                         jQuery('.select-ul').append(html);
+                    }
+               });
+          });
+     });
+     $("ul").on("click", ".init", function() {
+          $(this).closest("ul").children('li:not(.init)').toggle();    
+          $(".workshop-search ul").toggleClass('select-toggle');
+     });
+
+     // var allOptions = $(".select-ul").children('li:not(.init)');
+     $("ul").on("click", "li:not(.init)", function() {
+          $(this).closest("ul").children('li:not(.init)').removeClass('selected');
+          $(this).addClass('selected');
+          $("ul").children('.init').html($(this).data('name'));
+          $(this).closest("ul").children('li:not(.init)').toggle();
+          $(".workshop-search ul").toggleClass('select-toggle');
+          if($('#weapon-not-exist').prop( "checked") == false){
+               $('#weapon-choosed').show('fade');
+          }
+          $('#weapon-id').val($(this).data('id'));
+          $('.name-product').html($(this).data('name'));
+          $('.product-image').html($(this).data('img'));
+     });
+     $('#weapon-not-exist').on('click',function () {
+          if($(this).prop( "checked") == true) {
+               $('#no-weapon-choosed').show('fade');
+               $('#weapon-choosed').hide();
+          } else {
+               $('#no-weapon-choosed').hide();
+               if($('#weapon-id').val())
+                    $('#weapon-choosed').show('fade');
+          }        
+     });
+     $("#submit-form,#submit-form-2").on('click',function() {
+          var weaponId = $('#weapon-id').val();
+          var type = $('#type').val();
+          var notesRepair = $('#notes-repair').val();
+          var customerOrderNumber = $('#customer-order-number').val();
+          var customerWeaponDescription = $('#customer-weapon-description').val();
+          var customerWeaponManufacturer = $('#customer-weapon-manufacturer').val();
+          var chosenCarrier = $("input[name='chosen-parcel-service']:checked").val();
+          $.ajax({
+               url: window.ajaxUrlFrontNew + '?isAjax=true',
+               dataType: 'json',
+               type: 'post',
+               data: {
+                    form_key: window.FORM_KEY,
+                    weapon_id: weaponId,
+                    type: type,
+                    chosenCarrier: chosenCarrier,
+                    customerOrderNumber: customerOrderNumber,
+                    customerWeaponDescription: customerWeaponDescription,
+                    customerWeaponManufacturer: customerWeaponManufacturer,
+                    chat_message: notesRepair
+                    },
+               showLoader:true,
+               success: function (response) {
+                    //  window.location.reload();
+                    window.location.href = window.urlRedirect
+               }
+          });
+     });
+});
+</script>

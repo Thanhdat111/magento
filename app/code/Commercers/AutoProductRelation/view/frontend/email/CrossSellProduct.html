@@ -1,0 +1,4 @@
+<!--@subject {{trans "You get a promotion code, go see it now!"}}  @-->
+{{template config_path="design/email/header_template"}}
+	{{block class="Magento\Framework\View\Element\Template" name="email" template="Commercers_AutoProductRelation::email/crosssellproduct.phtml"  items=$items area="frontend"}}
+{{template config_path="design/email/footer_template"}}

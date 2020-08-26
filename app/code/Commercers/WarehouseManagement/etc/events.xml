@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+   <event name="checkout_onepage_controller_success_action">
+       <observer name="order_data" instance="Commercers\WarehouseManagement\Observer\OrderSaveAfter" />
+   </event>
+   <event name="receiving_data_load_after">
+       <observer name="receiving_ssve" instance="Commercers\WarehouseManagement\Observer\ReceivingSaveAfter" />
+   </event>
+</config>

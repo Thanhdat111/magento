@@ -1,0 +1,21 @@
+<?php
+
+namespace Commercers\AutoProductRelation\Cron;
+
+class CronBuildTableProduct {
+
+    protected $relationIndexer;
+    protected $insertTable;
+
+    public function __construct(
+    \Commercers\AutoProductRelation\Model\Indexer\RelationIndexer $relationIndexer,
+    \Commercers\AutoProductRelation\Service\Indexer\InsertTable $insertTable
+    ) {
+        $this->relationIndexer = $relationIndexer;
+        $this->insertTable = $insertTable;
+    }
+    public function execute() {
+        $this->relationIndexer->executeFull();
+        $this->insertTable->execute();
+    }
+}

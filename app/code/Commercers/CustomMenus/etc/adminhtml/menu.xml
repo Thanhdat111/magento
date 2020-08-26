@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+    <remove id="Magento_Backend::marketing" />
+    <remove id="Lof_All::lof_all" />
+    <remove id="Magento_Paypal::paypal_billing_agreement" />
+    <remove id="Magento_Sales::sales_transactions"/>
+    <remove id="BitExpert_ForceCustomerLogin::manage" />
+    <remove id="BitExpert_ForceCustomerLogin::bitexpert_force_login_whitelist"/>
+    </menu>
+</config>

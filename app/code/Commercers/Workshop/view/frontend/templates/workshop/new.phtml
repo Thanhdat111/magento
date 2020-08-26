@@ -1,0 +1,114 @@
+<script>
+    window.ajaxUrlFrontNew = '<?php echo $this->getUrl("workshop/frontend/save");?>';
+    window.ajaxUrlWorkshopProduct = '<?php echo $this->getUrl("workshop/frontend/workshopproduct");?>';
+    window.urlRedirect = '<?php echo $this->getUrl("workshop/frontend/myworkshoptask");?>';
+</script>
+<?php if ($this->countryWithJouleRestriction() === false):
+    ?><div class="workshop-error">
+    <?php echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('fn_workshop_not_allowed')->toHTML();
+    ?></div>
+<?php else:?>
+    <div class="std"><?php echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('fn_workshop_initial_purchase')->toHTML();?></div>
+    <section class="workshop-search">
+        <p><?php echo $this->getManufacturerHtmlSelect(); ?></p>
+        <form action="<?php echo $block->getUrl('*/frontend/getCustomerWeaponId/')?>" id="form-weaponSelect">
+            <!-- <select id="weaponSelect" style="width: 100%;">
+               <option class="init" value=""><?php //echo __('Select a weapon') ?></option>
+          </select> -->
+            <ul class="select-ul">
+                <li class="init"><?php echo __('Select a weapon') ?></li>
+            </ul>
+        </form>
+    </section>
+    <div class="form-workshop">
+        <h2>Ihre gewählte Waffe:</h2>
+        <div id="weapon-result"><div class="product"><div class="product-image"></div><div class="name-product"></div></div></div>
+        <!--hidden input fields for sending request to controller-->
+        <input type="hidden" id="weapon-id" name="weapon-id" >
+        <input type="hidden" name="type" id="type" value="new">
+
+        <input type="checkbox" name="limitation" id="limitation" value="limitation">
+        <label for="limitation">Drosselung auf 0.5 Joule</label>
+
+        <label for="notes-new" class="label-notes-new">Anmerkungen</label>
+        <textarea id="notes-new" name="chat-message" cols="35" rows="4" placeholder="Anmerkungen" required=""></textarea>
+
+        <div class="button-group text-right">
+            <input type="submit" id="submit-form" class="button action primary" value="Anfrage stellen">
+        </div>
+    </div>
+    <div class="buttons-set">
+        <p class="back-link"><a href="/workshop/frontend/index/"><?php echo __('back')?></a></p>
+    </div>
+<?php endif; ?>
+<script>
+    require(['jquery', 'jquery/ui'],function($) {
+        jQuery(document).ready(function () {
+            var check = '<?php echo $this->getManufacturerHtmlSelect(); ?>';
+            if(check != ''){
+                jQuery('#form-weaponSelect').hide();
+            }
+
+            jQuery('#manufacturer-select').on('change',function() {
+                if (jQuery('#manufacturer-select').val() === 'default')
+                    jQuery('#form-weaponSelect').hide();
+                else {
+                    jQuery('#form-weaponSelect').show();
+                    $('.select-ul').empty().append('<li class="init"><?php echo __('Select a weapon') ?></li>');
+                    var manuf = jQuery('#manufacturer-select').val();
+                    $.ajax({
+                        url: window.ajaxUrlWorkshopProduct + '?isAjax=true',
+                        dataType: 'json',
+                        type: 'post',
+                        data: {manuf: manuf},
+                        showLoader:true,
+                        success: function (response) {
+                            console.log(123);
+                            jQuery('.select-ul').append(response.product);
+                        }
+                    });
+                }
+            });
+        });
+        $("ul").on("click", ".init", function() {
+            $(this).closest("ul").children('li:not(.init)').toggle();
+            $(".workshop-search ul").toggleClass('select-toggle');
+        });
+
+        // var allOptions = $(".select-ul").children('li:not(.init)');
+        $("ul").on("click", "li:not(.init)", function() {
+            $(this).closest("ul").children('li:not(.init)').removeClass('selected');
+            $(this).addClass('selected');
+            $("ul").children('.init').html($(this).data('name'));
+            $(this).closest("ul").children('li:not(.init)').toggle();
+            $(".workshop-search ul").toggleClass('select-toggle');
+            $('.form-workshop').css('display','block');
+            $('#weapon-id').val($(this).data('id'));
+            $('.name-product').html($(this).data('name'));
+            $('.product-image').html('<img width="20%" src="'+$(this).data('img')+'">');
+        });
+        $("#submit-form").on('click',function() {
+            var weaponId = $('#weapon-id').val();
+            var limitation = $('#limitation').val();
+            var type = $('#type').val();
+            var notesNew = $('#notes-new').val();
+            $.ajax({
+                url: window.ajaxUrlFrontNew + '?isAjax=true',
+                dataType: 'json',
+                type: 'post',
+                data: {
+                    form_key: window.FORM_KEY,
+                    weapon_id: weaponId,
+                    type: type,
+                    limitation: limitation,
+                    chat_message: notesNew
+                },
+                showLoader:true,
+                success: function (response) {
+                    //  window.location.reload();
+                    window.location.href = window.urlRedirect
+                }
+            });
+        });
+    });
+</script>

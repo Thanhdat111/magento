@@ -1,0 +1,19 @@
+<?php
+$messages = $block->getItems();
+?>
+<h2 style="text-align: center;text-transform: uppercase;padding-bottom: 20px;">CrossSell Log</h2>
+
+<body>
+   <table>
+<tr><h4>ERROR:</h4></tr>
+   <?php foreach($messages as $message){
+    ?>
+    <tr>
+        <td><?= $message ?></td>   
+    </tr>
+   <?php } ?>
+</table>
+</body>
+
+
+

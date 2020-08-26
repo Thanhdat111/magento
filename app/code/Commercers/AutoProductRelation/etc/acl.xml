@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Acl/etc/acl.xsd">
+    <acl>
+        <resources>
+            <resource id="Magento_Backend::admin">
+                <resource id="Magento_Backend::marketing">
+                    <resource id="Commercers_AutoProductRelation::commercers" title="Commercres" translate="title" sortOrder="10">
+                        <resource id="Commercers_AutoProductRelation::crosssell_catalog" title="Auto Product Relation" translate="title" sortOrder="10" />
+                        <resource id="Commercers_AutoProductRelation::crosssell_followemail" title="CrossSell Followup Email" translate="title" sortOrder="10" />
+                        <resource id="Commercers_AutoProductRelation::crosssell_log" title="CrossSell Process Log" translate="title" sortOrder="10" />
+                    </resource>
+                </resource>
+            </resource>
+        </resources>
+    </acl>
+</config>

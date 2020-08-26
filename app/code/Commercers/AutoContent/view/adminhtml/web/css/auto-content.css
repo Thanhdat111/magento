@@ -1,0 +1,34 @@
+.filter-content-attribute .admin__field-control .admin__control-text{
+    width: 95%;
+}
+.filter-content-attribute .default-use{
+    padding-right: 20px;
+}
+.info-attribute table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.info-attribute td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+.info-attribute tr:nth-child(even) {
+  background-color: #dddddd;
+}
+.attribute-tester tr:nth-child(even) {
+  background-color: #fff;
+}
+.modal-popup._inner-scroll .modal-inner-wrap {
+    max-height: 70%;
+    width: 30%;
+}
+.filter-tester{
+    padding-right: 20px;
+    color: #303030;
+    font-size: 1.4rem;
+    font-weight: 600;
+}

@@ -1,0 +1,143 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+     <system>
+          <tab id="commercers" translate="label" sortOrder="10">
+               <label>commercers</label>
+          </tab>
+          <section id="workshop" translate="label" sortOrder="130" showInDefault="1" showInWebsite="1" showInStore="1">
+               <class>separator-top</class>
+               <label>Workshop</label>
+               <tab>commercers</tab>
+               <resource>Commercers_Workshop::config</resource>
+               <group id="default_group" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>General Settings</label>
+                    <field id="extension_active" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                         <label>Extension Activated:</label>
+                         <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    </field>
+                    <field id="debug_active" translate="label" type="select" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">
+                         <label>Debug Activated:</label>
+                         <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    </field>
+               </group>
+               <group id="frontend_group" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Frontend and Customer-Specific Settings</label>
+                    <field id="sender_address" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                         <label>Sender address</label>
+                    </field>
+                    <field id="new_order_created" translate="label" type="select" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                         <label>New order created</label>
+                         <source_model>Commercers\Workshop\Model\Source\Email\Templates</source_model>
+                    </field>
+                    <field id="offer_created" translate="label" type="select" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1">
+                         <label>Offer created:</label>
+                         <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    </field>
+                    <field id="email_template_offer_create" translate="label comment" type="select" sortOrder="4" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                         <label>Email Template offer created</label>
+                         <source_model>Commercers\Workshop\Model\Source\Email\Templates</source_model>
+                    </field>
+                    <field id="waiting_for_weapon" translate="label" type="select" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">
+                         <label>Waiting for weapon:</label>
+                         <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    </field>
+                    <field id="email_template_waiting_for_weapon" translate="label comment" type="select" sortOrder="6" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                         <label>Email Template waiting for weapon</label>
+                         <source_model>Commercers\Workshop\Model\Source\Email\Templates</source_model>
+                    </field>
+                    <field id="cancel" translate="label" type="select" sortOrder="7" showInDefault="1" showInWebsite="1" showInStore="1">
+                         <label>Cancel:</label>
+                         <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    </field>
+                    <field id="cancel_email_template" translate="label comment" type="select" sortOrder="8" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                         <label>Cancel Email Template</label>
+                         <source_model>Commercers\Workshop\Model\Source\Email\Templates</source_model>
+                    </field>
+                    <field id="subsequent_claims_created" translate="label" type="select" sortOrder="9" showInDefault="1" showInWebsite="1" showInStore="1">
+                         <label>Subsequent claims created:</label>
+                         <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    </field>
+                    <field id="email_template_subscription" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                         <label>Email Template Subscription</label>
+                         <source_model>Commercers\Workshop\Model\Source\Email\Templates</source_model>
+                    </field>
+                    <field id="email_template_new_chat_message" translate="label comment" type="select" sortOrder="11" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                         <label>Email Template New Chat Message</label>
+                         <source_model>Commercers\Workshop\Model\Source\Email\Templates</source_model>
+                    </field>
+                    <field id="email_template_two_weeks_reminder" translate="label comment" type="select" sortOrder="12" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                         <label>Email Template 2 Weeks Reminder</label>
+                         <source_model>Commercers\Workshop\Model\Source\Email\Templates</source_model>
+                    </field>
+                    <field id="email_template_four_weeks_reminder" translate="label comment" type="select" sortOrder="13" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                         <label>Email Template 4 Weeks Reminder</label>
+                         <source_model>Commercers\Workshop\Model\Source\Email\Templates</source_model>
+                    </field>
+                    <field id="error_message_checkout" translate="label" type="text" sortOrder="2" showInDefault="14" showInWebsite="1" showInStore="1">
+                         <label>Error Message Checkout</label>
+                    </field>
+               </group>
+               <group id="settings_for_the_admin_area" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Settings for the admin area</label>
+                    <field id="standard_fsk" translate="label comment" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                         <label>Standard FSK</label>
+                         <source_model>Commercers\Workshop\Model\Source\Options\ApprovalIds</source_model>
+                    </field>
+                    <field id="show_ws_box_for_all" translate="label" type="select" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">
+                         <label>Show WS-Box for all:</label>
+                         <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    </field>
+                    <field id="standard_type_for_ws_box" translate="label comment" type="select" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                         <label>Standard type for WS-Box</label>
+                         <source_model>Commercers\Workshop\Model\Source\Options\Type</source_model>
+                    </field>
+                    <field id="remove_wsc_articles_from_manage_articles_grid" translate="label" type="select" sortOrder="4" showInDefault="1" showInWebsite="1" showInStore="1">
+                         <label>Remove WSC articles from "Manage Articles" grid:</label>
+                         <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    </field>
+                    <field id="remove_wsc_articles_from_tax_office_grid" translate="label" type="select" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">
+                         <label>Remove WSC Articles from "Tax Office" Grid:</label>
+                         <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    </field>
+                    <field id="remove_wsc_items_from_inventory_grid" translate="label" type="select" sortOrder="6" showInDefault="1" showInWebsite="1" showInStore="1">
+                         <label>Remove WSC items from Inventory Grid:</label>
+                         <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    </field>
+                    <field id="remove_wsc_articles_from_worstseller_grid" translate="label" type="select" sortOrder="7" showInDefault="1" showInWebsite="1" showInStore="1">
+                         <label>Remove WSC Articles from Worstseller Grid:</label>
+                         <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    </field>
+                    <field id="remove_wsc_items_from_suppliers_grid" translate="label" type="select" sortOrder="8" showInDefault="1" showInWebsite="1" showInStore="1">
+                         <label>Remove WSC items from "Suppliers" grid:</label>
+                         <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    </field>
+                    <field id="remove_wsc_items_from_storagelocation_grid" translate="label" type="select" sortOrder="9" showInDefault="1" showInWebsite="1" showInStore="1">
+                         <label>Remove WSC items from "StorageLocation" Grid:</label>
+                         <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    </field>
+                    <field id="automatically_set_order_ready_status" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                         <label>Automatically set "Order ready" status:</label>
+                         <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    </field>
+                    <field id="generate_automatic_purchase_order" translate="label" type="select" sortOrder="11" showInDefault="1" showInWebsite="1" showInStore="1">
+                         <label>Generate automatic purchase order:</label>
+                         <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    </field>
+                    <field id="status_display_in_inhouse_display" type="multiselect" sortOrder="12" showInDefault="1" showInWebsite="1" showInStore="1">
+                         <label>Status Display in Inhouse Display</label>
+                         <source_model>Commercers\Workshop\Model\Source\Options\Status</source_model>
+                    </field>
+                    <field id="ascending_sorting_order_of_the_chat_entries" translate="label" type="select" sortOrder="13" showInDefault="1" showInWebsite="1" showInStore="1">
+                         <label>Ascending sorting order of the chat entries:</label>
+                         <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    </field>
+                    <field id="default_message_for_order_creation_by_admin" translate="label" type="text" sortOrder="14" showInDefault="1" showInWebsite="1" showInStore="1">
+                         <label>Default message for order creation by admin</label>
+                    </field>
+                    <field id="wdt_url" translate="label" type="text" sortOrder="2" showInDefault="1" showInWebsite="15" showInStore="1">
+                         <label>WDT-Url</label>
+                    </field>
+               </group>
+          </section>
+     </system>
+</config>

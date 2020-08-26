@@ -1,0 +1,67 @@
+<?php
+$data = $block->getReviewData();
+
+?>
+
+<?php if($data): ?>
+<div class="expand">
+    <button type="button" class="expand-button action- scalable primary">
+        <span><?php echo (__('Expand all fields'));?></span>
+    </button>
+</div>
+
+<div class="attributes-available" id="attributes-available">
+    <!--
+    <div class="product-available-attribute_show">
+        <ul id="attributes">
+            <?php //foreach ($data as $key => $value) : ?>
+
+                <?php //echo $block->renderAttributeItem($key, $value);?>
+
+            <?php //endforeach; ?>
+            
+        </ul>
+    </div>
+    -->
+    
+    <div class="product-available-attribute_show">
+        <ul id="attributes">
+            <?php echo $block->renderHtmlTree($data);?>
+        </ul>
+        
+    </div>
+    
+    
+    
+    
+    
+   
+    
+    
+
+</div> 
+<?php else :?>
+
+<p><?php echo __("No data is available. Pls check again your parametters");?></p>
+<?php endif; ?>
+
+<script type="text/x-magento-init">
+{
+
+
+    "*": {
+
+        "Magento_Ui/js/core/app": {
+
+            "components": { 
+
+                "dataReview" : {
+                    "component": "Commercers_Profilers/js/form/export/review"
+                    
+                }
+
+            }
+        }
+    }
+}
+</script>

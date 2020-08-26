@@ -1,0 +1,152 @@
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">crosssell_listing.crosssell_listing_data_source</item>
+            <item name="deps" xsi:type="string">crosssell_listing.crosssell_listing_data_source</item>
+        </item>
+    </argument>
+    <argument name="context" xsi:type="configurableObject">
+        <argument name="class" xsi:type="string">Magento\Framework\View\Element\UiComponent\Context</argument>
+        <argument name="namespace" xsi:type="string">crosssell_listing</argument>
+        <!-- this should be same as the file name or uicomponentname -->
+        <!-- ten file/namespace  -->
+    </argument>
+
+    <!-- Cai nay can thiet-->
+    <settings>
+
+        <spinner>crosssell_columns</spinner>
+        <deps>
+            <!-- ten file/namespace . ten cua datasource -->
+            <dep>crosssell_listing.crosssell_listing_data_source</dep>
+        </deps>
+    </settings>
+        <dataSource name="crosssell_listing_data_source">
+        <argument name="dataProvider" xsi:type="configurableObject">
+            <argument name="class" xsi:type="string">Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider</argument>
+            <argument name="name" xsi:type="string">crosssell_listing_data_source</argument>
+            <argument name="primaryFieldName" xsi:type="string">id</argument>
+            <argument name="requestFieldName" xsi:type="string">id</argument>
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="component" xsi:type="string">Magento_Ui/js/grid/provider</item>
+                    <item name="update_url" xsi:type="url" path="mui/index/render"/>
+                    <item name="storageConfig" xsi:type="array">
+                        <item name="indexField" xsi:type="string">id</item>
+                    </item>
+                </item>
+            </argument>
+        </argument>
+    </dataSource>
+    <listingToolbar name="listing_top">   
+        <columnsControls name="columns_controls"/>
+        <filters name="listing_filters" />
+        <paging name="listing_paging"/>
+        <exportButton name="export_button"/>
+    </listingToolbar>
+    <columns name="crosssell_columns">
+         <selectionsColumn name="ids">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="indexField" xsi:type="string">id</item>
+                    <item name="sortOrder" xsi:type="number">1</item>
+                </item>
+            </argument>
+        </selectionsColumn>    
+         <column name="order_id"><!-- field code trong database -->
+            <settings>
+                <filter>text</filter>
+                <editor>
+                    <validation>
+                        <rule name="required-entry" xsi:type="boolean">true</rule>
+                    </validation>
+                    <editorType>text</editorType>
+                </editor>
+                <label translate="true">order_id</label>
+            </settings>
+        </column>
+        <column name="customer_email"><!-- field code trong database -->
+            <settings>
+                <filter>text</filter>
+                <editor>
+                    <validation>
+                        <rule name="required-entry" xsi:type="boolean">true</rule>
+                    </validation>
+                    <editorType>text</editorType>
+                </editor>
+                <label translate="true">Customer Email</label>
+            </settings>
+        </column>
+        <column name="promotion_code"><!-- field code trong database -->
+            <settings>
+                <filter>text</filter>
+                <editor>
+                    <validation>
+                        <rule name="required-entry" xsi:type="boolean">true</rule>
+                    </validation>
+                    <editorType>text</editorType>
+                </editor>
+                <label translate="true">Promotion Code</label>
+            </settings>
+        </column>
+         <column name="referral_code"><!-- field code trong database -->
+            <settings>
+                <filter>text</filter>
+                <editor>
+                    <validation>
+                        <rule name="required-entry" xsi:type="boolean">true</rule>
+                    </validation>
+                    <editorType>text</editorType>
+                </editor>
+                <label translate="true">Referral Code</label>
+            </settings>
+        </column>
+        <column name="created_at"><!-- field code trong database -->
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="sorting" xsi:type="string">desc</item>
+                </item>
+            </argument>
+            <settings>
+                <filter>dateRange</filter>
+                <editor>
+                    <validation>
+                        <rule name="required-entry" xsi:type="boolean">true</rule>
+                    </validation>
+                    <editorType>text</editorType>
+                </editor>
+                <label translate="true">Created AT</label>
+            </settings>
+
+        </column>
+        <column name="sent_at"><!-- field code trong database -->
+            <settings>
+                <filter>dateRange</filter>
+                <editor>
+                    <validation>
+                        <rule name="required-entry" xsi:type="boolean">true</rule>
+                    </validation>
+                    <editorType>text</editorType>
+                </editor>
+                <label translate="true">Send AT</label>
+            </settings>
+        </column>
+         <column name="status">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Commercers\AutoProductRelation\Ui\Component\Listing\Status</item>
+                <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="string">select</item>
+                    <item name="label" translate="true" xsi:type="string">Status</item>
+                    <item name="component" xsi:type="string">Magento_Ui/js/grid/columns/select</item>
+                    <item name="dataType" xsi:type="string">select</item>  
+                </item>
+            </argument>
+         </column>
+         <actionsColumn name="actions" class="Commercers\AutoProductRelation\Ui\Component\Listing\Column\Actions">
+             <settings>
+                 <indexField>id</indexField>
+             </settings>
+         </actionsColumn> 
+    </columns>
+</listing>

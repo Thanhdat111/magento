@@ -1,0 +1,58 @@
+<profilers>
+    <profile>
+            <name>Profile 1 for CSV</name>
+            <id>profiler_1</id>
+            <enable_disable>1</enable_disable>
+            <data_source>product</data_source>
+            <format>csv</format>
+            <ftp>
+                <hostname>ftp.comvn.powered-by-rackspeed.de</hostname>
+                <username>developer@comvn.powered-by-rackspeed.de</username>
+                <password>*t4S@U5gw~DQ</password>
+                <type>0</type>
+                <port>21</port>
+                <localfolder>csv/ProductImport/local/folder</localfolder>
+                <done>csv/ProductImport/local/done</done>
+                <folderftp>var/csv/ProductImport/ftp/folder</folderftp>
+                <donefolderftp>var/csv/ProductImport/ftp/done</donefolderftp>
+                <localfolderftp>csv/ProductImport/local/folder</localfolderftp>
+            </ftp>
+            <cron>
+                <code>commercers_product_import_1</code>
+                <schedule>* * * * *</schedule>
+            </cron>
+            <mapping>
+                <sku>Scu</sku>
+                <qty>Quantity</qty>
+                <is_in_stock>isInStock</is_in_stock>
+            </mapping>
+    </profile>
+    <profile>
+            <name>Profile 2 for XML</name>
+            <id>profiler_2</id>
+            <enable_disable>1</enable_disable>
+            <data_source>product</data_source>
+            <format>xml</format>
+            <ftp>
+                <hostname>ftp.comvn.powered-by-rackspeed.de</hostname>
+                <username>developer@comvn.powered-by-rackspeed.de</username>
+                <password>*t4S@U5gw~DQ</password>
+                <type>0</type>
+                <port>21</port>
+                <localfolder>xml/ProductImport/local/folder</localfolder>
+                <done>xml/ProductImport/local/done</done>
+                <folderftp>var/xml/ProductImport/ftp/folder</folderftp>
+                <donefolderftp>var/xml/ProductImport/ftp/done</donefolderftp>
+                <localfolderftp>xml/ProductImport/local/folder</localfolderftp>
+            </ftp>
+            <cron>
+                <code>commercers_product_import_2</code>
+                <schedule>*/5 * * * *</schedule>
+            </cron>
+            <mapping>
+                <sku>Scu</sku>
+                <qty>Quantity</qty>
+                <is_in_stock>isInStock</is_in_stock>
+            </mapping>
+    </profile>
+</profilers>

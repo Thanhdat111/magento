@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Indexer/etc/indexer.xsd">
+	<indexer id="commercers_autoproductrelation_indexer" view_id="commercers_autoproductrelation_indexer" class="Commercers\AutoProductRelation\Model\Indexer\RelationIndexer">
+		<title translate="true">Commercers Auto Product Relation Indexer</title>
+		<description translate="true">Auto Product Relation of custom indexer</description>
+	</indexer>
+</config>

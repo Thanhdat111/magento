@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+<virtualType
+        name="Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\Pool">
+    <arguments>
+        <argument name="modifiers" xsi:type="array">
+            <item name="customTab" xsi:type="array">
+                <item name="class" xsi:type="string">
+                    Commercers\ProductAdvance\Ui\DataProvider\Product\Form\Modifier\SetSkuProduct
+                </item>
+                <item name="sortOrder" xsi:type="number">70</item>
+            </item>
+            <item name="updatePriceButton" xsi:type="array">
+                <item name="class" xsi:type="string">
+                    Commercers\ProductAdvance\Ui\DataProvider\Product\Form\Modifier\Price
+                </item>
+                <item name="sortOrder" xsi:type="number">80</item>
+            </item>
+            <item name="updateSizeButton" xsi:type="array">
+                <item name="class" xsi:type="string">
+                    Commercers\ProductAdvance\Ui\DataProvider\Product\Form\Modifier\Size
+                </item>
+                <item name="sortOrder" xsi:type="number">80</item>
+            </item>
+            <item name="updateWeaponButton" xsi:type="array">
+                <item name="class" xsi:type="string">
+                    Commercers\ProductAdvance\Ui\DataProvider\Product\Form\Modifier\Weapon
+                </item>
+                <item name="sortOrder" xsi:type="number">80</item>
+            </item>
+            <item name="updateLogo" xsi:type="array">
+                <item name="class" xsi:type="string">
+                    Commercers\ProductAdvance\Ui\DataProvider\Product\Form\Modifier\Logo
+                </item>
+                <item name="sortOrder" xsi:type="number">80</item>
+            </item>
+        </argument>
+    </arguments>
+</virtualType>
+</config>

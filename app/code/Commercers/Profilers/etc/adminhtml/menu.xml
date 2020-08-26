@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+
+        <add id="Commercers_Profilers::master_menu"
+             title="Import/Export Profilers"
+             module="Commercers_Profilers"
+             sortOrder="2"
+             action="navigation"
+             resource="Commercers_Profilers::master_menu" />
+
+
+        <add id="Commercers_Profilers::system_backend_grid"
+             title="Manage Profilers"
+             module="Commercers_Profilers"
+             sortOrder="2"
+             action="profilers/index/listing"
+             parent="Commercers_Profilers::master_menu"
+             resource="Magento_Backend::content" />
+
+    </menu>
+</config>

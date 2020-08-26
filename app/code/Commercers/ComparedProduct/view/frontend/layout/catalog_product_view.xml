@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+
+<page layout="1column" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <css src="Commercers_ComparedProduct::css/compared.css"/>
+    </head>
+    <body>
+        <referenceContainer name="product.col.left">
+            <container name="commercers-product-view" htmlTag="div" htmlClass="row commercers-product-view" before="product.info.details">
+            <block class="Commercers\ComparedProduct\Block\Product\ProductList\Compared"
+                   name="catalog.product.compared" template="Commercers_ComparedProduct::product/list/items.phtml"  />
+
+            </container>
+        </referenceContainer>
+    </body>
+</page>

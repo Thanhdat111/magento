@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Karliuka Vitalii(karliuka.vitalii@gmail.com)
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Framework\Module\Setup\Migration">
+        <arguments>
+            <argument name="compositeModules" xsi:type="array">
+                <item name="commercers_autocategory_rule" xsi:type="string">Commercers_AutoCategory</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Commercers\AutoCategory\Model\ResourceModel\Rule\Collection" shared="false"/>
+    <type name="Commercers\AutoCategory\Model\Rule\Condition\Combine">
+        <arguments>
+            <argument name="data" xsi:type="array">
+                <item name="form_name" xsi:type="string">category_form</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Commercers\AutoCategory\Model\Rule\Condition\Product">
+        <arguments>
+            <argument name="data" xsi:type="array">
+                <item name="form_name" xsi:type="string">category_form</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="autocategory_listing_data_source" xsi:type="string">
+                    Commercers\AutoContent\Model\ResourceModel\Rule\Collection
+                </item>
+            </argument>
+        </arguments>
+    </type>
+    <virtualType name="Commercers\AutoContent\Model\ResourceModel\Rule\Collection"
+                 type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">commercers_autocategory_rule</argument>
+            <argument name="resourceModel" xsi:type="string">
+                Commercers\AutoContent\Model\ResourceModel\Rule
+            </argument>
+        </arguments>
+    </virtualType>
+</config>

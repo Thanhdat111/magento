@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="admin-2columns-left" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="attributes_tabs">
+            <block class="Commercers\ProductAdvance\Block\Adminhtml\Product\Edit\UpdatePriceButton" name="tab_price" template="Magento_Catalog::catalog/product/edit/action/inventory.phtml"/>
+
+
+            <action method="addTab">
+                <argument name="name" xsi:type="string">inventory</argument>
+                <argument name="block" xsi:type="string">tab_price</argument>
+            </action>
+        </referenceBlock>
+    </body>
+</page>

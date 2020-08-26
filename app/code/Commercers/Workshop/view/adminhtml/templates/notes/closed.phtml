@@ -1,0 +1,41 @@
+<div class="admin__fieldset">
+     <div class="admin__field">
+          <div class="admin__field-label">
+               <label>
+                    <span></span>
+               </label>
+          </div>
+          <div class="admin__field-control">
+               <table class="admin__control-text" style="border: none">
+                    <tr>
+                         <td>
+                              <span style="color: red">if resposible admin filled out, he appear on the grid and he is responsible</span>
+                         </td>
+                    </tr>
+                    <tr>
+                         <td>
+                              <button id="task-done" title="Task done?" type="button" class="action- scalable primary">
+                                   <span>Task done?</span>
+                              </button>
+                         </td>
+                    </tr>
+                    <tr>
+                         <td>
+                              <span style="font-size: 8px">close note</span>
+                         </td>
+                    </tr>
+               </table>
+          </div>
+     </div>
+</div>
+
+<script>
+     require(['jquery', 'jquery/ui'],function($) {
+          id = '<?php echo $block->getCurrentId() ?>'
+          jQuery("document").ready(function(){
+               jQuery("#task-done").on('click',function() {
+                    window.location.href = window.BASE_URL + "note/notedone/pk_entity_id/"+id;
+               });
+          });
+     });
+</script>

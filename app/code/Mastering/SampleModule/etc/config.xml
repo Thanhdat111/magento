@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <mastering>
+            <general>
+                <enable>1</enable>
+                <cron_expression>00 * * * *</cron_expression>
+                <description>Thanhad2131231</description>
+            </general>
+        </mastering>
+    </default>
+</config>

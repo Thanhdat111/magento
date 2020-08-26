@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+
+<page layout="admin-2columns-left" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <css src="Commercers_Profilers::css/form/show-available.css"/>
+    </head>
+    <body>
+        <referenceContainer name="footer" remove="true"/>
+        <referenceContainer name="menu.wrapper" remove="true"/>       
+        <referenceContainer name="notices.wrapper" remove="true"/>
+        <referenceBlock name="header.container" remove="true" /> 
+        <referenceContainer name="content">            
+            <block class="Commercers\Profilers\Block\Adminhtml\Review\Data" template="Commercers_Profilers::review/data.phtml" name="review_data" />            
+        </referenceContainer>
+    </body>
+</page>

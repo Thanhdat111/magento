@@ -1,0 +1,60 @@
+<config>
+    <menu>
+        <catalog>
+            <children>
+                <commercers>
+                    <children>
+                        <autocategory module="commercers_autocategory">
+                            <title>Auto Category</title>
+                            <sort_order>71</sort_order>
+                            <children>
+                                <history module="commercers_autocategory">
+                                    <title>Log History</title>
+                                    <sort_order>2</sort_order>
+                                    <action>adminhtml/autocategory_log</action>
+                                </history>
+                            </children>
+                        </autocategory>
+                    </children>
+                </commercers>
+            </children>
+        </catalog>
+    </menu>
+    <acl>
+        <resources>
+            <admin>
+                <children>
+                    <catalog>
+                        <children>
+                            <commercers>
+                                <children>
+                                    <autocategory module="commercers_autocategory">
+                                        <title>Commercers Auto Category</title>
+                                        <sort_order>80</sort_order>
+                                        <children>
+                                            <rule module="commercers_autocategory">
+                                                <title>Rule Management</title>
+                                            </rule>
+                                        </children>
+                                    </autocategory>
+                                </children>
+                            </commercers>
+                        </children>
+                    </catalog>
+                    <system>
+                        <children>
+                            <config>
+                                <children>
+                                    <autocategory>
+                                        <title>Auto Category</title>
+                                    </autocategory>
+                                </children>
+                            </config>
+                        </children>
+                    </system>
+                </children>
+            </admin>
+
+        </resources>
+    </acl>
+</config>

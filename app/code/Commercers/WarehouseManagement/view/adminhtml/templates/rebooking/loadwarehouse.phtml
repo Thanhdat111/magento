@@ -1,0 +1,60 @@
+<?php 
+    $product = $block->getProduct();
+    $productId = $product->getId();
+    $receivingLocation = $block->getReceivingLocation($productId);
+    $qtyReceivingLocation = $receivingLocation->getQuantity();
+    if(!$qtyReceivingLocation)
+    $qtyReceivingLocation = 0;
+    $warehosueProducts = $block->getWarehouseProductLinking($productId);
+?>
+
+<div class="warehouse">
+
+    <div class="receving-location">
+        <strong>Quantity Receiving Location: <?php echo $qtyReceivingLocation;?></strong>
+    </div>
+    <div class="warehouse-product">
+        <table class="data-grid">
+        <thead>
+            <tr>
+                <th class="data-grid-th">Warehouse</th>
+                <th class="data-grid-th">Area</th>
+                <th class="data-grid-th">Rack Row</th>
+                <th class="data-grid-th">Rack Level</th>
+                <th class="data-grid-th">Select</th>
+                <th class="data-grid-th">Quantity</th>
+            </tr>
+        </thead>
+        <tbody class="optionBox">
+        <?php if(!$warehosueProducts): ?>
+            <tr class="data-grid-tr-no-data">
+               <td colspan="6">We couldn't find any records.</td>  
+            </tr>
+        <?php endif; ?>
+        <?php $row = 1; ?>
+        <?php foreach($warehosueProducts as $warehosueProduct): ?>
+            <input type="hidden" name="productId" value="<?php echo $warehosueProduct['product_id'] ?>" >
+            <input type="hidden" value="<?php echo $warehosueProduct['area_id'] ?>" id="areaId-<?php echo $row ?>">
+             <tr>
+                <td><?php echo  $block->getWarehouse($warehosueProduct['warehouse_id'])->getName(); ?></td>
+                <td><?php echo $warehosueProduct['area'] ?></td>
+                <td><?php echo $warehosueProduct['rack_row'] ?></td>
+                <td><?php echo $warehosueProduct['rack_level'] ?></td>
+                <td class="checkbox-center">
+                    <input type="checkbox" class="checkbox-select">
+                </td>
+                <td>
+                    <input class="input-text qty" data-id="<?php echo $row ?>" disabled>
+                </td>
+              
+             </tr>
+        <?php $row++; ?>
+        <?php endforeach; ?>
+        </tbody>
+        </table>
+    </div>
+</div>
+<script type="text/javascript"  src="<?php echo $block->getJsLoadWarehouse();?>"></script>
+<script>
+    window.qtyReceivingLocation = <?php echo $qtyReceivingLocation; ?>;
+</script>

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">profilers_listing.profilers_listing_data_source</item>
+        </item>
+        <item name="buttons" xsi:type="array">
+            <item name="import" xsi:type="array">
+                <item name="name" xsi:type="string">Import</item>
+                <item name="label" xsi:type="string" translate="true">Import</item>
+                <item name="class" xsi:type="string">primary</item>
+                <item name="url" xsi:type="string">*/import/importcsv</item>
+            </item>
+            <item name="save" xsi:type="array">
+                <item name="name" xsi:type="string">Add New</item>
+                <item name="label" xsi:type="string" translate="true">Add New</item>
+                <item name="class" xsi:type="string">primary</item>
+                <item name="url" xsi:type="string">*/*/index</item>
+            </item>
+        </item>
+    </argument>
+
+    <settings>
+        <spinner>backend_columns</spinner>
+        <deps>
+            <dep>profilers_listing.profilers_listing_data_source</dep>
+        </deps>
+    </settings>
+
+    <listingToolbar name="listing_top">  
+        <bookmark name="bookmarks"/>
+        <columnsControls name="columns_controls"/>
+        <filters name="listing_filters" />
+        <paging name="listing_paging"/>
+        <exportButton class="Magento\Ui\Component\ExportButton">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="options" xsi:type="array">
+                        <item name="cvs" xsi:type="array">
+                            <item name="value" xsi:type="string">csv</item>
+                            <item name="label" xsi:type="string" translate="true">CSV</item>
+                            <item name="url" xsi:type="string">profilers/export/gridToCsv</item>
+                        </item>
+	                    
+                    </item>
+                </item>
+            </argument>
+        </exportButton>
+    </listingToolbar>
+    <dataSource name="profilers_listing_data_source" component="Magento_Ui/js/grid/provider">
+        <settings>
+            <storageConfig>
+                <param name="indexField" xsi:type="string">id</param>
+            </storageConfig>
+            <!-- cai rule cua magento 2 -->
+            <updateUrl path="mui/index/render"/>
+        </settings>
+        
+        <aclResource>Commercers_Profilers::index</aclResource>
+        <dataProvider class="Commercers\Profilers\Ui\Component\Profilers\DataProvider" name="profilers_listing_data_source">
+            <settings>
+                <requestFieldName>id</requestFieldName>
+                <primaryFieldName>id</primaryFieldName>
+            </settings>
+        </dataProvider>
+    </dataSource>
+    <columns name="backend_columns">
+        <!-- <selectionsColumn name="ids">
+            <settings>
+                <indexField>id</indexField>
+            </settings>
+        </selectionsColumn> -->
+        
+        <column name="id">
+            <settings>
+                <filter>textRange</filter>
+                <label translate="true">ID</label>
+                <sorting>asc</sorting>
+            </settings>
+        </column>
+        
+        <column name="name">
+            <settings>
+                <filter>textRange</filter>
+                <label translate="true">Name</label>
+                <sorting>asc</sorting>
+            </settings>
+        </column>
+        
+        <column name="id_profiler">
+            <settings>
+                <filter>textRange</filter>
+                <label translate="true">ID Profiler</label>
+                <sorting>asc</sorting>
+            </settings>
+        </column>
+        
+        <column name="schedule">
+            <settings>
+                <filter>textRange</filter>
+                <label translate="true">Cron job schedule</label>
+                <sorting>asc</sorting>
+            </settings>
+        </column>
+        <!-- button action edit -->
+        <actionsColumn name="actions" class="Commercers\Profilers\Ui\Component\Listing\Columns\EditActions">
+            <settings>
+                <indexField>id</indexField>
+            </settings>
+        </actionsColumn>
+        <!-- end button action edit -->
+    </columns>
+</listing>

@@ -1,0 +1,40 @@
+<section class="customer-messages" style="position: relative;" >
+    <div class="admin__page-section-title">
+        <span class="title">Nachricht an Kunde</span>
+    </div>
+    <textarea data-bind="value : customer_message" style="width: 100%; height: 100px;"></textarea>
+
+    <button type="button" class="action-default scalable action-save action-secondary" data-bind="click: sendMessageToCustomer">
+        <span>peichern und an Kunden Senden</span>
+    </button>
+
+    <div class="upload-div field required">
+        <div class="upload-uploader" data-bind="scope: 'upload-uploader'"
+             id="upload-uploader">
+            <!--  ko template: getTemplate()--><!--  /ko -->
+        </div>
+    </div>
+    <input type="hidden" name="file_info" id="file_info" value/>
+</section>
+<script>
+
+</script>
+<script type="text/x-magento-init">
+{
+                        ".upload-uploader": {
+                        "Magento_Ui/js/core/app": {
+                        "components": {
+                        "upload-uploader": {
+                        "component": "Commercers_Workshop/js/action/custom-file-uploader",
+                        "template": "ui/form/element/uploader/uploader",
+                        "isMultipleFiles" : true,
+                        "uploaderConfig": {
+                        "url": "http://begadi-dev.powered-by-rackspeed.de/kammer/workshop/chat_action_file/upload"
+                        }
+                        }
+                        }
+                        }
+                        }
+                        }
+
+</script>

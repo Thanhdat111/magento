@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+      <menu>
+            <add id="Commercers_Workshop::second_level"
+                  title="Commercers Workshop"
+                  module="Commercers_Workshop"
+                  sortOrder="1"
+                  parent="Commercers_DailyOffers::first_level"
+                  resource="Magento_Backend::content" />
+                  
+      </menu>
+      <menu>
+            <add id="Commercers_Workshop::overview"
+                  title="Übersicht"
+                  module="Commercers_Workshop"
+                  sortOrder="1"
+                  action="workshop/index/index"
+                  parent="Commercers_Workshop::second_level"
+                  resource="Magento_Backend::content" />
+      </menu>
+      <menu>
+            <add id="Commercers_Workshop::notedashboard"
+                  title="Notizen-Dashboard"
+                  module="Commercers_Workshop"
+                  sortOrder="1"
+                  action="workshop/note/note"
+                  parent="Commercers_Workshop::second_level"
+                  resource="Magento_Backend::content" />
+      </menu>
+      <menu>
+            <add id="Commercers_Workshop::additionalclaims"
+                  title="Nachforderungen"
+                  module="Commercers_Workshop"
+                  sortOrder="2"
+                  action="workshop/claims/index"
+                  parent="Commercers_Workshop::second_level"
+                  resource="Magento_Backend::content" />
+      </menu>
+      <menu>
+            <add id="Commercers_Workshop::refund"
+                  title="Erstattungen"
+                  module="Commercers_Workshop"
+                  sortOrder="3"
+                  action="workshop/refund/index"
+                  parent="Commercers_Workshop::second_level"
+                  resource="Magento_Backend::content" />
+      </menu>
+      <menu>
+            <add id="Commercers_Workshop::completedtaskopenorder"
+                  title="Offene Bestellungen für abgeschlossene Aufträge"
+                  module="Commercers_Workshop"
+                  sortOrder="4"
+                  action="workshop/completed/tasksopenorder"
+                  parent="Commercers_Workshop::second_level"
+                  resource="Magento_Backend::content" />
+      </menu>
+</config>

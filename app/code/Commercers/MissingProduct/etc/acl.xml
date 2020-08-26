@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Acl/etc/acl.xsd">
+    <acl>
+        <resources>
+            <resource id="Magento_Backend::admin">
+                <resource id="Commercers_Profilers::master_menu" title="Import/Export Profilers" sortOrder="51">
+                    <resource id="Commercers_Profilers::system_backend_grid" title="Manage Profilers" sortOrder="10"/>
+                    <resource id="Commercers_MissingProduct::system_backend_grid_missing_product" title="Missing Product" sortOrder="99" />
+                </resource>
+            </resource>
+        </resources>
+    </acl>
+</config>

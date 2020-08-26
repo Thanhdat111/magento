@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+      xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">profilers_new.profilers_new_data_source</item>
+        </item>
+        <item name="label" xsi:type="string" translate="true">General Information</item>
+        <item name="template" xsi:type="string">templates/form/collapsible</item>
+        
+        <item name="buttons" xsi:type="array">
+            <item name="back" xsi:type="string">Commercers\Profilers\Block\Adminhtml\Profilers\Button\Back</item>
+            
+            <item name="save" xsi:type="array">
+                <item name="name" xsi:type="string">save</item>
+                <item name="label" xsi:type="string" translate="true">Save</item>
+                <item name="class" xsi:type="string">primary</item>
+                <item name="url" xsi:type="string">*/*/savegeneral</item>
+            </item>
+
+        </item>
+    </argument>
+    <settings>
+       
+        
+        <namespace>profilers_new</namespace>
+        <dataScope>data</dataScope>
+        <deps>
+            <dep>profilers_new.profilers_new_data_source</dep>
+        </deps>
+    </settings>
+    <dataSource name="profilers_new_data_source">
+        <!--  Core cua UI Component -->
+        <argument name="data" xsi:type="array">
+            <item name="js_config" xsi:type="array">
+                <item name="component" xsi:type="string">Magento_Ui/js/form/provider</item>
+            </item>
+        </argument>
+        <!-- -->
+        <settings>
+            <submitUrl path="*/*/savegeneral"/>
+        </settings>
+
+        <dataProvider class="Commercers\Profilers\Ui\Component\Profilers\Form\NewProfiler\DataProvider" name="profilers_new_data_source">
+            <settings>
+                <requestFieldName>id</requestFieldName>
+                <primaryFieldName>id</primaryFieldName>
+            </settings>
+        </dataProvider>
+    </dataSource>
+
+    <fieldset name="general">
+        <settings>
+            <label translate="true">General</label>
+        </settings>
+        
+        <field name="name">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Name</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                    </item>
+                    <item name="source" xsi:type="string">general</item>
+                </item>
+            </argument>
+        </field>
+
+        <field name="id_profiler">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">ID Profiler</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                    </item>
+                    <item name="source" xsi:type="string">general</item>
+                </item>
+            </argument>
+        </field>
+        
+        <field name="data_source">
+            <!-- <settings>
+                <imports>
+                    <link name="disabled">${ $.provider }:data.disabled</link>
+                </imports>
+            </settings> -->
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Commercers\Profilers\Model\DataSource\Options</item>
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Data Source</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="formElement" xsi:type="string">select</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                    </item>
+                    <item name="source" xsi:type="string">general</item>
+                    <!-- <item name="disabled" xsi:type="boolean">${ $.provider }:data.disabled</item> -->
+                </item>
+            </argument>
+        </field>
+        
+        <field name="enable_disable">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Commercers\Profilers\Model\Option\OptionProfilerStatus</item>
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Enable</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="formElement" xsi:type="string">select</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                    </item>
+                    <item name="source" xsi:type="string">general</item>
+                </item>
+            </argument>
+        </field>
+
+        <field name="type">
+            <!-- <settings>
+                <imports>
+                    <link name="disabled">${ $.provider }:data.disabled</link>
+                </imports>
+            </settings> -->
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Commercers\Profilers\Model\Option\Type</item>
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Type</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="formElement" xsi:type="string">select</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                    </item>
+                    <item name="source" xsi:type="string">general</item>
+                    <!-- <item name="disabled" xsi:type="boolean">${ $.provider }:data.disabled</item> -->
+                </item>
+            </argument>
+        </field>    
+        
+    </fieldset>
+    
+    
+</form>

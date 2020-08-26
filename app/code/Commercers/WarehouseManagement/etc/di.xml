@@ -1,0 +1,28 @@
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../lib/internal/Magento/Framework/ObjectManager/etc/config.xsd">
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="warehouse_management_listing_data_source" xsi:type="string">Commercers\WarehouseManagement\Model\ResourceModel\Warehouse\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+    <virtualType name="Commercers\WarehouseManagement\Model\ResourceModel\Warehouse\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">commercers_warehouse_management</argument>
+            <argument name="resourceModel" xsi:type="string">Commercers\WarehouseManagement\Model\ResourceModel\Warehouse</argument>
+        </arguments>
+    </virtualType>
+        <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="warehouse_log_listing_data_source" xsi:type="string">Commercers\WarehouseManagement\Model\ResourceModel\WarehouseLog\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+    <virtualType name="Commercers\WarehouseManagement\Model\ResourceModel\WarehouseLog\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">commercers_warehouse_log</argument>
+            <argument name="resourceModel" xsi:type="string">Commercers\WarehouseManagement\Model\ResourceModel\WarehouseLog</argument>
+        </arguments>
+    </virtualType>
+</config>

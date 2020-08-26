@@ -1,0 +1,39 @@
+<?php
+$data = $block->getItems();
+$crossSellProduct = $data['crossSellProduct'];
+$referralCode = $data['referralCode'];
+$url = $data['url'];
+$expireDay = $data['expireDay'];
+$orderId = $data['orderId'];
+?>
+<h2 style="text-align: center;text-transform: uppercase;padding-bottom: 20px;">Product Recommendation</h2>
+<p style="text-align: center;text-transform: uppercase;padding-bottom: 20px;">Thank you for your purchase. We are glad to offer you a special discount for the products below, Hurry up! This coupon will be expired on: <?=$expireDay?></p>
+<table style="border:1px;width: 100%;">
+    <tr>
+        <th style="border: 1px solid #B3BFAA;
+            padding: .5em 1em;background: #D5E0CC;">Images</th>
+        <th style="border: 1px solid #B3BFAA;
+            padding: .5em 1em;background: #D5E0CC;">Name</th>
+        <th style="border: 1px solid #B3BFAA;
+            padding: .5em 1em;background: #D5E0CC;text-align: center;">Link</th>
+    </tr>
+<?php foreach ($crossSellProduct as $sku => $values): ?>
+    <?php 
+        $uri = "productid/".$values['productId']."/email/".$values['customerEmail']."/referralCode/".$referralCode."/orderId/".$orderId;
+        $uriEncode = base64_encode($uri);
+    ?>
+        <tr>
+            <td style="border: 1px solid #B3BFAA;
+                padding: .5em 1em;text-align: left;width:10px;">
+                <img src="{{view url='<?php echo "http://www.comvn.powered-by-rackspeed.de/pub/media/catalog/product/" . $values['image']; ?>'}}" height="30" width="30" alt="Product image" />
+            </td>
+            <td style="border: 1px solid #B3BFAA;
+                padding: .5em 1em;text-align: left;"><?= $values['nameProduct'] ?></td>
+            <td style="border: 1px solid #B3BFAA;
+                padding: .5em 1em;text-align: left;text-align: center;"><a style="color: #739931;" href="<?= $url ?>commercers/couponcode/autoapply/params/<?=$uriEncode?>">Shop Now</a></td>
+        </tr>
+<?php endforeach; ?>
+</table>
+
+
+

@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+<menu>
+    <add id="Codedecorator_Password::password" title="Show/Hide Password" module="Codedecorator_Password" sortOrder="60" resource="Codedecorator_Password::password"/>
+
+    <add id="Codedecorator_Password::configuration" title="Configuration" module="Codedecorator_Password" sortOrder="10" parent="Codedecorator_Password::password" action="adminhtml/system_config/edit/section/disable_password" resource="Codedecorator_Password::configuration"/>
+</menu>
+</config>

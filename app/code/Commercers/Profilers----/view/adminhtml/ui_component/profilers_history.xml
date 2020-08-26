@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">profilers_history.profilers_history_data_source</item>
+        </item>
+    </argument>
+
+    <settings>
+        <spinner>backend_columns</spinner>
+        <deps>
+            <dep>profilers_history.profilers_history_data_source</dep>
+        </deps>
+    </settings>
+    <listingToolbar name="listing_top">
+    <bookmark name="bookmarks"/>
+        <columnsControls name="columns_controls"/>
+        <filters name="listing_filters" />
+        <paging name="listing_paging"/>
+        <exportButton name="export_button"/>
+    </listingToolbar>
+    <dataSource name="profilers_history_data_source" component="Magento_Ui/js/grid/provider">
+        <settings>
+            <storageConfig>
+                <param name="indexField" xsi:type="string">profiler_id</param>
+            </storageConfig>
+            <!-- cai rule cua magento 2 -->
+            <updateUrl path="mui/index/render"/>
+
+        </settings>
+        <aclResource>Commercers_Profilers::index</aclResource>
+        <dataProvider class="Commercers\Profilers\Ui\Component\Profilers\DataProviderHistory" name="profilers_history_data_source">
+            <settings>
+                <requestFieldName>profiler_id</requestFieldName>
+                <primaryFieldName>profiler_id</primaryFieldName>
+            </settings>
+        </dataProvider>
+    </dataSource>
+    <columns name="backend_columns">
+
+        <column name="process_id">
+            <settings>
+                <filter>textRange</filter>
+                <label translate="true">ID</label>
+                <sorting>asc</sorting>
+            </settings>
+        </column>
+
+        <column name="id_profiler">
+            <settings>
+                <filter>textRange</filter>
+                <label translate="true">ID Profiler</label>
+                <sorting>asc</sorting>
+            </settings>
+        </column>
+
+        <column name="status">
+            <settings>
+                <filter>textRange</filter>
+                <label translate="true">Status</label>
+                <sorting>asc</sorting>
+            </settings>
+        </column>
+
+        <column name="message">
+            <settings>
+                <filter>textRange</filter>
+                <label translate="true">Message</label>
+                <sorting>asc</sorting>
+            </settings>
+        </column>
+
+        <column name="executed_at">
+            <settings>
+                <filter>textRange</filter>
+                <label translate="true">Executed_at</label>
+                <sorting>asc</sorting>
+            </settings>
+        </column>
+
+        <column name="end_at">
+            <settings>
+                <filter>textRange</filter>
+                <label translate="true">End_at</label>
+                <sorting>asc</sorting>
+            </settings>
+        </column>
+
+    </columns>
+</listing>
+

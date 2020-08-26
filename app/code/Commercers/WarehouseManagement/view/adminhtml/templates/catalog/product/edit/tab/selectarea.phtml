@@ -1,0 +1,11 @@
+<?php
+    $areaWarehouses = $this->getAreaWarehouse();
+?>
+<select name="area[]" class="admin__control-select select-warehouse">
+    <option value="">--Please Select--</option>
+    <?php if($areaWarehouses):?>
+    <?php foreach($areaWarehouses as $areaWarehouse):?>
+        <option value="<?php echo $areaWarehouse->getArea().','.$areaWarehouse->getId()?>"><?php echo $areaWarehouse->getArea()?></option>
+    <?php endforeach; ?>
+    <?php endif; ?>
+</select>

@@ -1,0 +1,127 @@
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <listingToolbar name="listing_top">   
+        <columnsControls name="columns_controls"/>
+        <filters name="listing_filters" />
+        <paging name="listing_paging"/>
+        <exportButton name="export_button"/>
+    </listingToolbar>
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">warehouse_management_listing.warehouse_management_listing_data_source</item>
+            <item name="deps" xsi:type="string">warehouse_management_listing.warehouse_management_listing_data_source</item>
+        </item>
+                    <item name="buttons" xsi:type="array">
+                <item name="save" xsi:type="array">
+                    <item name="name" xsi:type="string">save</item>
+                    <item name="label" xsi:type="string" translate="true">New Warehouse</item>
+                    <item name="class" xsi:type="string">primary</item>
+                    <item name="url" xsi:type="string">backend/warehouse/editaction</item>
+                    <!-- <  sua link lai > -->
+                </item>
+            </item>
+    </argument>
+    <argument name="context" xsi:type="configurableObject">
+        <argument name="class" xsi:type="string">Magento\Framework\View\Element\UiComponent\Context</argument>
+        <argument name="namespace" xsi:type="string">warehouse_management_listing</argument>
+        <!-- this should be same as the file name or uicomponentname -->
+        <!-- ten file/namespace  -->
+    </argument>
+
+    <!-- Cai nay can thiet-->
+    <settings>
+
+        <spinner>warehouse_columns</spinner>
+        <deps>
+            <dep>warehouse_management_listing.warehouse_management_listing_data_source</dep>
+        </deps>
+    </settings>
+    <dataSource name="warehouse_management_listing_data_source" component="Magento_Ui/js/grid/provider">
+        <settings>
+            <updateUrl path="mui/index/render"/>
+        </settings>
+
+        <aclResource>Commercers_WarehouseManagement::index</aclResource> <!-- ACL , nho lai-->
+
+        <dataProvider class="Magento\Cms\Ui\Component\DataProvider" name="warehouse_management_listing_data_source">
+            <settings>
+                <requestFieldName>warehouse_id</requestFieldName>
+                <primaryFieldName>warehouse_id</primaryFieldName>
+            </settings>
+        </dataProvider>
+    </dataSource>
+    <columns name="warehouse_columns">
+         <selectionsColumn name="ids">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="indexField" xsi:type="string">id</item>
+                    <item name="sortOrder" xsi:type="number">1</item>
+                </item>
+            </argument>
+        </selectionsColumn>    
+        <column name="warehouse_id">
+            <settings>
+                <filter>text</filter>
+                <editor>
+                    <validation>
+                        <rule name="required-entry" xsi:type="boolean">true</rule>
+                    </validation>
+                    <editorType>text</editorType>
+                </editor>
+                <label translate="true">ID</label>
+            </settings>
+        </column>
+        <column name="name">
+            <settings>
+                <filter>text</filter>
+                <editor>
+                    <validation>
+                        <rule name="required-entry" xsi:type="boolean">true</rule>
+                    </validation>
+                    <editorType>text</editorType>
+                </editor>
+                <label translate="true">Name</label>
+            </settings>
+        </column>
+        <column name="address">
+            <settings>
+                <filter>text</filter>
+                <editor>
+                    <validation>
+                        <rule name="required-entry" xsi:type="boolean">true</rule>
+                    </validation>
+                    <editorType>text</editorType>
+                </editor>
+                <label translate="true">Address</label>
+            </settings>
+        </column>
+        <column name="description">
+            <settings>
+                <filter>text</filter>
+                <editor>
+                    <validation>
+                        <rule name="required-entry" xsi:type="boolean">true</rule>
+                    </validation>
+                    <editorType>text</editorType>
+                </editor>
+                <label translate="true">Description</label>
+            </settings>
+        </column>
+        <column name="created_at">
+            <settings>
+                <filter>text</filter>
+                <editor>
+                    <validation>
+                        <rule name="required-entry" xsi:type="boolean">true</rule>
+                    </validation>
+                    <editorType>text</editorType>
+                </editor>
+                <label translate="true">Created At</label>
+            </settings>
+        </column>
+         <actionsColumn name="actions" class="Commercers\WarehouseManagement\Ui\Component\Listing\Columns\Actions">
+             <settings>
+                 <indexField>id</indexField>
+             </settings>
+         </actionsColumn> 
+    </columns>
+</listing>

@@ -1,0 +1,23 @@
+    <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <virtualType name="Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\Pool">
+        <arguments>
+            <argument name="modifiers" xsi:type="array">
+                <item name="advancedCustomOptions" xsi:type="array">
+                    <item name="class" xsi:type="string">Commercers\CustomMenus\Ui\DataProvider\ProductForm</item>
+                    <item name="sortOrder" xsi:type="number">999</item>
+                </item>
+            </argument>
+        </arguments>
+    </virtualType>
+</config>
+<!--<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../lib/internal/Magento/Framework/ObjectManager/etc/config.xsd">-->
+<!--    <type name="Magento\Backend\Block\Widget\Tabs">-->
+<!--        <plugin name="plugin-edit-tag" type="Commercer\CustomMenus\Plugin\CustomTab" sortOrder="1"/>-->
+<!--    </type>-->
+<!--</config>-->
+<!-- <?xml version="1.0"?> --> 
+<!-- <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Backend\Block\Widget\Tabs">
+        <plugin name="Commercers_CustomMenus_Plugin_Edit_Tabs" type="Commercer\CustomMenus\Plugin\CustomTab" sortOrder="10" />
+    </type>
+</config> -->

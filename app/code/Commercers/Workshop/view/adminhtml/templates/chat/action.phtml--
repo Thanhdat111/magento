@@ -1,0 +1,44 @@
+<div class="admin__field">
+     <input id="fileupload" type="file" name="image" multiple="multiple" class="action-default scalable save primary ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
+</div>
+<div class="admin__field">
+     <textarea id="new_message" name="new_message" rows="10" cols="50" class=" textarea"></textarea>
+</div>
+<div class="admin__field">
+     <button id="ajax_send_message" title="Save Config" type="button" class="action-default scalable save primary ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" data-ui-id="page-actions-toolbar-save-button" role="button" aria-disabled="false">
+          <span class="ui-button-text">
+               <span>ajax_send_message</span>
+          </span>
+     </button>
+</div>
+<script>
+     window.chatAjaxUrl = '<?php echo $this->getUrl("workshop/chat/ajax");?>';
+     window.idTask = '<?php echo $this->getRequest()->getParam('id'); ?>';
+</script>
+<script>
+     require([
+        'jquery',
+        'jquery/ui'
+        ], function($){
+          $('#ajax_send_message').on('click',function(){
+               var message = $('#new_message').val();
+               var url =   window.chatAjaxUrl;  
+               var idTask =   window.idTask;  
+               $.ajax({
+                    url: url + '?isAjax=true',
+                    dataType: 'json',
+                    type: 'post',
+                    data: {
+                         form_key: window.FORM_KEY,
+                         message: message,
+                         idTask: idTask
+                         },
+                    showLoader:true,
+                    success: function (response) {
+                         window.location.reload();
+                    }
+               });
+
+          });
+    });
+</script>

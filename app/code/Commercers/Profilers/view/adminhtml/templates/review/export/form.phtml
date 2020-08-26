@@ -1,0 +1,35 @@
+
+<div class="show-fields-available" data-bind="scope:'showFieldsAvailable'">
+    <div class="review-side">
+        <label><?php echo (__('ID'));?></label>
+        <input id="field-available-id" name="product_id" type="number" value="1"/>
+        <button type="button" class="button-show-fields action- scalable primary" data-bind="event: {click : showAvailableButton}"><span><?php echo (__('Review'));?></span></button>
+    </div>
+    
+    <div class="fields-available">
+
+    </div>
+</div>
+<script>
+    window.profilerConfig = <?php echo $block->getProfilerJsonFormConfig(); ?>;
+</script>
+<script type="text/x-magento-init">
+{
+
+
+    "*": {
+
+        "Magento_Ui/js/core/app": {
+
+            "components": { 
+
+                "showFieldsAvailable" : {
+                    "component": "Commercers_Profilers/js/form/export/review/data/form"
+                    
+                }
+
+            }
+        }
+    }
+}
+</script>

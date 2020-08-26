@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+     <menu>
+            <add id="Commercers_AutoContent::commercers"
+                title="Commercers" translate="title"
+                module="Commercers_AutoContent"
+                parent="Magento_Backend::content"
+                sortOrder="0"
+                resource="Commercers_AutoContent::commercers"/>
+          <add id="Commercers_AutoContent::gray"
+                title="Commercers AutoContent"
+                module="Commercers_AutoContent"
+                sortOrder="1"
+                action="backend/content_rule/index"
+                parent="Commercers_AutoContent::commercers"
+                resource="Magento_Backend::content" />
+<!--          <add id="Commercers_AutoContent::test"
+                title="AutoContent Tester"
+                module="Commercers_AutoContent"
+                sortOrder="2"
+                action="backend/content/tester"
+                parent="Commercers_AutoContent::commercers"
+                resource="Magento_Backend::content" />-->
+    </menu>
+</config>

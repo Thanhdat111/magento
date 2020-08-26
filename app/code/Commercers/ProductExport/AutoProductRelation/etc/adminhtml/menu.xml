@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Commercers_AutoProductRelation::backend"
+             title="AutoProductRelation"
+             module="Commercers_AutoProductRelation"
+             parent="Magento_CatalogRule::promo"
+             sortOrder="40"
+             action="backend/crosssell_rule/index"
+             dependsOnModule="Magento_Sales"
+             resource="Commercers_AutoProductRelation::rule"
+        />
+        <add id="Commercers_AutoProductRelation::system_backend"
+             title="Commercers Chuc"
+             module="Commercers_AutoProductRelation"
+             sortOrder="0"
+             action="backend/index/testservice"
+             parent="Magento_Catalog::catalog"
+             resource="Commercers_AutoProductRelation::content" />
+			 
+		<add id="Commercers_AutoProductRelation::system_backend_2"
+             title="Commercers Chuc 2"
+             module="Commercers_AutoProductRelation"
+             sortOrder="0"
+             action="/createcouponcodes"
+             parent="Magento_Catalog::catalog"
+             resource="Commercers_AutoProductRelation::content_2" />
+        
+        <add id="Commercers_AutoProductRelation::backend_test"
+             title="Commercers ToanTester"
+             module="Commercers_AutoProductRelation"
+             sortOrder="0"
+             action="backend/index/toantester"
+             parent="Magento_Catalog::catalog"
+             resource="Commercers_AutoProductRelation::test" />
+        <add id="Commercers_AutoProductRelation::backend_email"
+             title="Crosssell Followup Email"
+             module="Commercers_AutoProductRelation"
+             sortOrder="0"
+             action="backend/crosssell/followupemail"
+             parent="Magento_Catalog::catalog"
+             resource="Commercers_AutoProductRelation::email" />
+        
+    </menu>
+</config>

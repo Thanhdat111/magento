@@ -1,0 +1,90 @@
+<?php
+namespace Commercers\ComparedProduct\Controller\Product;
+
+use Magento\Catalog\Api\ProductRepositoryInterface;
+use Magento\Catalog\ViewModel\Product\Checker\AddToCompareAvailability;
+use Magento\Framework\App\Action\HttpPostActionInterface as HttpPostActionInterface;
+use Magento\Framework\Data\Form\FormKey\Validator;
+use Magento\Framework\Exception\NoSuchEntityException;
+use Magento\Framework\View\Result\PageFactory;
+
+
+class Compare extends \Magento\Catalog\Controller\Product\Compare implements HttpPostActionInterface
+{
+    protected $_pageFactory;
+
+    public function __construct(
+        \Magento\Framework\App\Action\Context $context,
+        \Magento\Catalog\Model\Product\Compare\ItemFactory $compareItemFactory,
+        \Magento\Catalog\Model\ResourceModel\Product\Compare\Item\CollectionFactory $itemCollectionFactory,
+        \Magento\Customer\Model\Session $customerSession,
+        \Magento\Customer\Model\Visitor $customerVisitor,
+        \Magento\Catalog\Model\Product\Compare\ListCompare $catalogProductCompareList,
+        \Magento\Catalog\Model\Session $catalogSession,
+        \Magento\Store\Model\StoreManagerInterface $storeManager,
+        Validator $formKeyValidator,
+        PageFactory $resultPageFactory,
+        ProductRepositoryInterface $productRepository,
+        AddToCompareAvailability $compareAvailability = null
+    )
+    {
+        parent::__construct(
+            $context,
+            $compareItemFactory,
+            $itemCollectionFactory,
+            $customerSession,
+            $customerVisitor,
+            $catalogProductCompareList,
+            $catalogSession,
+            $storeManager,
+            $formKeyValidator,
+            $resultPageFactory,
+            $productRepository
+        );
+
+        $this->compareAvailability = $compareAvailability
+            ?: $this->_objectManager->get(AddToCompareAvailability::class);
+    }
+
+    public function execute()
+    {
+        $resultRedirect = $this->resultRedirectFactory->create();
+        if (!$this->_formKeyValidator->validate($this->getRequest())) {
+            return $resultRedirect->setRefererUrl();
+        }
+        //clear compared list
+
+        $items = $this->_itemCollectionFactory->create();
+        if ($this->_customerSession->isLoggedIn()) {
+            $items->setCustomerId($this->_customerSession->getCustomerId());
+        } elseif ($this->_customerId) {
+            $items->setCustomerId($this->_customerId);
+        } else {
+            $items->setVisitorId($this->_customerVisitor->getId());
+        }
+        $items->clear();
+
+        $params = $this->getRequest()->getParams();
+        unset($params['form_key']);
+        foreach($params as $productId){
+            if ($productId) {
+                $storeId = $this->_storeManager->getStore()->getId();
+                try {
+                    /** @var \Magento\Catalog\Model\Product $product */
+                    $product = $this->productRepository->getById($productId, false, $storeId);
+                } catch (NoSuchEntityException $e) {
+                    $product = null;
+                }
+
+                if ($product) {
+                    //add new compare items
+                    $this->_catalogProductCompareList->addProduct($product);
+                }
+
+            }
+        }
+
+        $resultRedirect->setPath('catalog/product_compare/index');
+        return $resultRedirect;
+    }
+}

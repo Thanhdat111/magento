@@ -1,0 +1,26 @@
+#editorMapping{
+	height: 800px;
+}
+#editorOutputFormat{
+	height: 800px;
+}
+.show-fields-available {
+    margin-bottom: 2%;
+}
+.result-container-div{
+    padding: 12px 1px 22px 0px;
+}
+.result-container{
+    margin: 20px 0; 
+    background: #f7f6f5;
+}
+
+.test-input-side{
+    display: inline-block;
+    border-left: 1px solid black;
+    margin-left: 1%;
+    padding-left: 1%;
+}
+.result-container-div , .result-container h2{
+    margin-left: 1%;
+}

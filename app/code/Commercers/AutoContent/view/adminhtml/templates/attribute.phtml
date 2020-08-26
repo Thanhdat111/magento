@@ -1,0 +1,118 @@
+<?php
+    
+    $editId = $this->getRequest()->getParam('id');
+    if(!$editId)$editId = 0;
+    $stores = $block->getStore();
+?>
+<button id="attribute-popup" class="action- scalable primary" type="button">Show Attribute Code Infomation</button>
+<div id="element" data-mage-init='{"accordion":{"openedState": "active", "collapsible": true, "1": false, "multipleCollapsible": true}}'>
+<?php foreach($stores as $store):?>
+    <?php
+        $storeId = $store['store_id'];
+        $storeLabel = $store['store_label'];
+    ?>
+<?php $productAttributes[$storeId] =  $block->getProductAttributes()?>
+<?php         $attributeComponent["attribute_$storeId"] = array('component'=>"Commercers_AutoContent/js/view/attribute",'params'=>array('storeId'=>$storeId,'ruleId'=>$editId)); ?>
+        <div data-role="collapsible">
+        <div data-role="trigger">
+            <div class="fieldset-wrapper admin__collapsible-block-wrapper">
+                <div class="fieldset-wrapper-title">
+                    <span class="admin__collapsible-title">Store: <?php echo $storeLabel ?></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div data-role="content">
+    <div class="filter-content-attribute" data-bind="scope: 'attribute_<?php echo $storeId?>'">
+    <table class="admin__dynamic-rows admin__control-table">
+        <thead>
+            <tr>
+                <th class="_empty">Attribute</th>
+                <th class="_empty">Expression</th>
+                <th class="_empty">Actions</th>
+            </tr>
+        </thead>
+        <tbody data-bind="foreach: attributeCollection" >
+        <tr class="data-row">
+            <td><select  data-bind="options: $parent.attributes,value:attribute, optionsText: 'frontend_label'"></select></td>
+            <td>
+                <div class="admin__field-control">
+                    <textarea rows="4" cols="50" class="admin__control-text required-entry _required input-text" data-bind="value:expression, disable:use_default" data-validate="{'required-entry':true}"></textarea>
+                    <input data-bind="value:store_id " type="hidden" />
+                    <span class="default-use">Default Use:</span><input type="checkbox" data-bind="checked:use_default">
+              
+                </div>
+            </td>
+            <td><button class="action-delete" title="Remove" data-bind="click: $parent.removeAttribute.bind($parent)"></button></td>
+        </tr>  
+        </tbody>
+        <tfoot>
+            </tr>
+             <tr>
+                <td></td>
+                <td><span  class="filter-tester">Preview:</span><input class="tester-see" placeholder="Sku Product" data-bind="value:sku_test,event:{keyup:keypressInput } " type="text" > <button data-bind="click: tester" type="button" class="action- scalable primary tester see">See</button></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td><button data-bind="click: addAttribute" type="button">Add New Attribute</button></td>
+                <td></td>
+                <td>
+                    <?php if($editId>0):?>
+                        <button id="clickButton" class="action- scalable primary" data-bind='click: saveAttribute, visible: attributeCollection().length > 0' >Save</button>
+                    <?php endif; ?>
+                </td>
+            </tr>
+        </tfoot>
+                <div class="getJson" data-bind='click: save'></div>
+                <input name="attribute[]" type="hidden" data-bind="value:lastSavedJson">
+    </table>
+</div>
+</div>
+<?php endforeach;?>
+</div>
+<?php 
+//echo "<pre>";print_r($block->getAttributeExpression());
+?>
+<div class="info-attribute">
+   <table width="100%">
+  <tr>
+    <th>Attribute Code</th>
+    <th>Attribute Label</th>
+  </tr>
+  <?php foreach($block->getAllProductAttributes() as $attribute): ?>
+  <tr>
+    <td>{<?php echo  $attribute['attribute_code']?>}</td>
+    <td><?php echo  $attribute['frontend_label']?></td>
+  </tr>
+  <?php endforeach; ?>
+</table>
+</div>
+<script>
+    window.productAttribute = <?php echo json_encode($block->getProductAttributes()); ?>;
+    window.productAttributeExpression = <?php echo json_encode($block->getAttributeExpression()); ?>;
+    window.attributeConfig = <?php echo $block->getAttributeJsonFormConfig(); ?>;
+    require(['jquery', 'jquery/ui'], function($){ 
+        $('.save').click(function() {
+                $('.getJson').click();
+        });
+        var url = '/ja5uopz2q46zbpjv/backend/content/tester';
+    });
+</script>
+<script type="text/x-magento-init">
+    {
+    <?php // we can specify site elements on which we want to trigger our script 
+    ?>
+    <?php // * means we launch it only once - for the whole page 
+    ?>
+    "*": {
+        <?php // this is javascript we are launching 
+        ?>
+        
+        "Magento_Ui/js/core/app": {
+            <?php // and here we declare components of Magento_Ui/js/core/app 
+            ?>
+            "components":<?php echo json_encode($attributeComponent)?>
+        }
+    }
+}
+</script>

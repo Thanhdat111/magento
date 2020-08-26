@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Karliuka Vitalii(karliuka.vitalii@gmail.com)
+ * See COPYING.txt for license details.
+ */
+-->
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="catalog_eav_attribute">
+        <column xsi:type="smallint" name="is_used_for_auto_category_rules" padding="5" unsigned="true" nullable="false" default="0"
+                comment="Is Used For Auto Category Rules"/>
+        <index referenceId="CATALOG_EAV_ATTRIBUTE_IS_USED_FOR_SMART_RULES" indexType="btree">
+            <column name="is_used_for_auto_category_rules"/>
+        </index>
+    </table>
+    <table name="commercers_autocategory_rule" resource="default" engine="innodb" comment="Auto Category Rule">
+        <column xsi:type="int" name="rule_id" padding="10" unsigned="true" nullable="false"
+                comment="Rule Id"/>
+        <column xsi:type="mediumtext" name="conditions_serialized" nullable="true"
+                comment="Conditions Serialized"/>
+        <column xsi:type="varchar" name="title" nullable="false" length="255"
+                comment="Category Name"/>
+        <column xsi:type="timestamp" name="time_occurred" nullable="true"
+                default="CURRENT_TIMESTAMP" on_update="true"
+                comment="Time of event"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="rule_id"/>
+        </constraint>
+    </table>
+</schema>

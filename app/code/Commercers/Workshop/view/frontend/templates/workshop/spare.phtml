@@ -1,0 +1,67 @@
+<script>
+     window.ajaxUrlFrontNew = '<?php echo $this->getUrl("workshop/frontend/save");?>';
+     window.urlRedirect = '<?php echo $this->getUrl("workshop/frontend/myworkshoptask");?>';
+</script>
+<div class="std"><?php echo $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('fn_workshop_spare_part_order')->toHTML();?></div>
+<hr>
+<div class="form-workshop" style="display: block;">
+    <input type="hidden" name="type" id="type" value="spare">
+    <input type="hidden" id="weapon-id" name="weapon-id" >
+    <label for="customer-weapon-manufacturer"><?php echo __("Manufacturer")?></label>  
+    <input id="customer-weapon-manufacturer" type="text" name="customer-weapon-manufacturer" placeholder="<?php echo __("Manufacturer")?>" required>
+
+    <label for="customer-weapon-description"><?php echo __("Weapon Description"); ?> (<?php echo __("weaponname/type/part-number")?>)</label>
+    <input type="text" id="customer-weapon-description" name="customer-weapon-description" placeholder="<?php echo __("Weaponname/type/number")?>" required>
+   
+    <label for="customer-order-number"><?php echo __("order-invoice-number") ?></label>
+    <input type="number" id="customer-order-number" name="customer-order-number" required>
+    
+    <label for="notes-spare"><?php echo __("Notes")?></label>
+    <textarea id="notes-spare" name="chat-message" cols="35" rows="4" placeholder="<?php echo __("Notes")?>" required></textarea> 	
+                  
+    <label style="display: block;"><?php echo __("chosen-parcel-service-text"); ?>:</label>
+    <input type="radio" value="dpd" id="chosen-parcel-service-dpd" name="chosen-parcel-service" required>
+    <label for="chosen-parcel-service-dpd"><?php echo __("chosen-parcel-service-dpd") ?></label>
+    <input type="radio" value="dhl" id="chosen-parcel-service-dhl" name="chosen-parcel-service" required>
+    <label for="chosen-parcel-service-dhl"><?php echo __("chosen-parcel-service-dhl") ?></label>
+
+    <div class="button-group text-right">              
+        <input type="submit" id="submit-form" class="button action primary" value="Anfrage stellen">
+    </div>    
+</div>
+<div class="buttons-set">
+     <p class="back-link"><a href="/workshop/frontend/index/"><?php echo __('back')?></a></p>        
+</div>
+<script>
+require(['jquery', 'jquery/ui'],function($) {
+    $("#submit-form").on('click',function() {
+        var weaponId = $('#weapon-id').val();
+        var type = $('#type').val();
+        var notesSpare = $('#notes-spare').val();
+        var customerOrderNumber = $('#customer-order-number').val();
+        var customerWeaponDescription = $('#customer-weapon-description').val();
+        var customerWeaponManufacturer = $('#customer-weapon-manufacturer').val();
+        var chosenCarrier = $("input[name='chosen-parcel-service']:checked").val();
+        $.ajax({
+            url: window.ajaxUrlFrontNew + '?isAjax=true',
+            dataType: 'json',
+            type: 'post',
+            data: {
+                form_key: window.FORM_KEY,
+                weapon_id: weaponId,
+                type: type,
+                chosenCarrier: chosenCarrier,
+                customerOrderNumber: customerOrderNumber,
+                customerWeaponDescription: customerWeaponDescription,
+                customerWeaponManufacturer: customerWeaponManufacturer,
+                chat_message: notesSpare
+                },
+            showLoader:true,
+            success: function (response) {
+                //  window.location.reload();
+                window.location.href = window.urlRedirect
+            }
+        });
+    });
+});
+</script>

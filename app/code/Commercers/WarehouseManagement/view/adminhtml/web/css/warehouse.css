@@ -1,0 +1,32 @@
+    .sku-field label:after{
+    color: #e22626;
+    content: '*';
+    display: inline-block;
+    font-size: 1.6rem;
+    font-weight: 500;
+    line-height: 1;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: .2rem;
+    z-index: 1;
+    }
+    .warehouse{
+       margin-top: 55px;
+    }
+    .warehouse-product{
+      margin-top: 35px;
+    }
+    .error{
+        background-color: #fce4e4; border: 1px solid #cc0033; outline: none; 
+    }
+    .error-message{
+        color: #cc0033;
+        font-size: 12px;
+        display: contents;
+    }
+    .data-grid tr:not(.data-grid-editable-row):last-child td {
+        background-color: #f2f2f2;
+    }
+    .checkbox-center{
+        text-align: center;
+    }

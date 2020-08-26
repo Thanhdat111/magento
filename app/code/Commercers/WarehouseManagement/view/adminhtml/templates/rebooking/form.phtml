@@ -1,0 +1,40 @@
+<form class="rebooking-form" method="POST" id ="rebooking-form" data-bind="scope: 'rebooking'" action="<?php echo $block->getSaveUrl() ?>">
+    <input type="hidden" name="form_key" value="<?php echo $block->getFormKey() ?>" />
+    <div class="page-main-actions attribute-caculate-form-function">
+        <div class="page-actions" data-ui-id="page-actions-toolbar-content-header">
+            <div class="page-actions-inner">
+                <div class="page-actions-buttons">
+                    <button type="submit" class="button-save action- scalable primary"><span><?php echo __('Save'); ?></span></button>
+                </div>
+                <div class="page-actions-buttons">
+                    <button type="button" class="button_back action- scalable back" onClick="location.href='<?php echo $block->getBackUrl();?>'"><span><?php echo __('Back'); ?></span></button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="page-main-actions">
+            <div class="sku-field">
+                <label> Attribute: SKU</label>
+                <input class="admin__control-text" type="text" name="sku" data-bind="value: skuProduct">
+                <button type="button" class="action- scalable primary"  data-bind="click: loadWarehouse"><span><?php echo __('Load Warehosue'); ?></span></button>
+            </div>
+        <div class="load-warehouse"></div>
+    </div>
+</form>
+<script>
+    window.urlAjax = <?php echo $block->getUrlAjax();?>;
+</script>
+<script type="text/x-magento-init">
+    {
+
+    "*": {
+        "Magento_Ui/js/core/app": {
+                "components": { 
+                    "rebooking" : {
+                    "component": "Commercers_WarehouseManagement/js/rebooking"
+                    }
+                }
+            }
+        }
+    }
+</script>

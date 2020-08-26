@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Cron:etc/crontab.xsd">
+
+<group id="custom_cron_autoproductrelation">
+
+    <job name="commercers_auto_product_relation" instance="Commercers\AutoProductRelation\Cron\CronAutoProductRelation" method="execute">
+
+        <schedule>* * * * *</schedule>
+
+    </job>
+    <job name="commercers_auto_build_table_product" instance="Commercers\AutoProductRelation\Cron\CronBuildTableProduct" method="execute">
+
+        <schedule>* * * * *</schedule>
+    </job>
+    
+     <job name="commercers_auto_linkeds_product" instance="Commercers\AutoProductRelation\Cron\CronAutoLinkeds" method="execute">
+
+        <schedule>* 5 * * *</schedule>
+    </job>
+    
+     <job name="commercers_auto_sent_email" instance="Commercers\AutoProductRelation\Cron\SendMailCustomer" method="execute">
+
+        <schedule>* * * * *</schedule>
+    </job>
+</group>
+
+</config>

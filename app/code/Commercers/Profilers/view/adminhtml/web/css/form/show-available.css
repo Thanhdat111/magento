@@ -1,0 +1,83 @@
+.show_fields_availabel {
+    margin-bottom: 5%;
+}
+.test-xsl-template {
+    margin-bottom: 5%;
+}
+li.value {
+    margin-left: 2%;
+    padding: 1px 1px 1px 1px;
+    color: blue;
+    font-weight: 600;
+}
+ul, #attributes {
+  list-style-type: none;
+}
+
+ul.nested li{
+    padding-left: 10px;
+}
+
+#attributes {
+  margin: 0;
+  padding: 0;
+}
+
+.attr-name {
+  cursor: pointer;
+  -webkit-user-select: none; /* Safari 3.1+ */
+  -moz-user-select: none; /* Firefox 2+ */
+  -ms-user-select: none; /* IE 10+ */
+  user-select: text;
+}
+
+.attr-name::before {
+  content: "\25B6";
+  color: black;
+  display: inline-block;
+  margin-right: 6px;
+}
+
+.attr-name-down::before {
+  -ms-transform: rotate(90deg); /* IE 9 */
+  -webkit-transform: rotate(90deg); /* Safari */
+  transform: rotate(90deg);  
+}
+.nested {
+  display: none;
+}
+
+.active {
+  display: block;
+}
+.product-information_show {
+    width: 40%;
+    margin-bottom: 5%;
+}
+.available-attributes-modal {
+    width: 30%; 
+    left: 0;
+}
+.review-side {
+    padding: 1% 1% 1% 1%;
+    border: 1px solid #cccccc;
+    width: fit-content;
+}
+.fields-available{
+    padding: 3% 0% 0% 1%;
+}
+.expand-button {
+    margin-bottom: 3%;
+}
+.container {
+    width: 50%;
+    float: left;
+    padding: 1% 1% 1% 1%;
+}
+.expand{
+    margin: 5% 1% 5% 1%;
+}
+.attributes-available {
+    padding: 3% 3% 3% 3%;
+    background: #cecccb69;
+}

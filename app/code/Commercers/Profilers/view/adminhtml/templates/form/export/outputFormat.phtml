@@ -1,0 +1,84 @@
+<button type="button" class="show-fields-available action- scalable primary" onclick="showFieldsAvailable()"><span><?php echo (__('Show Fields Available For Export')); ?></span></button>
+
+
+<textarea name="outputformat[export_output_template]" id="outputformat" value="<?php echo htmlspecialchars($block->getOutputFormat()); ?>"  
+          data-form-part="profilers_form" class="admin__control-text"/>
+
+<h2><?php echo __("Output Template"); ?></h2>
+<div id="editorOutputFormat"><?php echo htmlspecialchars($block->getOutputFormat()); ?></div>
+
+<div class="result-container">
+    <h2><?php echo __("Test Result"); ?></h2>
+    <div class="result-container-div">
+        <button type="button" class="test-xsl-template action- scalable primary" onclick="testXslTemplate()">
+            <span><?php echo (__('Test XSL Template')); ?></span>
+        </button>
+        <div class="test-input-side">
+            <label><?php echo (__('ID'));?></label>
+            <input id="id-for-test" name="id" type="number" value="1"/>
+        </div>
+        
+    </div>
+    
+    <textarea name="testxsltemplate" id="test-xsl-template" value class="admin__control-text"/>
+    
+    <div id="editorResult"></div>
+</div>
+
+<script>
+    var editor = ace.edit("editorOutputFormat");
+    var resultEditor = ace.edit("editorResult");
+    var textarea = jQuery('textarea[name="outputformat[outputformat]"]').hide();
+    //editor.getSession().setValue(textarea.val());
+    editor.getSession().on('change', function () {
+        textarea.val(editor.getSession().getValue());
+    });
+    textarea.val(editor.getSession().getValue());
+    
+    editor.setTheme("ace/theme/monokai");
+    editor.session.setMode("ace/mode/xml");
+
+    resultEditor.setTheme("ace/theme/monokai");
+    resultEditor.session.setMode("ace/mode/xml");
+
+    var textareaResult = jQuery('#test-xsl-template').hide();
+    resultEditor.getSession().on('change', function () {
+        textareaResult.val(resultEditor.getSession().getValue());
+    });
+
+    window.profilerConfig = <?php echo $block->getProfilerJsonFormConfig(); ?>;
+
+
+
+    function showFieldsAvailable() {
+        var pathname = new URL(window.location.href).pathname;
+        var profilers_id = pathname.split("/")[6];
+        var param = 'profilers_id=' + profilers_id;
+        window.open(window.profilerConfig.show_fields_available + param, "Review Available Attributes", "width=500,height=600,left=-1840,top=0");
+    }
+
+    function testXslTemplate() {
+        var dataInTextarea = jQuery('#outputformat').val();
+        var pathname = new URL(window.location.href).pathname;
+        var profilerId = pathname.split("/")[6];
+        var id = jQuery('#id-for-test').val();
+        jQuery.ajax(
+            window.profilerConfig.get_xls_template,
+            {
+                type: 'post',
+                data: {dataInTextarea: dataInTextarea, profiler_id: profilerId , id: id},
+                showLoader: true,
+                success: function (response) {
+                    
+                    jQuery('#editorResult').css({'height': '300px','margin': '20px 0'});
+                    if(response == false){
+                        resultEditor.getSession().setValue('Do not find anything for this ID.');
+                    }else{
+                        resultEditor.getSession().setValue(response);
+                    }
+                    
+                }
+        });
+    }
+</script>
+

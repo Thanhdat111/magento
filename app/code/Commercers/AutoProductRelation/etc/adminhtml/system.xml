@@ -1,0 +1,119 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="commercers" translate="label" sortOrder="100">
+            <label>Commercers</label>
+        </tab>
+        <section id="section_cross_sell" translate="label" sortOrder="1030" showInDefault="1" showInWebsite="1" showInStore="1">
+            <class>separator-top</class>
+            <label>Cross Sell Product</label>
+            <tab>commercers</tab>
+            <resource>Commercers_AutoProductRelation::commercers_auto_product_relation_config</resource>
+            <group id="group_commercers_auto_product_relation_general" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>General</label>
+                <field id="enable_auto_product_relation_general" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Activate module</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="enable_auto_product_relation_general_attributes" translate="label" type="multiselect" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Available attributes</label>
+                    <source_model>Commercers\AutoProductRelation\Model\Adminhtml\System\Config\Source\Product\Attributes</source_model>
+                    
+                    <depends>
+                        <field id="enable_auto_product_relation_general">1</field>
+                    </depends>
+                </field>
+                <field id="enable_auto_product_relation_general_day_consider" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>(x) Days considered for BestSeller</label>
+                    <validate>required-entry validate-not-negative-number</validate>
+                    <depends>
+                        <field id="enable_auto_product_relation_general">1</field>
+                    </depends>
+                </field>
+                <field id="enable_auto_product_relation_general_maximum_items_per_cron" translate="label" type="text" sortOrder="30" showInDefault="10" showInWebsite="1" showInStore="1">
+                    <label>Maximum items per cron </label>
+                    <comment>Default value is 10</comment>
+                    <validate>required-entry validate-not-negative-number</validate>
+                    <depends>
+                        <field id="enable_auto_product_relation_general">1</field>
+                    </depends>
+                </field>
+                <field id="enable_auto_product_relation_general_maximum_cross_selling_items" translate="label" type="text" sortOrder="40" showInDefault="10" showInWebsite="1" showInStore="1">
+                    <label>Maximum cross selling items </label>
+                    <validate>required-entry validate-not-negative-number</validate>
+                    <comment>Default value is 10</comment>
+                    <depends>
+                        <field id="enable_auto_product_relation_general">1</field>
+                    </depends>
+                </field>
+                <field id="enable_auto_product_relation_general_cron_frequency" translate="label" type="select" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Cron frequency </label>
+                    <source_model>Commercers\AutoProductRelation\Model\Adminhtml\System\Config\Source\Cron\Frequency</source_model>
+                    <depends>
+                        <field id="enable_auto_product_relation_general">1</field>
+                    </depends>
+                </field>
+                <field id="enable_auto_product_relation_general_custom_cron_expression" translate="label" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Custom cron expression</label>
+                    <comment>Set a custom cron expression for the import frequency. Only change this if you know what you're doing.</comment>
+                    <backend_model>Commercers\AutoProductRelation\Model\Adminhtml\System\Config\Source\Cron\Expression</backend_model>
+                    <depends>
+                        <field id="enable_auto_product_relation_general">1</field>
+                    </depends>
+                </field>
+            </group>
+            <group id="group_commercers_auto_product_relation_followup_email" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Follow-up email</label>
+                <field id="enable_auto_product_relation_followup_email" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Activate module</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="enable_auto_product_relation_followup_email_email_template" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Email template</label>
+                    <source_model>Commercers\AutoProductRelation\Model\Adminhtml\System\Config\Source\Email\Templates</source_model>
+                    <depends>
+                        <field id="enable_auto_product_relation_followup_email">1</field>
+                    </depends>
+                </field>
+                <field id="enable_auto_product_relation_followup_email_order_status" translate="label" type="multiselect" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Followup will be sent when order status is one of</label>
+                    <source_model>Commercers\AutoProductRelation\Model\Adminhtml\System\Config\Source\Order\Status</source_model>
+                    
+                    <depends>
+                        <field id="enable_auto_product_relation_followup_email">1</field>
+                    </depends>
+                </field>
+                <field id="enable_auto_product_relation_followup_email_coupon_expire" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Coupon will be expired after (x) days</label>
+                    <validate>required-entry validate-not-negative-number</validate>
+                    <depends>
+                        <field id="enable_auto_product_relation_followup_email">1</field>
+                    </depends>
+                </field>
+                <field id="enable_auto_product_relation_followup_email_sent_followup_email" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Followup email will be sent after (x) days</label>
+                    <validate>required-entry validate-not-negative-number</validate>
+                    <depends>
+                        <field id="enable_auto_product_relation_followup_email">1</field>
+                    </depends>
+                </field>
+                <field id="enable_auto_product_relation_followup_email_shopping_cart_rule" translate="label" type="select" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Shopping cart rule</label>
+                    <source_model>Commercers\AutoProductRelation\Model\Adminhtml\System\Config\Source\Sales\Rule</source_model>
+                    
+                    <depends>
+                        <field id="enable_auto_product_relation_followup_email">1</field>
+                    </depends>
+                </field>
+                <field id="enable_auto_product_relation_followup_email_guest_allow" translate="label" type="select" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Guest allow</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="enable_auto_product_relation_followup_email">1</field>
+                    </depends>
+                </field>
+            </group>
+        </section>
+        
+    </system>
+</config>

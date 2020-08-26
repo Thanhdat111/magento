@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Commercers_MissingProduct::system_backend_grid_missing_product"
+             title="Missing Product"
+             module="Commercers_MissingProduct"
+             sortOrder="2"
+             action="missing_product/index/listing"
+             parent="Commercers_Profilers::master_menu"
+             resource="Commercers_MissingProduct::system_backend_grid_missing_product" />
+    </menu>
+</config>
+
+
+

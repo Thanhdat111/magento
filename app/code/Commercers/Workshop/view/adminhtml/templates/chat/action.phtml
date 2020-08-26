@@ -1,0 +1,19 @@
+<div data-bind="scope:'chat_action'">
+    <div data-bind="scope:'load-message'">
+
+    </div>
+</div>
+<script type="text/x-magento-init">
+    {
+
+    "*": {
+        "Magento_Ui/js/core/app": {
+                "components": {
+                    "load-message" : {
+                    "component": "Commercers_Workshop/js/action/load-message"
+                    }
+                }
+            }
+        }
+    }
+</script>

@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance" layout="admin-2columns-left" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <css src="Commercers_AutoContent::css/auto-content.css" />
+    </head>
+    <body>
+    <referenceContainer name="left">
+        <block class="Commercers\AutoContent\Block\Adminhtml\Content\Rule\Edit\Tabs" name="content_rule_edit_tabs">
+            <block class="Commercers\AutoContent\Block\Adminhtml\Content\Rule\Edit\Tab\Main" name="content_rule_edit_tab_main"/>
+            <block class="Commercers\AutoContent\Block\Adminhtml\Content\Rule\Edit\Tab\Conditions" name="content_rule_edit_tab_conditions"/>
+            <block class="Commercers\AutoContent\Block\Adminhtml\Content\Rule\Edit\Tab\Attribute" name="content_rule_edit_tab_attribute"/>
+            <block class="Commercers\AutoContent\Block\Adminhtml\Content\Rule\Edit\Tab\Cron" name="content_rule_edit_tab_cron"/>
+            <block class="Commercers\AutoContent\Block\Adminhtml\Content\Rule\Edit\Tab\History" name="content_rule_edit_tab_history">
+                <container  label="History">
+                    <uiComponent name="autocontent_history"/>
+                </container> 
+            </block>
+
+
+            <action method="addTab">
+                <argument name="name" xsi:type="string">main_section</argument>
+                <argument name="block" xsi:type="string">content_rule_edit_tab_main</argument>
+            </action>
+            <action method="addTab">
+                <argument name="name" xsi:type="string">conditions_section</argument>
+                <argument name="block" xsi:type="string">content_rule_edit_tab_conditions</argument>
+            </action>
+            <action method="addTab">
+                <argument name="name" xsi:type="string">attribute_section</argument>
+                <argument name="block" xsi:type="string">content_rule_edit_tab_attribute</argument>
+            </action>
+            <action method="addTab">
+                <argument name="name" xsi:type="string">cron_section</argument>
+                <argument name="block" xsi:type="string">content_rule_edit_tab_cron</argument>
+            </action>
+            <action method="addTab">
+                <argument name="name" xsi:type="string">history_section</argument>
+                <argument name="block" xsi:type="string">content_rule_edit_tab_history</argument>
+            </action>
+        </block>
+    </referenceContainer>
+    <referenceContainer name="content">
+        <block class="Commercers\AutoContent\Block\Adminhtml\Content\Rule\Edit" name="content_rule_edit"/>
+    </referenceContainer>
+    </body>
+</page>

@@ -1,0 +1,42 @@
+<?php if ($this->countryWithJouleRestriction() === false){
+     ?><div class="workshop-error">
+          <?php echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('fn_workshop_not_allowed')->toHTML();
+     ?></div>
+<?php }?>
+<div class="messages"><?php //echo $this->getMessagesBlock()->getGroupedHtml(); ?></div>
+<?php echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('fn_workshop_initial_intro')->toHTML();?>
+
+<div class="row collapse workshop-list row-custom">
+     <div class="medium-4 column">
+          <?php if ($block->countryWithJouleRestriction() === true){ ?>
+          <a class="image" href="<?php echo $block->getUrl('workshop/frontend/workshopnew'); ?>">
+               <?php echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('fn_workshop_type_selection_new')->toHtml();?>
+          </a> 
+          <?php }
+          else{
+               echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('fn_workshop_type_selection_new')->toHtml();
+          }?>
+     </div>
+     <div class="medium-4 column">
+          <?php if ($block->countryWithJouleRestriction() === true){ ?>
+          <a class="image" href="<?php echo $block->getUrl('workshop/frontend/repair'); ?>">
+               <?php echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('fn_workshop_type_selection_repair_tuning')->toHtml();?>
+          </a>
+          <?php }
+          else{
+               echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('fn_workshop_type_selection_repair_tuning')->toHtml();
+          } ?>
+     </div>
+     <div class="medium-4 column">
+          <?php if ($block->countryWithJouleRestriction() === true){ ?>
+          <a class="image" href="<?php echo $block->getUrl('workshop/frontend/spare'); ?>">
+               <?php echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('fn_workshop_type_selection_spare_part')->toHtml();?>
+          </a>
+          <?php }
+          else{
+               echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('fn_workshop_type_selection_spare_part')->toHtml();
+          } ?>
+     </div>
+</div>
+<?php echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('fn_workshop_initial_bottom')->toHTML();?>
+<center> <?php echo $block->getDeliveryTimeBlock(); ?> </center>

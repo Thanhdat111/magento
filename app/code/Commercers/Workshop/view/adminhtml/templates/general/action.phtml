@@ -1,0 +1,641 @@
+<script>
+     window.urlAjaxChangeApprovalId = '<?php echo $block->getUrl("workshop/index/changeapprovalid"); ?>';
+     window.urlAjaxSaveOfferPrice = '<?php echo $block->getUrl("workshop/index/offerprice"); ?>';
+     window.urlAjaxSaveOfferPriceFree = '<?php echo $block->getUrl("workshop/index/offerpricefree"); ?>';
+     window.urlAjaxSaveMarkTaskProcessed = '<?php echo $block->getUrl("workshop/index/marktaskprocessed"); ?>';
+     window.urlAjaxSaveMarkTaskFinished = '<?php echo $block->getUrl("workshop/index/marktaskfinished"); ?>';
+     window.urlAjaxSaveWaitingForWeapon = '<?php echo $block->getUrl("workshop/index/waitingforweapon"); ?>';
+     window.urlAjaxSaveWaitingForWeaponNotRequired = '<?php echo $block->getUrl("workshop/index/waitingforweaponnotrequired"); ?>';
+     window.urlAjaxSaveAskForWeaponMarkedearly = '<?php echo $block->getUrl("workshop/index/askforweaponmarkedearly"); ?>';
+     window.urlAjaxSaveWeaponReceived = '<?php echo $block->getUrl("workshop/index/weaponreceived"); ?>';
+     window.urlAjaxSaveReopenTask = '<?php echo $block->getUrl("workshop/index/reopentask"); ?>';
+     window.urlAjaxSaveClaimInput = '<?php echo $block->getUrl("workshop/index/claiminput"); ?>';
+     window.urlAjaxSaveRefundInput = '<?php echo $block->getUrl("workshop/index/refundinput"); ?>';
+     window.urlAjaxSaveMarkTaskAsCompletedInBudget = '<?php echo $block->getUrl("workshop/index/marktaskascompletedinbudget"); ?>';
+     window.urlAjaxSaveWillStayInBudget = '<?php echo $block->getUrl("workshop/index/willstayinbudget"); ?>';
+     window.urlAjaxSaveEditClaimInputTitle = '<?php echo $block->getUrl("workshop/index/editclaiminputtitle"); ?>';
+     window.urlAjaxSaveEditRefundInputTitle = '<?php echo $block->getUrl("workshop/index/editrefundinputtitle"); ?>';
+     window.urlAjaxSaveCancel = '<?php echo $block->getUrl("workshop/index/cancel"); ?>';
+     window.idTask = '<?php echo $block->getCurrentId() ?>';
+</script>
+<div class="admin__fieldset">
+     <div class="admin__field">
+          <div class="admin__field-label">
+               <label class="label-workshop">
+                    <span>Actions</span>
+               </label>
+          </div>
+     </div>
+     <?php if($block->isShowCreateOfferFields()): ?>
+          <div class="admin__field">
+               <div class="admin__field-label">
+                    <label>
+                         <span>Preis</span>
+                    </label>
+               </div>
+               <div class="admin__field-control">
+                    <div class="admin__control-text workshop-div-content">
+                         <input type="text "name="offer price" id="offer_price" maxlength="255"> <br>
+                         <?php if($block->getTask()->getType() == Commercers\Workshop\Model\Source\Options\Type::TYPE_REPAIR_AND_TUNING): ?>
+                              <p><input id="checkboxWeapon" type="checkbox" checked="checked"> Kunden gleich bitten Waffe einzuschicken</p> <br>
+                         <?php endif; ?>
+                         <button id="save-offer-price" title="Save Offer Price" type="button"  class="workshop-button action-default scalable save primary ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" data-ui-id="page-actions-toolbar-save-button" role="button" aria-disabled="false">
+                              <span class="ui-button-text">
+                                   <span>Angebot erstellen</span>
+                              </span>
+                         </button> <br>
+                         <p>offer_price_hint_<?php echo $block->getTask()->getStatus(); ?></p>
+                    </div>
+               </div>
+          </div>
+     <?php endif; ?>
+     <?php if(($block->getTask()->getType() == Commercers\Workshop\Model\Source\Options\Type::TYPE_NEW && $block->getTask()->getStatus() == Commercers\Workshop\Model\Source\Options\Status::STATUS_TASK_REOPENED) || $block->getTask()->getType() != Commercers\Workshop\Model\Source\Options\Type::TYPE_NEW): ?>
+          <div class="admin__field">
+               <div class="admin__field-label">
+                    <label>
+                         <span>offer_free_title</span>
+                    </label>
+               </div>
+               <div class="admin__field-control">
+                    <div class="admin__control-text workshop-div-content">
+                         <button id="save-offer-price-free" title="Save Config" type="button"  class="workshop-button action-default scalable save primary ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" data-ui-id="page-actions-toolbar-save-button" role="button" aria-disabled="false">
+                              <span class="ui-button-text">
+                                   <span>create offer free</span>
+                              </span>
+                         </button> <br>
+                         <p>offer_price_hint</p>
+                    </div>
+               </div>
+          </div>
+     <?php endif; ?>
+     <?php if($block->isShowMarkAsProcessed()): ?>
+          <div class="admin__field">
+               <div class="admin__field-label">
+                    <label>
+                         <span>mark_task_processed</span>
+                    </label>
+               </div>
+               <div class="admin__field-control">
+                    <div class="admin__control-text workshop-div-content">
+                         <?php 
+                              if ($this->getTask->getType() == Commercers\Workshop\Model\Source\Options\Type::TYPE_SPARE_PART_IMPORT) {
+                                   $text = "mark_task_processed_import";
+                              } else {
+                                   $text = "mark_task_processed";
+                              }
+                         ?>
+                         <button id="save-mark-task-processed" title="Save Config" value="<?php echo $text; ?>" type="button"  class="workshop-button action-default scalable save primary ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" data-ui-id="page-actions-toolbar-save-button" role="button" aria-disabled="false">
+                              <span class="ui-button-text">
+                                   <span>mark_task_processed</span>
+                              </span>
+                         </button> <br>
+                         <p>offer_price_hint</p>
+                    </div>
+               </div>
+          </div>
+     <?php endif; ?>
+     <?php if($block->isShowMarkTaskAsFinished()): ?>
+          <div class="admin__field">
+               <div class="admin__field-label">
+                    <label>
+                         <span>mark_task_finished</span>
+                    </label>
+               </div>
+               <div class="admin__field-control">
+                    <div class="admin__control-text workshop-div-content">
+                         <button id="save-mark-task-finished" title="Save Config" type="button"  class="workshop-button action-default scalable save primary ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" data-ui-id="page-actions-toolbar-save-button" role="button" aria-disabled="false">
+                              <span class="ui-button-text">
+                                   <span>mark_task_finished</span>
+                              </span>
+                         </button> <br>
+                    </div>
+               </div>
+          </div>
+     <?php endif; ?>
+     <?php if($block->isShowWaitingForWeapon()): ?>
+          <div class="admin__field">
+               <div class="admin__field-label">
+                    <label>
+                         <span>waiting_for_weapon</span>
+                    </label>
+               </div>
+               <div class="admin__field-control">
+                    <div class="admin__control-text workshop-div-content">
+                         <button id="save-waiting-for-weapon" title="Save Config" type="button"  class="workshop-button action-default scalable save primary ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" data-ui-id="page-actions-toolbar-save-button" role="button" aria-disabled="false">
+                              <span class="ui-button-text">
+                                   <span>waiting_for_weapon</span>
+                              </span>
+                         </button> <br>
+                    </div>
+               </div>
+          </div>
+          <div class="admin__field">
+               <div class="admin__field-label">
+                    <label>
+                         <span>waiting_for_weapon_not_required</span>
+                    </label>
+               </div>
+               <div class="admin__field-control">
+                    <div class="admin__control-text workshop-div-content">
+                         <button id="save-waiting-for-weapon-not-required" title="Save Config" type="button"  class="workshop-button action-default scalable save primary ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" data-ui-id="page-actions-toolbar-save-button" role="button" aria-disabled="false">
+                              <span class="ui-button-text">
+                                   <span>waiting_for_weapon_not_required</span>
+                              </span>
+                         </button> <br>
+                    </div>
+               </div>
+          </div>
+     <?php endif; ?>
+     <?php if($block->isShowAskForWeaponMarkedEarly()): ?>
+          <?php if($block->getTask()->getStatus() != \Commercers\Workshop\Model\Source\Options\Type::TYPE_NEW): ?>
+               <div class="admin__field">
+                    <div class="admin__field-label">
+                         <label>
+                              <span>ask_for_weapon_marked_early</span>
+                         </label>
+                    </div>
+                    <div class="admin__field-control">
+                         <div class="admin__control-text workshop-div-content">
+                              <button id="save-ask-for-weapon-marked-early" title="Save Config" type="button"  class="workshop-button action-default scalable save primary ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" data-ui-id="page-actions-toolbar-save-button" role="button" aria-disabled="false">
+                                   <span class="ui-button-text">
+                                        <span>ask_for_weapon_marked_early</span>
+                                   </span>
+                              </button> <br>
+                         </div>
+                    </div>
+               </div>
+          <?php endif; ?>
+     <?php endif; ?>
+     <?php if($block->isShowWeaponReceived()): ?>
+          <div class="admin__field">
+               <div class="admin__field-label">
+                    <label>
+                         <span>weapon_received</span>
+                    </label>
+               </div>
+               <div class="admin__field-control">
+                    <div class="admin__control-text workshop-div-content">
+                         <button id="save-weapon-received" title="Save Config" type="button"  class="workshop-button action-default scalable save primary ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" data-ui-id="page-actions-toolbar-save-button" role="button" aria-disabled="false">
+                              <span class="ui-button-text">
+                                   <span>weapon_received</span>
+                              </span>
+                         </button> <br>
+                    </div>
+               </div>
+          </div>
+     <?php endif; ?>
+     <?php if($block->isShowReopenTask()): ?>
+          <div class="admin__field">
+               <div class="admin__field-label">
+                    <label>
+                         <span>reopen_task</span>
+                    </label>
+               </div>
+               <div class="admin__field-control">
+                    <div class="admin__control-text workshop-div-content">
+                         <button id="save-reopen-task" title="Save Config" type="button"  class="workshop-button action-default scalable save primary ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" data-ui-id="page-actions-toolbar-save-button" role="button" aria-disabled="false">
+                              <span class="ui-button-text">
+                                   <span>reopen_task</span>
+                              </span>
+                         </button> <br>
+                    </div>
+               </div>
+          </div>
+     <?php endif; ?>
+     <?php if($block->isShowCreateClaimRefundFields() || $block->isShowCreateClaimRefundFieldsEarly()): ?>
+          <?php 
+               $showInBudget = true; 
+               if($block->isShowCreateClaimRefundFieldsEarly() && (int)$block->getTask()->getStatus() !== \Commercers\Workshop\Model\Source\Options\Status::STATUS_TASK_FINISHED){
+                    $showInBudget = false;
+                    //for not setting status updates just yet (when within early claim/refund circle)
+                    $noStatusUpdate = '/no_status_update/1';
+               }
+          ?>
+          <div class="admin__field">
+               <div class="admin__field-label">
+                    <label>
+                         <span>create_claim_refund_input</span>
+                    </label>
+               </div>
+               <div class="admin__field-control">
+                    <div class="admin__control-text workshop-div-content">
+                         <input type="hidden" name="no status update" id="no-status-update" value="/no_status_update/1<?php //echo $noStatusUpdate; ?>">
+                         <input type="text "name="price" id="claim-refund-price" value="0.00" maxlength="255"> <br>
+                         <button id="save-claim-input" title="Save Config" type="button"  class="workshop-button action-default scalable save primary ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" data-ui-id="page-actions-toolbar-save-button" role="button" aria-disabled="false">
+                              <span class="ui-button-text">
+                                   <span>create_claim_input</span>
+                              </span>
+                         </button> <br>
+                         <button id="save-refund-input" title="Save Config" type="button"  class="workshop-button action-default scalable save primary ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" data-ui-id="page-actions-toolbar-save-button" role="button" aria-disabled="false">
+                              <span class="ui-button-text">
+                                   <span>create_refund_input</span>
+                              </span>
+                         </button> <br>
+                         <p>create_claim_refund_input_hint</p> <br>
+                    </div>
+               </div>
+          </div>
+          <?php if($showInBudget): ?>
+               <div class="admin__field">
+                    <div class="admin__field-label">
+                         <label>
+                              <span>mark_task_as_completed_in_budget</span>
+                         </label>
+                    </div>
+                    <div class="admin__field-control">
+                         <div class="admin__control-text workshop-div-content">
+                              <button id="save-mark-task-as-completed-in-budget" title="Save Config" type="button"  class="workshop-button action-default scalable save primary ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" data-ui-id="page-actions-toolbar-save-button" role="button" aria-disabled="false">
+                                   <span class="ui-button-text">
+                                        <span>mark_task_as_completed_in_budget</span>
+                                   </span>
+                              </button> <br>
+                         </div>
+                    </div>
+               </div>
+          <?php endif; ?>
+     <?php endif; ?>
+     <?php
+          $willStayInBudget = null;
+          if ($block->isShowWillStayInBudgetRemove()) {
+               $willStayInBudget = false;
+               $willStayInBudgetText = 'will_stay_in_budget_remove';
+          } elseif ($block->isShowWillStayInBudget()) {
+               $willStayInBudget = true;
+               $willStayInBudgetText = 'will_stay_in_budget';
+          }
+          if(is_bool($willStayInBudget)):
+     ?>
+          <div class="admin__field">
+               <div class="admin__field-label">
+                    <label>
+                         <span>will_stay_in_budget</span>
+                    </label>
+               </div>
+               <div class="admin__field-control">
+                    <div class="admin__control-text workshop-div-content">
+                         <input type="hidden" name="willStayInBudget" id="willStayInBudget" value="<?php echo $willStayInBudget; ?>">
+                         <button id="save-will-stay-in-Budget" title="Save Config" type="button"  class="workshop-button action-default scalable save primary ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" data-ui-id="page-actions-toolbar-save-button" role="button" aria-disabled="false">
+                              <span class="ui-button-text">
+                                   <span>will_stay_in_budget</span>
+                              </span>
+                         </button> <br>
+                    </div>
+               </div>
+          </div>
+     <?php endif; ?>
+     <?php
+          $claims = $block->getClaimsCollection();
+          if(!empty($claims)):
+               foreach($claims as $claim):
+                    preg_match('\'Product ID:([0-9]+)\'', $claim['comment'], $matches);
+                    if(isset($matches[1]) && $block->getStatusProduct($matches[1]) === \Magento\Catalog\Model\Product\Attribute\Source\Status::STATUS_ENABLED):
+                         $idName = 'edit_claim_input_' . $claim->getId();
+                    ?>
+                    <div class="admin__field">
+                         <div class="admin__field-label">
+                              <label>
+                                   <span>edit_claim_input_title</span>
+                              </label>
+                         </div>
+                         <div class="admin__field-control">
+                              <div class="admin__control-text workshop-div-content">
+                                   <button id="save-edit-claim-input-title" name="<?php echo $idName; ?>" data-claimid="<?php echo $claim->getId() ?>" data-productid="<?php echo $matches[1] ?>" title="Save Config" type="button"  class="workshop-button action-default scalable save primary ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" data-ui-id="page-actions-toolbar-save-button" role="button" aria-disabled="false">
+                                        <span class="ui-button-text">
+                                             <span><?php echo $idName; ?></span>
+                                        </span>
+                                   </button> <br>
+                              </div>
+                         </div>
+                    </div>
+                    <?php
+                    endif;
+               endforeach;
+          endif;
+     ?>
+     <?php
+          $refunds = $block->getRefundsCollection();
+          if(!empty($refunds)):
+               foreach($refunds as $refund):
+                    $idName = 'edit_refund_input_' . $refund->getId();
+                    ?>
+                    <div class="admin__field">
+                         <div class="admin__field-label">
+                              <label>
+                                   <span>edit_refund_input_title</span>
+                              </label>
+                         </div>
+                         <div class="admin__field-control">
+                              <div class="admin__control-text workshop-div-content">
+                                   <button id="save-edit-refund-input-title" name="<?php echo $idName; ?>" data-refundid="<?php echo $refund->getId() ?>" title="Save Config" type="button"  class="workshop-button action-default scalable save primary ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" data-ui-id="page-actions-toolbar-save-button" role="button" aria-disabled="false">
+                                        <span class="ui-button-text">
+                                             <span><?php echo $idName; ?></span>
+                                        </span>
+                                   </button> <br>
+                              </div>
+                         </div>
+                    </div>
+                    <?php
+               endforeach;
+          endif;
+     ?>
+     <?php if($block->isShowChangeApproval()): ?>
+          <div class="admin__field">
+               <div class="admin__field-label">
+                    <label>
+                         <span>FSK Bewertung</span>
+                    </label>
+               </div>
+               <div class="admin__field-control">
+                    <div class="admin__control-text workshop-div-content">
+                         <select id="approval_id" name="approval_id" title="Die FSK Einstufung des Auftrages" class=" select">
+                         <?php foreach($block->getApprovalIds() as $option): ?>
+                              <option value="<?php echo $option['value']?>" <?php if($option['value'] == $block->getTask()->getApprovalId()): ?>selected = 'selected'<?php endif; ?>><?php echo $option['label']?></option>
+                         <?php endforeach; ?>
+                         </select> <br>
+                         <button id="save-change-approval-id" title="Change Approval Id" type="button"  class="workshop-button action-default scalable save primary ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" data-ui-id="page-actions-toolbar-save-button" role="button" aria-disabled="false">
+                              <span class="ui-button-text">
+                                   <span>FSK ändern</span>
+                              </span>
+                         </button> <br>
+                         <p>Wählen Sie den FSK Wert, der für diesen Auftrag gelten soll.</p> <br>
+                    </div>
+               </div>
+          </div>
+     <?php endif; ?>
+     <?php if($block->isShowCancelTask()): ?>
+          <div class="admin__field">
+               <div class="admin__field-label">
+                    <label>
+                         <span></span>
+                    </label>
+               </div>
+               <div class="admin__field-control">
+                    <div class="admin__control-text workshop-div-content">
+                         <button id="cancel" title="cancel" type="button"  class="workshop-button action-default scalable save primary ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" data-ui-id="page-actions-toolbar-save-button" role="button" aria-disabled="false">
+                              <span class="ui-button-text">
+                                   <span>stornieren</span>
+                              </span>
+                         </button> <br>
+                         <p><input id="checkboxCancelling" type="checkbox" checked="checked"> Storno-Mail an Kunde</p> <br>
+                    </div>
+               </div>
+          </div>
+     <?php endif;?>
+</div>
+
+<style>
+.label-workshop{
+     float: left;
+}
+.workshop-div-content{
+     border: none;
+     display: inline-grid;
+     width: unset;
+}
+.workshop-button{
+     float: right;
+     width: max-content;
+}
+</style>
+
+<script>
+     require(['jquery', 'jquery/ui'],function($) {
+          jQuery("document").ready(function(){
+               jQuery('#save-change-approval-id').on('click',function(){
+                    var approvalId = jQuery('#approval_id').val();
+                    var idTask = window.idTask;
+                    jQuery.ajax({
+                         url: window.urlAjaxChangeApprovalId,
+                         dataType: 'json',
+                         type : 'post',
+                         showLoader: true,
+                         data: {approvalId : approvalId,idTask:idTask},
+                         success: function(response){
+                              window.location.reload();
+                         }
+                    });
+               });
+               jQuery('#save-offer-price').on('click',function(){
+                    var offerPrice = jQuery('#offer_price').val();
+                    var checkbox = jQuery('#checkboxWeapon').val();
+                    var idTask = window.idTask;
+                    jQuery.ajax({
+                         url: window.urlAjaxSaveOfferPrice,
+                         dataType: 'json',
+                         type : 'post',
+                         showLoader: true,
+                         data: {offerPrice : offerPrice,idTask:idTask,checkbox:checkbox},
+                         success: function(response){
+                              window.location.reload();
+                         }
+                    });
+               });
+               jQuery('#save-offer-price-free').on('click',function(){
+                    var idTask = window.idTask;
+                    jQuery.ajax({
+                         url: window.urlAjaxSaveOfferPriceFree,
+                         dataType: 'json',
+                         type : 'post',
+                         showLoader: true,
+                         data: {idTask:idTask},
+                         success: function(response){
+                              window.location.reload();
+                         }
+                    });
+               });
+               jQuery('#save-mark-task-processed').on('click',function(){
+                    var idTask = window.idTask;
+                    jQuery.ajax({
+                         url: window.urlAjaxSaveMarkTaskProcessed,
+                         dataType: 'json',
+                         type : 'post',
+                         showLoader: true,
+                         data: {idTask:idTask},
+                         success: function(response){
+                              window.location.reload();
+                         }
+                    });
+               });
+               jQuery('#save-mark-task-finished').on('click',function(){
+                    var idTask = window.idTask;
+                    jQuery.ajax({
+                         url: window.urlAjaxSaveMarkTaskFinished,
+                         dataType: 'json',
+                         type : 'post',
+                         showLoader: true,
+                         data: {idTask:idTask},
+                         success: function(response){
+                              window.location.reload();
+                         }
+                    });
+               });
+               jQuery('#save-waiting-for-weapon').on('click',function(){
+                    var idTask = window.idTask;
+                    jQuery.ajax({
+                         url: window.urlAjaxSaveWaitingForWeapon,
+                         dataType: 'json',
+                         type : 'post',
+                         showLoader: true,
+                         data: {idTask:idTask},
+                         success: function(response){
+                              window.location.reload();
+                         }
+                    });
+               });
+               jQuery('#save-waiting-for-weapon-not-required').on('click',function(){
+                    var idTask = window.idTask;
+                    jQuery.ajax({
+                         url: window.urlAjaxSaveWaitingForWeaponNotRequired,
+                         dataType: 'json',
+                         type : 'post',
+                         showLoader: true,
+                         data: {idTask:idTask},
+                         success: function(response){
+                              window.location.reload();
+                         }
+                    });
+               });
+               jQuery('#save-ask-for-weapon-marked-early').on('click',function(){
+                    var idTask = window.idTask;
+                    jQuery.ajax({
+                         url: window.urlAjaxSaveAskForWeaponMarkedearly,
+                         dataType: 'json',
+                         type : 'post',
+                         showLoader: true,
+                         data: {idTask:idTask},
+                         success: function(response){
+                              window.location.reload();
+                         }
+                    });
+               });
+               jQuery('#save-weapon-received').on('click',function(){
+                    var idTask = window.idTask;
+                    jQuery.ajax({
+                         url: window.urlAjaxSaveWeaponReceived,
+                         dataType: 'json',
+                         type : 'post',
+                         showLoader: true,
+                         data: {idTask:idTask},
+                         success: function(response){
+                              window.location.reload();
+                         }
+                    });
+               });
+               jQuery('#save-reopen-task').on('click',function(){
+                    var idTask = window.idTask;
+                    jQuery.ajax({
+                         url: window.urlAjaxSaveReopenTask,
+                         dataType: 'json',
+                         type : 'post',
+                         showLoader: true,
+                         data: {idTask:idTask},
+                         success: function(response){
+                              window.location.reload();
+                         }
+                    });
+               });
+               jQuery('#save-claim-input').on('click',function(){
+                    var idTask = window.idTask;
+                    var price = jQuery('#claim-refund-price').val();
+                    var noStatusUpdate = jQuery('#no-status-update').val();
+                    jQuery.ajax({
+                         url: window.urlAjaxSaveClaimInput,
+                         dataType: 'json',
+                         type : 'post',
+                         showLoader: true,
+                         data: {idTask:idTask,price:price,noStatusUpdate:noStatusUpdate},
+                         success: function(response){
+                              // window.location.reload();
+                         }
+                    });
+               });
+               jQuery('#save-refund-input').on('click',function(){
+                    var idTask = window.idTask;
+                    var price = jQuery('#claim-refund-price').val();
+                    var noStatusUpdate = jQuery('#no-status-update').val();
+                    jQuery.ajax({
+                         url: window.urlAjaxSaveRefundInput,
+                         dataType: 'json',
+                         type : 'post',
+                         showLoader: true,
+                         data: {idTask:idTask,price:price,noStatusUpdate:noStatusUpdate},
+                         success: function(response){
+                              window.location.reload();
+                         }
+                    });
+               });
+               jQuery('#save-mark-task-as-completed-in-budget').on('click',function(){
+                    var idTask = window.idTask;
+                    jQuery.ajax({
+                         url: window.urlAjaxSaveMarkTaskAsCompletedInBudget,
+                         dataType: 'json',
+                         type : 'post',
+                         showLoader: true,
+                         data: {idTask:idTask},
+                         success: function(response){
+                              window.location.reload();
+                         }
+                    });
+               });
+               jQuery('#save-will-stay-in-budget').on('click',function(){
+                    var idTask = window.idTask;
+                    var willStayInBudget = jQuery('#willStayInBudget').val();
+                    jQuery.ajax({
+                         url: window.urlAjaxSaveWillStayInBudget,
+                         dataType: 'json',
+                         type : 'post',
+                         showLoader: true,
+                         data: {idTask:idTask,willStayInBudget:willStayInBudget},
+                         success: function(response){
+                              window.location.reload();
+                         }
+                    });
+               });
+               jQuery('#save-edit-claim-input-title').on('click',function(){
+                    var idTask = window.idTask;
+                    var claimId = jQuery(this).data('claimid');
+                    var productId = jQuery(this).data('productid');
+                    var price = jQuery('#claim-refund-price').val();
+                    jQuery.ajax({
+                         url: window.urlAjaxSaveEditClaimInputTitle,
+                         dataType: 'json',
+                         type : 'post',
+                         showLoader: true,
+                         data: {idTask:idTask,claimId:claimId,productId:productId,price:price},
+                         success: function(response){
+                              window.location.reload();
+                         }
+                    });
+               });
+               jQuery('#save-edit-refund-input-title').on('click',function(){
+                    var idTask = window.idTask;
+                    var refundId = jQuery(this).data('refundid');
+                    var price = jQuery('#claim-refund-price').val();
+                    jQuery.ajax({
+                         url: window.urlAjaxSaveEditRefundInputTitle,
+                         dataType: 'json',
+                         type : 'post',
+                         showLoader: true,
+                         data: {idTask:idTask,refundId:refundId,price:price},
+                         success: function(response){
+                              window.location.reload();
+                         }
+                    });
+               });
+               jQuery('#cancel').on('click',function(){
+                    var idTask = window.idTask;
+                    var checkboxCancelling = jQuery('#checkboxCancelling').val();
+                    jQuery.ajax({
+                         url: window.urlAjaxSaveCancel,
+                         dataType: 'json',
+                         type : 'post',
+                         showLoader: true,
+                         data: {idTask:idTask,checkboxCancelling:checkboxCancelling},
+                         success: function(response){
+                              // window.location.reload();
+                         }
+                    });
+               });
+          });
+     });
+</script>

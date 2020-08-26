@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+     <argument name="data" xsi:type="array">
+          <item name="js_config" xsi:type="array">
+               <item name="provider" xsi:type="string">workshop_addnote.workshop_note_data_source</item>
+               <item name="deps" xsi:type="string">workshop_addnote.workshop_note_data_source</item>
+          </item>
+          <item name="label" xsi:type="string" translate="true">Notes</item>
+          <item name="layout" xsi:type="array">
+               <item name="type" xsi:type="string">tabs</item>
+               <item name="navContainerName" xsi:type="string">left</item>
+          </item>
+          
+          <item name="buttons" xsi:type="array">
+               <item name="back" xsi:type="string">Commercers\Workshop\Block\Adminhtml\Workshop\Button\DeleteButton</item>
+               <item name="save" xsi:type="array">
+                    <item name="name" xsi:type="string">save</item>
+                    <item name="label" xsi:type="string" translate="true">Save</item>
+                    <item name="class" xsi:type="string">primary</item>
+                    <item name="url" xsi:type="string">*/note/savenote</item>
+               </item>
+          </item>
+     </argument>
+
+     <dataSource name="workshop_note_data_source">
+          <!--  Core cua UI Component -->
+          <argument name="data" xsi:type="array">
+               <item name="js_config" xsi:type="array">
+                    <item name="component" xsi:type="string">Magento_Ui/js/form/provider</item>
+               </item>
+          </argument>
+          <!-- -->
+          <settings>
+               <submitUrl path="workshop/note/savenote"/>
+          </settings>
+
+          <dataProvider class="Commercers\Workshop\Ui\Component\Workshop\Form\DataProviderNote" name="workshop_note_data_source">
+               <settings>
+                    <requestFieldName>pk_entity_id</requestFieldName>
+                    <primaryFieldName>pk_entity_id</primaryFieldName>
+               </settings>
+          </dataProvider>
+     </dataSource>
+
+     <fieldset name="addnote">
+          <settings>
+               <label translate="true">Add note</label>
+          </settings>
+          
+          <field name="note">
+               <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                         <item name="label" xsi:type="string" translate="true">Note text</item>
+                         <item name="dataType" xsi:type="string">textarea</item>
+                         <item name="formElement" xsi:type="string">input</item>
+                         <item name="validation" xsi:type="array">
+                         <item name="required-entry" xsi:type="boolean">true</item>
+                         </item>
+                         <item name="source" xsi:type="string">addnote</item>
+                    </item>
+               </argument>
+          </field>
+
+          <field name="fk_responsible_admin_id">
+               <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                         <item name="label" xsi:type="string" translate="true">Responsible admin from list</item>
+                         <item name="dataType" xsi:type="string">select</item>
+                         <item name="formElement" xsi:type="string">input</item>
+                         <item name="source" xsi:type="string">addnote</item>
+                    </item>
+               </argument>
+          </field>
+            
+          <field name="responsible_admin">
+               <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                         <item name="label" xsi:type="string" translate="true">Or responsible admin</item>
+                         <item name="dataType" xsi:type="string">text</item>
+                         <item name="formElement" xsi:type="string">input</item>
+                         <item name="validation" xsi:type="array">
+                         <item name="required-entry" xsi:type="boolean">true</item>
+                         </item>
+                         <item name="source" xsi:type="string">addnote</item>
+                    </item>
+               </argument>
+          </field>
+
+          <container name="output_container" >
+               <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                         <item name="sortOrder" xsi:type="number">10</item>
+                    </item>
+               </argument>
+               <htmlContent name="html_content">
+                    <argument name="block" xsi:type="object">Commercers\Workshop\Block\Adminhtml\Workshop\Button\Closed</argument>
+               </htmlContent>
+          </container>
+          
+     </fieldset>
+</form>

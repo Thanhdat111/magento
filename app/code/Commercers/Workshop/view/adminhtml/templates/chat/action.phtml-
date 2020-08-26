@@ -1,0 +1,64 @@
+<section class="customer-messages" style="position: relative;">
+    <!-- ko if: !isTicketCreated() -->
+    <div class="disabled-mask" ></div>
+    <!-- /ko -->
+
+
+
+    <div class="admin__page-section-title">
+        <span class="title"><?= $block->escapeHtml(__('Nachricht an Kunde')) ?></span>
+    </div>
+
+    <!-- ko if: !isArchivedMode() -->
+
+    <textarea data-bind="disable : isArchivedMode(), value : customer_message" style="width: 100%; height: 100px;"></textarea>
+
+    <button type="button" class="action-default scalable action-save action-secondary" data-bind="disable : isArchivedMode(), event: {click : sendMessageToCustomer}">
+        <span><?php echo __("Speichern und an Kunden Senden"); ?></span>
+    </button>
+
+    <div class="upload-wrapper" data-bind="scope: 'uploader'">
+        <!-- ko template: getTemplate() --><!-- /ko -->
+    </div>
+    <!-- /ko -->
+
+
+
+    <div class="edit-order-comments" style="margin-top: 10px; background: #f0f0f0; padding: 20px;">
+        <ul class="note-list" data-bind="foreach: customer_messages">
+            <li class="note-list-item">
+                <span class="note-list-date" data-bind="text: $parent.formatDateTime(created_at)"></span>
+                <!--<span class="note-list-time">5:48:31 AM</span>-->
+                <span class="note-list-customer" data-bind="text: admin_name"></span>
+                <div class="note-list-comment" data-bind="text: message"></div>
+                <div class="note-list-comment" data-bind="html: image_html"></div>
+
+
+            </li>
+
+        </ul>
+
+    </div>
+
+
+</section>
+
+<script type="text/x-magento-init">
+{
+    ".upload-wrapper": {
+       "Magento_Ui/js/core/app": {
+           "components": {
+               "uploader": {
+                   "component": "Magento_Ui/js/form/element/file-uploader",
+                   "template": "ui/form/element/uploader/uploader",
+                   "isMultipleFiles" : true,
+                   "uploaderConfig": {
+                   		"url": "<?php echo $block->getUrl('workshop/chat/action_file_upload'); ?>"
+                   }
+               }
+           }
+       }
+   }
+}
+</script>
+   

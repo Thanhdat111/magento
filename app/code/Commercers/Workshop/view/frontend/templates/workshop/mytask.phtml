@@ -1,0 +1,272 @@
+<?php
+$id = $this->getParamFromRequest('id');
+$this->checkCustomerToTaskId($id);
+$workshopTask = $this->getWorkshopTask()->load($id);
+$weapon_received = $workshopTask->getAdditionalStatusWeaponReceived();
+//check if order has been already send to customer
+$order_send = $this->hasOrderBeenSend($id);
+//get image
+$product = $this->getProduct()->load($workshopTask->getFkProductId());
+$imagewidth=200;
+$imageheight=200;
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$imageHelper  = $objectManager->get('\Magento\Catalog\Helper\Image');
+$image = $imageHelper->init($product, 'product_page_image_small')->setImageFile($product->getFile())->resize($imagewidth, $imageheight)->getUrl();
+//load workshop
+$status = $this->getStatusToTask($id);
+$task_type = $this->getTaskTypeToTask($id);
+$storeManager  = $objectManager->get('\Magento\Store\Model\StoreManagerInterface');
+$store_id = $storeManager->getStore()->getStoreId();
+//get tax helper
+$tax_helper = $objectManager->get('\Magento\Tax\Model\Calculation');
+$tax_request = $tax_helper->getRateOriginRequest();
+if($tax_request){
+     $tax_request->setProductClassId($product->getTaxClassId());
+     $tax = $tax_helper->getRate($tax_request);
+}
+// $is_allowed_workshop_from_country = $this->is_workshop_allowed_for_customer_country();
+// get status values
+$status_values = $this->getStatus();
+$product_id = $product->getId();
+// get Product name
+if($product_id !== null){
+     $product_name = $product->getName();
+}
+else{
+     $product_name = $workshopTask->getReferenceProductName();
+}
+if(!$product_name) 
+     $product_name = $workshopTask->getWeaponDescription();
+?>
+<div class="workshop-type"><?php echo $task_type ?></div>
+<h1><?php echo __("My task <span>$product_name</span>"); ?></h1>
+<?php
+     //message that task has been canceled
+     if ((int) $status === \Commercers\Workshop\Model\Source\Options\Status::STATUS_TASK_CANCELED) {     
+?>
+    <div class="workshop-error"><?php echo __('workshop-task-status-canceled'); ?></div>
+<?php
+     }
+?>
+<div class="workshop-task">
+     <div class="row">
+          <div class="medium-2 column">
+               <img src="<?php echo $image ?>" width="150" height="150" alt="">
+          </div>
+          <div class="medium-6 column">                        
+               <?php if ($workshopTask->getAdditionalStatusTaskReadyForExecution() === '1') : ?>
+                    <div class="workshop-type important"><?php echo __('Payment received')?></div>
+               <?php endif?>            
+               <?php if ($weapon_received === '1') : ?>
+                    <div class="workshop-type important"><?php echo __('Weapon received')?></div>
+               <?php endif;
+                    //message that order has been send, if status of corresponding order is complete
+                    if ($order_send !== Null) {
+                         foreach ($order_send as $order_id) {
+                         if ($order_id !== Null) {
+                              $order_model = $this->getOrder()->load($order_id);
+                              $increment_id = $order_model->getIncrementId();
+                              ?>
+                              <div class="workshop-type important"><?php echo __("Your order with id $increment_id has been send <br>"); ?></div>
+                              <?php
+                              }
+                         }
+                    }
+               ?>    
+               <p>
+                    <?php if(\Commercers\Workshop\Model\Source\Options\Status::STATUS_WAITING_FOR_WEAPON && $weapon_received !== '1'): ?>
+                         <?php echo $status_values[$workshopTask->getStatus()]['label']; ?><br>
+                    <?php endif; ?>
+                    <strong><?php echo __("task id") ?>:</strong> <?php echo $workshopTask->getId()?><br>
+                    <strong><?php echo $product_name; ?></strong>
+                    <?php if($workshopTask->getWeaponLimitation()): ?>
+                         <?php echo __('workshop-front-weapon-limit') ?><br>
+                    <?php endif; ?>
+               </p>      
+
+               <?php if ($workshopTask->getOfferPrice() === '0.0000') : ?>
+                    <p><?php echo __('Gratis / Gewährleistungsbearbeitung') ?></p>
+               <?php endif; ?>          
+                    
+               <?php
+               //load cms block if status is waiting for weapon
+               if ($this->is_show_fe_waiting_for_weapon_block($workshopTask)) {
+                    ?>
+                    <div class="workshop-error">
+                         <?php echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('fn_workshop_waiting_for_weapon')->toHtml(); ?>
+                    </div>
+                    <?php    
+               }
+               ?>      
+          </div>
+          <div class="medium-4 column">
+               <?php if ($workshopTask->getOfferPrice() !== Null):?>
+                    <p>
+                         <?php if ((int) $workshopTask->getType() === \Commercers\Workshop\Model\Source\Options\Type::TYPE_NEW){
+                              $price_new_purchase = (float) $workshopTask->getOfferPrice() + (float) $product->getPrice();?>
+                              <span class="wsprice"><?php echo $this->helper('Magento\Framework\Pricing\Helper\Data')->currency($price_new_purchase, true, false);?></span><br>
+                         <?php } else { ?>
+                              <span class="wsprice"><?php echo $this->helper('Magento\Framework\Pricing\Helper\Data')->currency($workshopTask->getOfferPrice(), true, false);?></span><br>
+                         <?php } ?>
+                         <?php if ($tax === 0){?>
+                              <small><?php echo __("Incl. %s Tax, excl. Shippingcost", $this->htmlEscape('19 %'));?></small>
+                         <?php } else {?>
+                              <small><?php echo __("Incl. %s Tax, excl. Shippingcost", $this->htmlEscape($tax . '%'));?></small> 
+                         <?php }?>
+                    </p>
+                    <?php
+                    // if customer accept offer price, create task
+                    if (
+                         (int) $status == \Commercers\Workshop\Model\Source\Options\Status::STATUS_OFFER_CREATED || 
+                         (int) $status === \Commercers\Workshop\Model\Source\Options\Status::STATUS_OFFER_CREATED_FREE
+                    ) {
+                         ?>    
+                         <form action="<?php echo $this->getUrl('*/frontend/create_workshopproduct') ?>" method="post">
+                         <input type="hidden" name="task_id" value="<?php echo htmlspecialchars($id); ?>">
+                         <input class="button btn-cart expanded" type="submit" value="<?php echo __("Accept Offer") ?>">
+                         </form>
+                         <?php                 
+                    }
+                    //add add to cart button workshopTask
+                    if (
+                         ((int) $status === \Commercers\Workshop\Model\Source\Options\Status::STATUS_OFFER_ACCEPTED ||  (int) $status === \Commercers\Workshop\Model\Source\Options\Status::STATUS_WAITING_FOR_WEAPON ||  (int) $status === \Commercers\Workshop\Model\Source\Options\Status::STATUS_WAITING_FOR_PAYMENT) && 
+                         $workshopTask->getAdditionalStatusTaskReadyForExecution() === '0' && $is_allowed_workshop_from_country
+                    ) { ?>
+                         <?php $wsc_product = $this->getCreatedProductToTask($id);
+                         $product_status = $wsc_product->getStatus();
+                         $stockItem = $objectManager->get('\Magento\CatalogInventory\Model\ResourceModel\Stock\Item')->loadByProduct($wsc_product);
+                         $isInStock = $stockItem->getIsInStock();
+                         if ($product_status === '1' && $isInStock === '1'){?>
+                         <button class="button expanded btn-cart" type="button" title="<?php echo __('add to cart') ?>" onclick="setLocation('<?php echo $objectManager->get('Magento\Checkout\Helper\Cart')->getAddUrl($wsc_product) ?>')"><?php echo __('add to cart') ?></button>
+                         <?php } ?>
+                         <?php
+                    }             
+               endif; 
+                    //cancel workshopTask (not allowed if already marked as payed)
+               if ($this->isShowCancelTask($workshopTask) && $workshopTask->getAdditionalStatusTaskReadyForExecution() !== '1')
+               { ?>
+                    <form action="<?php echo $this->getUrl('*/frontend/cancel') ?>" method="post">
+                         <input type="hidden" name="task_id" value="<?php echo htmlspecialchars($id); ?>">
+                         <input onclick="return confirm('<?php echo __('Are you sure?')?>');" class="button alert expanded" type="submit" value="<?php echo __("cancel_task") ?>">
+                    </form>
+                    <?php         
+               }  
+               if ($this->getRefundsToTask($id)->getSize() !== 0):?>
+                    <section>
+                         <h2><?php echo __('open refunds'); ?></h2>        
+                         <?php
+                         foreach ($this->getRefundsToTask($id) as $refunds) {
+                         $amount = $refunds->getAmount();
+                         ?>
+                         <div><?php echo $this->helper('Magento\Framework\Pricing\Helper\Data')->currency($amount, true, false) ?></div>
+                         <?php
+                         }
+                         ?>        
+                    </section>
+               <?php endif;
+               $claims = $this->getClaimsToTask($workshopTask,$id);
+               $use_buy_text = (int) $workshopTask->getType() === \Commercers\Workshop\Model\Source\Options\Type::TYPE_NEW;
+               if ($claims->getSize() !== 0) : ?>
+                    <section>
+                         <?php foreach ($claims as $claim) {
+                         $claim_product = $this->getCreatedProductForClaim($claim);
+                         //$amount = $thishelper('tax')->getPrice($claim_product, $claim_product->getFinalPrice());
+                         $amount = $claim_product->getPrice();
+                         $claim_status = $claim_product->getStatus();
+                         $stockItem_claim = $objectManager->get('\Magento\CatalogInventory\Model\ResourceModel\Stock\Item')->loadByProduct($claim_product);
+                         $isInStock_claim = $stockItem_claim->getIsInStock();
+                         //if product is in stock and status is "active" and allowed from country, show claim and cart button
+                         if ($claim_status === '1' && $isInStock_claim === '1' && $is_allowed_workshop_from_country){ ?>
+                         <h2><?php echo __('open claims'); ?></h2>
+                         <div class="wsprice"><?php echo $this->helper('Magento\Framework\Pricing\Helper\Data')->currency($amount, true, false) ?></div>
+                         <button class="button expanded btn-cart" type="button" title="<?php echo __(($use_buy_text)?'pay now':'add to cart'); ?>" onclick="setLocation('<?php echo $objectManager->get('Magento\Checkout\Helper\Cart')->getAddUrl($claim_product) ?>')"><?php echo __(($use_buy_text)?'pay now':'add to cart'); ?></button>   
+                         <?php }
+                         }?>
+                    </section>
+               <?php endif; ?>
+          </div>
+     </div>
+</div>
+<?php if( count($this->getChatsToTask($id))) : ?>
+    <section class="workshop-list">
+        <h2><?php echo __("Request history") ?></h2>
+        <div class="list">
+            <ul>
+            <?php
+            foreach ($this->getChatsToTask($id) as $chat) {
+                $message_customer = $chat->getFkCustomerId();
+                  /* @var $dt \DateTime */
+                $timezone = "Europe/Berlin";
+                $dt = \DateTime::createFromFormat('Y-m-d H:i:s', $chat->getCreatedAt() );
+                $dt->setTimezone(new DateTimeZone($timezone));
+                if ($store_id === '1') {
+                    $chat_date = $dt->format('d.m.Y H:i') . ' Uhr';
+                } else {
+                    $chat_date = $dt->format('Y-m-d H:i');
+                }
+                ?>
+                <li class="<?php echo $message_customer == Null ? 'begadi' : ''?>">
+                    <header>
+                        <datetime><?php echo $chat_date; ?></datetime>
+                        <?php
+                        if ($message_customer !== Null) {                    
+                            echo __('Me');
+                        } else {
+                            ?> 
+                            <img src="https://www.begadi.com/skin/frontend/begadi/default/images/logo.png" width="25" height="25" alt=""> Support
+                            <?php
+                        }
+                        ?>:
+                    </header>     
+                    <div class="content">
+                        <?php $message_begadi = $chat->getMessage();?>
+                        <?php if (preg_match_all('/< *img[^>]*src *= *["\']?([^"\']*)[^>]*>/i', $chat->getMessage(), $matches) !== false && strpos($chat->getMessage(), 'wysiwyg') !== False) {
+                            $i = 0;
+                                        foreach ($matches[0] as $inner_match) {
+                                            $message_begadi = str_replace($inner_match,
+                                                   '<a class = "swipebox workshop-task"  href="'.$matches[1][$i].'" rel="product-images">'. str_replace('wysiwyg','wysiwyg/.thumbs/wysiwyg', $inner_match). '</a>',
+                                                    $message_begadi);
+                                            $i++;
+                                        }
+                              }?>
+                        <?php echo nl2br($message_begadi) ?>
+                    </div>                    
+                </li>
+                <?php
+            }
+            ?>
+            </ul>
+        </div>
+    </section>
+<?php endif; ?>
+<form action="<?php echo $this->getUrl('*/frontend/message') ?>" method="post" class="form-comment my-account" id="form-validate"  data-abide novalidate enctype="multipart/form-data">
+     <input type="hidden" name="task_id" value="<?php echo htmlspecialchars($id); ?>">
+     <label for="message_customer"><strong><?php echo __("Send Message") ?>:</strong></label>
+     <textarea id="message_customer" name="chat_message" cols="35" rows="4" required></textarea>
+     <input type="hidden" name="file_info" id="file_info" value/>
+     <div class="upload-wrapper" data-bind="scope: 'uploader'">
+          <!-- ko template: getTemplate() --><!-- /ko -->
+     </div>
+     <div class="buttons-set">
+          <p class="back-link"><a href="<?php echo $this->getUrl('workshop/frontend/myworkshoptask') ?>"><?php echo __('back')?></a></p>
+          <button class="button" type="submit" value="<?php echo __("post") ?>"><?php echo __("post") ?></button>
+     </div>    
+</form>
+<script type="text/x-magento-init">
+{
+   ".upload-wrapper": {
+       "Magento_Ui/js/core/app": {
+           "components": {
+               "uploader": {
+                   "component": "Commercers_Workshop/js/action/custom-file-uploader",
+                   "template": "ui/form/element/uploader/uploader",
+                   "uploaderConfig": {
+                   		"url": "<?php echo $block->getUrl('workshop/frontend/upload'); ?>"
+                   }
+               }
+           }
+       }
+   }
+}
+ 
+</script>

@@ -1,0 +1,33 @@
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<p><input class="admin__control-text" type="text"
+          data-bind="
+        event: {change: userChanges},
+        value: value,
+        hasFocus: focused,
+        valueUpdate: valueUpdate,
+        attr: {
+            name: inputName,
+            placeholder: placeholder,
+            'aria-describedby': noticeId,
+            id: uid,
+            disabled: disabled,
+            maxlength: 255
+    }"/></p>
+<div>
+    <input type="file" id="files" name="files[]" multiple data-bind=" event:{change: fileSelect}" />
+    <input type="submit" value="Upload Picture" data-bind="click: upload" />
+</div>
+
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+
+<!--&lt;!&ndash;</script>&ndash;&gt;-->

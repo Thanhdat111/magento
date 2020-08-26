@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+     <!--<update handle="customer_account"/>-->
+     <body>
+          <referenceContainer name="sidebar.additional">
+               <block class="Commercers\Workshop\Block\Sidebar" name="sps.sidebar.custom.1" template="Commercers_Workshop::sidebar/custom_sidebar.phtml" before="-" />
+          </referenceContainer>
+     </body>
+</page>

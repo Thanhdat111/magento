@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Ui/etc/ui_configuration.xsd">
+     <argument name="data" xsi:type="array">
+          <item name="js_config" xsi:type="array">
+               <item name="provider" xsi:type="string">workshop_completed_tasks_open_order.workshop_completed_tasks_open_order_listing_data_source</item>
+               <item name="deps" xsi:type="string">workshop_completed_tasks_open_order.workshop_completed_tasks_open_order_listing_data_source</item>
+               <item name="component" xsi:type="string">Magento_Ui/js/form/provider</item>
+          </item>
+          <item name="spinner" xsi:type="string">workshop_columns</item>
+     </argument>
+     <dataSource name="workshop_completed_tasks_open_order_listing_data_source" component="Magento_Ui/js/grid/provider">
+          <settings>
+               <storageConfig>
+                    <param name="indexField" xsi:type="string">pk_entity_id</param>
+               </storageConfig>
+               <!-- cai rule cua magento 2 -->
+               <updateUrl path="mui/index/render"/>
+          </settings>
+          
+          <aclResource>Commercers_Workshop::index</aclResource>
+          <dataProvider class="Commercers\Workshop\Ui\Component\Workshop\DataProviderReference" name="workshop_completed_tasks_open_order_listing_data_source">
+               <settings>
+                    <requestFieldName>pk_entity_id</requestFieldName>
+                    <primaryFieldName>pk_entity_id</primaryFieldName>
+               </settings>
+          </dataProvider>
+     </dataSource>
+     <listingToolbar name="listing_top">
+          <settings>
+               <sticky>true</sticky>
+          </settings>
+
+          <bookmark name="bookmarks"/>
+
+          <columnsControls name="columns_controls"/>
+
+          <exportButton name="export_button"/>
+
+          <filterSearch name="fulltext"/>
+
+          <paging name="listing_paging"/>
+
+          <filters name="listing_filters"/>
+
+     </listingToolbar>
+     <columns name="workshop_columns">
+          <column name="pk_entity_id">
+               <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                         <item name="filter" xsi:type="string">pk_entity_id</item>
+                         <item name="component" xsi:type="string">Magento_Ui/js/grid/columns/column</item>
+                         <item name="dataType" xsi:type="string">text</item>
+                         <item name="label" xsi:type="string" translate="true">Workshop Task ID</item>
+                         <item name="sortOrder" xsi:type="number">1</item>
+                    </item>
+               </argument>
+          </column>
+          <column name="type">
+               <argument name="data" xsi:type="array">
+                    <item name="options" xsi:type="object">Commercers\Workshop\Model\Source\Options\Type</item>
+                    <item name="config" xsi:type="array">
+                         <item name="filter" xsi:type="string">select</item>
+                         <item name="label" translate="true" xsi:type="string">Type</item>
+                         <item name="component" xsi:type="string">Magento_Ui/js/grid/columns/select</item>
+                         <item name="dataType" xsi:type="string">select</item>
+                    </item>
+               </argument>
+          </column>
+          <column name="offer_price">
+               <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                         <item name="filter" xsi:type="string">offer_price</item>
+                         <item name="component" xsi:type="string">Magento_Ui/js/grid/columns/column</item>
+                         <item name="dataType" xsi:type="string">select</item>
+                         <item name="label" xsi:type="string" translate="true">offer_free_label</item>
+                         <item name="sortOrder" xsi:type="number">3</item>
+                    </item>
+               </argument>
+          </column>
+
+          <column name="order_increment_id">
+               <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                         <item name="filter" xsi:type="string">text</item>
+                         <item name="component" xsi:type="string">Magento_Ui/js/grid/columns/column</item>
+                         <item name="dataType" xsi:type="string">text</item>
+                         <item name="label" xsi:type="string" translate="true">Order ID</item>
+                         <item name="sortOrder" xsi:type="number">4</item>
+                    </item>
+               </argument>
+          </column>
+          <column name="status">
+               <argument name="data" xsi:type="array">
+                    <item name="options" xsi:type="object">Magento\Sales\Model\Config\Source\Order\Status</item>
+                    <item name="config" xsi:type="array">
+                         <item name="filter" xsi:type="string">status</item>
+                         <item name="component" xsi:type="string">Magento_Ui/js/grid/columns/column</item>
+                         <item name="dataType" xsi:type="string">select</item>
+                         <item name="label" xsi:type="string" translate="true">Status</item>
+                         <item name="sortOrder" xsi:type="number">5</item>
+                    </item>
+               </argument>
+          </column>
+          <actionsColumn name="task_action" class="Commercers\Workshop\Ui\Component\Listing\Columns\EditActions" sortOrder="6">
+               <settings>
+                    <indexField>pk_entity_id</indexField>
+               </settings>
+          </actionsColumn>
+          <actionsColumn name="order_action" class="Commercers\Workshop\Ui\Component\Listing\Columns\OrderActions" sortOrder="7">
+               <settings>
+                    <indexField>pk_entity_id</indexField>
+               </settings>
+          </actionsColumn>
+     </columns>
+</listing>

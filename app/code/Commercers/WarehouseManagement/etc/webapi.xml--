@@ -1,0 +1,14 @@
+<?xml version="1/0"?>
+<route url="/V1/catalog/product/edit/id" method="GET">
+    <service class="Commercers\WarehouseManagement\Api\WarehouseReponsitoryInterface" method="getAllWarehouse" />
+    <resources>
+        <resource ref="anonymous"/>
+    </resources>
+</route>
+<route url="/V1/catalog/product/edit/id" method="GET">
+    <service class="Commercers\WarehouseManagement\Api\CellWarehouseReponsitoryInterface" method="getCellWarehouseById" />
+    <resources>
+        <resource ref="anonymous"/>
+    </resources>
+    
+</route>

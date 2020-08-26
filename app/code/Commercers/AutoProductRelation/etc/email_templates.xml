@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../Email/etc/email_templates.xsd">
+    <template id="crosssell_email_template" label="Send Customer Linked Product" file="CrossSellProduct.html" type="html" module="Commercers_AutoProductRelation" area="frontend"/>
+    <template id="crosssell_email_log_template" label="Send Admin Log" file="CrossSellLog.html" type="html" module="Commercers_AutoProductRelation" area="frontend"/>
+
+</config>

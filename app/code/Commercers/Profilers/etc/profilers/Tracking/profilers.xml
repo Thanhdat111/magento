@@ -1,0 +1,123 @@
+<?xml version="1.0"?>
+
+<profilers>
+
+
+    <profile>
+
+        <name>Profile 1 for CSV</name>
+
+        <id>profiler_1</id>
+
+        <enable_disable>1</enable_disable>
+
+        <data_source>tracking</data_source>
+
+        <format>csv</format>
+
+
+        <ftp>
+
+            <hostname>ftp.comvn.powered-by-rackspeed.de</hostname>
+
+            <username>developer@comvn.powered-by-rackspeed.de</username>
+
+            <password>*t4S@U5gw~DQ</password>
+
+            <type>1</type>
+
+            <port>21</port>
+
+            <localfolder>csv/TrackingImport/local/folder</localfolder>
+
+            <done>csv/TrackingImport/local/done</done>
+
+            <folderftp>/var/csv/TrackingImport/ftp/folder</folderftp>
+
+            <donefolderftp>csv/TrackingImport/ftp/done</donefolderftp>
+
+            <localfolderftp>csv/TrackingImport/local/folder</localfolderftp>
+
+        </ftp>
+
+
+        <mapping>
+
+            <order_id>Order</order_id>
+
+            <sku>Artikel#</sku>
+
+            <qty>Menge</qty>
+
+            <tracking_number>Trackingnummer</tracking_number>
+
+            <carrier>Carrier</carrier>
+
+            <shelf_life>MHD</shelf_life>
+
+            <lot_number>Charge</lot_number>
+
+        </mapping>
+
+    </profile>
+
+
+    <profile>
+
+        <name>Profile 2 for XML</name>
+
+        <id>profiler_2</id>
+
+        <enable_disable>1</enable_disable>
+
+        <data_source>tracking</data_source>
+
+        <format>xml</format>
+
+
+        <ftp>
+
+            <hostname>ftp.comvn.powered-by-rackspeed.de</hostname>
+
+            <username>developer@comvn.powered-by-rackspeed.de</username>
+
+            <password>*t4S@U5gw~DQ</password>
+
+            <type>1</type>
+
+            <port>21</port>
+
+            <localfolder>xml/TrackingImport/local/folder</localfolder>
+
+            <done>xml/TrackingImport/local/done</done>
+
+            <folderftp>var/xml/TrackingImport/ftp/folder</folderftp>
+
+            <donefolderftp>var/xml/TrackingImport/ftp/done</donefolderftp>
+
+            <localfolderftp>xml/TrackingImport/local/folder</localfolderftp>
+
+        </ftp>
+
+
+        <mapping>
+
+            <order_id>Order</order_id>
+
+            <sku>Artikel</sku>
+
+            <qty>Menge</qty>
+
+            <tracking_number>Trackingnummer</tracking_number>
+
+            <carrier>Carrier</carrier>
+
+            <shelf_life>MHD</shelf_life>
+
+            <lot_number>Charge</lot_number>
+
+        </mapping>
+
+    </profile>
+
+</profilers>

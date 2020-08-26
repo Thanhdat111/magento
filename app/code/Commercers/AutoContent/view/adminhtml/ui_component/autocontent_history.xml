@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">autocontent_history.autocontent_history_data_source</item>
+        </item>
+    </argument>
+
+    <settings>
+        <spinner>backend_columns</spinner>
+        <deps>
+            <dep>autocontent_history.autocontent_history_data_source</dep>
+        </deps>
+    </settings>
+    <listingToolbar name="listing_top">   
+    <bookmark name="bookmarks"/>
+        <columnsControls name="columns_controls"/>
+        <paging name="listing_paging"/>
+        <exportButton name="export_button"/>
+    </listingToolbar>
+    <dataSource name="autocontent_history_data_source" component="Magento_Ui/js/grid/provider">
+        <settings>
+            <storageConfig>
+                <param name="indexField" xsi:type="string">id</param>
+            </storageConfig>
+            <!-- cai rule cua magento 2 -->
+            <updateUrl path="mui/index/render"/>
+            
+        </settings>
+        <aclResource>Commercers_AutoContent::index</aclResource>
+        <dataProvider class="\Commercers\AutoContent\Ui\Component\AutoContent\DataProviderHistory" name="autocontent_history_data_source">
+            <settings>
+                <requestFieldName>id</requestFieldName>
+                <primaryFieldName>id</primaryFieldName>
+            </settings>
+        </dataProvider>
+    </dataSource>
+    <columns name="backend_columns">
+        <column name="process_id">
+            <settings>
+                <filter>dateRange</filter>
+                <editor>
+                    <validation>
+                        <rule name="required-entry" xsi:type="boolean">true</rule>
+                    </validation>
+                    <editorType>text</editorType>
+                </editor>
+                <label translate="true">ID</label>
+            </settings>
+        </column>
+        <column name="id_profiler">
+            <settings>
+                <filter>dateRange</filter>
+                <editor>
+                    <validation>
+                        <rule name="required-entry" xsi:type="boolean">true</rule>
+                    </validation>
+                    <editorType>text</editorType>
+                </editor>
+                <label translate="true">Id Profiler</label>
+            </settings>
+        </column>
+        <column name="status">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Commercers\AutoContent\Ui\Component\AutoContent\Status</item>
+                <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="string">select</item>
+                    <item name="label" translate="true" xsi:type="string">Status</item>
+                    <item name="component" xsi:type="string">Magento_Ui/js/grid/columns/select</item>
+                    <item name="dataType" xsi:type="string">select</item>  
+                </item>
+            </argument>
+         </column>
+        <column name="message">
+            <settings>
+                <filter>text</filter>
+                <editor>
+                    <validation>
+                        <rule name="required-entry" xsi:type="boolean">true</rule>
+                    </validation>
+                    <editorType>text</editorType>
+                </editor>
+                <label translate="true">Message</label>
+            </settings>
+        </column>
+        <column name="executed_at">
+            <settings>
+                <filter>text</filter>
+                <editor>
+                    <validation>
+                        <rule name="required-entry" xsi:type="boolean">true</rule>
+                    </validation>
+                    <editorType>text</editorType>
+                </editor>
+                <label translate="true">Executed At</label>
+            </settings>
+        </column>
+        <column name="end_at">
+            <settings>
+                <filter>text</filter>
+                <editor>
+                    <validation>
+                        <rule name="required-entry" xsi:type="boolean">true</rule>
+                    </validation>
+                    <editorType>text</editorType>
+                </editor>
+                <label translate="true">End At</label>
+            </settings>
+        </column>
+    </columns>
+</listing>
+

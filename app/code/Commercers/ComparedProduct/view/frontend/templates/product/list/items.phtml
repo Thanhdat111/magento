@@ -1,0 +1,81 @@
+<?php if($currentProduct  = $block->getCurrentProduct()):?>
+    <?php
+
+    $comparedProductIds = $block->getComparedProductIds($currentProduct->getId());
+    //echo "<pre>";
+    //print_r($comparedProductIds);exit;
+    ?>
+    <?php if(!empty($comparedProductIds)):?>
+
+        <form id="auto-compare-product" action="<?php echo $block->getUrl('custom_compare/product/compare')?>">
+            <?php echo $block->getBlockHtml('formkey')?>
+
+        <table class="commercers-compared-product">
+                <thead class="thead">
+                    <tr><td colspan="4"><h2><?php echo __('You can compare with these products.')?></h2></td></tr>
+                </thead>
+                <tbody class="tbody">
+                <tr class="current-product">
+                    <td class="image"><img src="<?php echo $block->getMediaUrl().'catalog/product'.$currentProduct->getData('small_image')?>" alt="<?php echo $currentProduct->getName();?>" /></td>
+                    <td class="name"><span><?php echo $currentProduct->getName();?></span></td>
+                    <td class="price"><?php echo $block->getProductPrice($currentProduct);?></td>
+                    <td class="action">
+                        <input class="selected-product" type="checkbox" name="selected-product-<?php echo $currentProduct->getId();?>" checked id="selected-product-<?php echo $currentProduct->getId();?>" value="<?php echo $currentProduct->getId();?>" />
+                    </td>
+                </tr>
+            <?php foreach($comparedProductIds as $productId => $comparedProductId):?>
+
+                <?php $comparedProduct = $block->getProduct($comparedProductId); ?>
+                    <?php if($comparedProduct):?>
+                        <tr class="compared-product">
+                            <td class="image">
+                                <a href="<?php echo $comparedProduct->getProductUrl()?>">
+                                    <img src="<?php echo $block->getMediaUrl().'catalog/product'.$comparedProduct->getData('small_image')?>" alt="<?php echo $comparedProduct->getName();?>" />
+                                </a>
+                            </td>
+                            <td class="name">
+                                <a href="<?php echo $comparedProduct->getProductUrl()?>"><?php echo $comparedProduct->getName();?></a>
+                            </td>
+                            <td class="price"><?php echo $block->getProductPrice($comparedProduct);?></td>
+                            <td class="action">
+                                <input class="selected-product" type="checkbox" checked name="selected-product-<?php echo $comparedProduct->getId();?>"  id="selected-product-<?php echo $comparedProduct->getId();?>" value="<?php echo $comparedProduct->getId();?>" />
+                            </td>
+                        </tr>
+                    <?php endif;?>
+
+            <?php endforeach;?>
+
+                </tbody>
+
+                <tfoot class="tfoot">
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td colspan="2">
+                            <button type="button" class="compare-now-button" ><?php echo __('Compare Products')?></button>
+
+                        </td>
+                    </tr>
+                </tfoot>
+        </table>
+        </form>
+    <?php endif;?>
+    <script>
+        jQuery('.compare-now-button').on("click",function(){
+            var selectedProducts = [];
+            jQuery.each(jQuery(".selected-product:checkbox:checked"),function(){
+                selectedProducts.push(jQuery(this).val());
+            });
+            console.log(selectedProducts);
+            if(selectedProducts.length === 0 || selectedProducts.length === 1){
+                if(!jQuery('.compare-error').length){
+                    var html = '<div class="compare-error" id="form-error"><?php echo __("Please select at least 2 products to compare.");?></div>';
+                    jQuery('.compare-now-button').after(html);
+                    jQuery('.compare-error').css('color',"red");
+                }
+            }else{
+                jQuery('#auto-compare-product').submit();
+            }
+        });
+    </script>
+<?php endif;?>

@@ -1,0 +1,37 @@
+<?php
+    $item =  $block->getProduct();
+     $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+?>
+<main id="maincontent" class="pagemain">
+    <div class="columns">
+        <div class="column main">
+            <div class="product-info-main">
+                <div class="page-title-wrapper product">
+                    <h1 class="page-title"><span class="base" data-ui-id="page-title-wrapper" itemprop="name"><?=$item->getName()?></span></h1>
+                </div>
+                <div class="price-box price-final_price" data-role="priceBox" data-product-id="<?=$item->getId()?>" data-price-box="product-id-".<?=$item->getId()?>>
+                    <span class="price-container price-final_price tax weee" itemprop="offers" itemscope="" itemtype="http://schema.org/Offer">
+                     <span id="product-price-".<?=$item->getId()?> data-price-amount="100" data-price-type="finalPrice" class="price-wrapper "><span class="price">.<?=$item->getPrice()?></span></span>
+                        <meta itemprop="price" content="100">
+                        <meta itemprop="priceCurrency" content="USD">
+                </div>
+                <div class="product-info-stock-sku">
+                    <div class="product attribute sku">
+                        <strong class="type">SKU</strong>    <div class="value" itemprop="sku"><?=$item->getSku()?></div>
+                    </div>
+                </div>
+                <div class="product media">
+                    <div  class="gallery-placeholder" data-gallery-role="gallery-placeholder">
+                        <div class="fotorama__stage__frame fotorama__active fotorama_vertical_ratio fotorama__loaded fotorama__loaded--img" aria-hidden="false" data-active="true" href="#" style="left: 0px;">
+                            <?php  $imagewidth=200;
+                            $imageheight=200;
+                            $imageHelper  = $objectManager->get('\Magento\Catalog\Helper\Image');
+                            $image_url = $imageHelper->init($item, 'small_image')->setImageFile($item->getSmallImage())->resize($imagewidth, $imageheight)->getUrl(); ?>
+                            <img src="<?=$image_url?>" alt="<?=$item->getName()?>" class="fotorama__img" aria-hidden="false">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

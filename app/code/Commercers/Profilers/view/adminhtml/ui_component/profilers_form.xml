@@ -1,0 +1,579 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">profilers_form.profilers_form_data_source</item>
+            <item name="deps" xsi:type="string">profilers_form.profilers_form_data_source</item>
+        </item>
+        <item name="label" xsi:type="string" translate="true">Profilers Manage</item>
+        <item name="layout" xsi:type="array">
+            <item name="type" xsi:type="string">tabs</item>
+            <item name="navContainerName" xsi:type="string">left</item>
+        </item>
+
+        <item name="buttons" xsi:type="array">
+            <item name="back" xsi:type="string">Commercers\Profilers\Block\Adminhtml\Profilers\Button\Back</item>
+            <item name="save_and_continue" xsi:type="string">Commercers\Profilers\Block\Adminhtml\Profilers\Button\SaveAndContinueButton</item>
+            <item name="save" xsi:type="array">
+                <item name="name" xsi:type="string">save</item>
+                <item name="label" xsi:type="string" translate="true">Save</item>
+                <item name="class" xsi:type="string">primary</item>
+                <item name="url" xsi:type="string">/*/save</item>
+            </item>
+
+        </item>
+    </argument>
+
+    <dataSource name="profilers_form_data_source">
+        <!--  Core cua UI Component -->
+        <argument name="data" xsi:type="array">
+            <item name="js_config" xsi:type="array">
+                <item name="component" xsi:type="string">Magento_Ui/js/form/provider</item>
+            </item>
+        </argument>
+        <!-- -->
+        <settings>
+            <submitUrl path="profilers/index/save"/>
+        </settings>
+
+        <dataProvider class="Commercers\Profilers\Ui\Component\Profilers\Form\DataProvider" name="profilers_form_data_source">
+            <settings>
+                <requestFieldName>id</requestFieldName>
+                <primaryFieldName>id</primaryFieldName>
+            </settings>
+        </dataProvider>
+    </dataSource>
+
+    <fieldset name="general" sortOrder="10">
+        <settings>
+            <label translate="true">General</label>
+
+        </settings>
+
+        <field name="name">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Name</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                    </item>
+                    <item name="source" xsi:type="string">general</item>
+                    <item name="disabled" xsi:type="string">${ $.provider }:data.disable_field_name</item>
+                </item>
+            </argument>
+        </field>
+
+        <field name="id_profiler">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">ID Profiler</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                    </item>
+                    <item name="source" xsi:type="string">general</item>
+                    <item name="disabled" xsi:type="string">${ $.provider }:data.disable_field_id_profiler</item>
+                </item>
+            </argument>
+        </field>
+
+        <field name="data_source">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Commercers\Profilers\Model\DataSource\Options</item>
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Data Source</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="formElement" xsi:type="string">select</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                    </item>
+                    <item name="source" xsi:type="string">general</item>
+                    <item name="disabled" xsi:type="string">${ $.provider }:data.disable_field_data_source</item>
+                </item>
+            </argument>
+        </field>
+
+        <field name="status">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Commercers\Profilers\Model\Option\OptionProfilerStatus</item>
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Enable</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="formElement" xsi:type="string">select</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                    </item>
+                    <item name="source" xsi:type="string">general</item>
+                </item>
+            </argument>
+        </field>
+
+        <field name="type">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Commercers\Profilers\Model\Option\Type</item>
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Import/Export</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="formElement" xsi:type="string">select</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                    </item>
+                    <item name="source" xsi:type="string">general</item>
+                    <item name="disabled" xsi:type="string">${ $.provider }:data.disable_field_import_export</item>
+                </item>
+            </argument>
+        </field>
+
+    </fieldset>
+
+    <fieldset name="ftp" sortOrder="20">
+        <settings>
+            <label translate="true">Ftp Sources</label>
+        </settings>
+
+        <field name="ftp_enable">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Commercers\Profilers\Model\Option\OptionProfilerStatus</item>
+                <item name="config" xsi:type="array">
+                    <item name="component" xsi:type="string">Commercers_Profilers/js/form/element/enable-ftp</item>
+                    <item name="elementTmpl" xsi:type="string">Commercers_Profilers/form/element/enable-ftp</item>
+                    <item name="label" xsi:type="string" translate="true">Enable</item>
+                    <item name="dataType" xsi:type="string">integer</item>
+                    <item name="dataScope" xsi:type="string">ftp_enable</item>
+                    <item name="formElement" xsi:type="string">select</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                    </item>
+                    <item name="source" xsi:type="string">general</item>
+                </item>
+            </argument>
+        </field>
+
+        <field name="ftp_hostname">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Hostname</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="dataScope" xsi:type="string">ftp_hostname</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="source" xsi:type="string">general</item>
+                </item>
+            </argument>
+        </field>
+
+        <field name="ftp_username">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Username</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="dataScope" xsi:type="string">ftp_username</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="source" xsi:type="string">general</item>
+                </item>
+            </argument>
+        </field>
+
+        <field name="ftp_password">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Password</item>
+                    <item name="dataType" xsi:type="string">password</item>
+                    <item name="dataScope" xsi:type="string">ftp_password</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="source" xsi:type="string">general</item>
+                </item>
+            </argument>
+        </field>
+
+        <field name="ftp_type">
+            
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Commercers\Profilers\Model\Option\FtpType</item>
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Type</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="formElement" xsi:type="string">select</item>
+                    <item name="dataScope" xsi:type="string">ftp_type</item>
+                    <item name="source" xsi:type="string">general</item>
+                </item>
+            </argument>
+        </field>
+        
+        <field name="ftp_key_file">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Private Key File</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="dataScope" xsi:type="string">ftp_key_file</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="source" xsi:type="string">general</item>
+                </item>
+            </argument>
+        </field>
+
+        <field name="ftp_port">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Port</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="dataScope" xsi:type="string">ftp_port</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="source" xsi:type="string">general</item>
+                </item>
+            </argument>
+        </field>
+
+
+        <field name="ftp_folder">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">FTP Folder</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="dataScope" xsi:type="string">ftp_folder</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="notice" xsi:type="string" translate="true">[..]/var/Directory path to local folder of FTP.</item>
+
+
+                </item>
+            </argument>
+            <!--
+            <settings>
+                <imports>
+                    <link name="disabled">${ $.provider}:data.disabled_when_import</link>
+                </imports>
+            </settings>
+            -->
+        </field>
+
+
+        <field name="ftp_done_folder">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">FTP Processed Folder</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="dataScope" xsi:type="string">ftp_done_folder</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="notice" xsi:type="string" translate="true">[..]/var/Directory path to local folder of FTP.</item>
+                    <item name="source" xsi:type="string">general</item>
+
+                </item>
+            </argument>
+            <settings>
+                <imports>
+                    <link name="disabled">${ $.provider}:data.disabled_when_export</link>
+                </imports>
+            </settings>
+        </field>
+
+        <field name="ftp_local_tmp">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Temporary Folder On Local Server</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="dataScope" xsi:type="string">ftp_local_tmp</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="notice" xsi:type="string" translate="true">[..]/var/Directory path to done folder of FTP.</item>
+                    <item name="source" xsi:type="string">general</item>
+
+                </item>
+            </argument>
+            <settings>
+                <imports>
+                    <link name="disabled">${ $.provider}:data.disabled_when_export</link>
+                </imports>
+            </settings>
+        </field>
+
+        
+    </fieldset>
+
+    <fieldset name="local" sortOrder="30">
+        <settings>
+            <label translate="true">Local Folder</label>
+        </settings>
+
+        <field name="local_enable">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Commercers\Profilers\Model\Option\OptionProfilerStatus</item>
+                <item name="config" xsi:type="array">
+                    <item name="component" xsi:type="string">Commercers_Profilers/js/form/element/enable-local</item>
+                    <item name="elementTmpl" xsi:type="string">Commercers_Profilers/form/element/enable-local</item>
+                    <item name="label" xsi:type="string" translate="true">Enable</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="dataScope" xsi:type="string">local_enable</item>
+                    <item name="formElement" xsi:type="string">select</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                    </item>
+                    <item name="source" xsi:type="string">general</item>
+                </item>
+            </argument>
+        </field>
+
+        
+        <field name="local_folder" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Import Folder</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="dataScope" xsi:type="string">local_folder</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="notice" xsi:type="string" translate="true">[../var]/Directory path to local folder.</item>
+                    <item name="source" xsi:type="string">general</item>
+                </item>
+            </argument>
+            <settings>
+                <!--
+                <imports>
+                    <link name="disabled">${ $.provider}:data.disabled_when_export</link>
+                </imports>
+                -->
+            </settings>
+        </field>
+
+        <field name="local_done_folder">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Local Done Folder</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="dataScope" xsi:type="string">local_done_folder</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="notice" xsi:type="string" translate="true">[../var]/Directory path to done folder.</item>
+                    <item name="source" xsi:type="string">general</item>
+                </item>
+            </argument>
+            <settings>
+                <!--
+                <imports>
+                    <link name="disabled">${ $.provider}:data.disabled_when_export</link>
+                </imports>
+                -->
+            </settings>
+        </field>
+        
+        <field name="local_nfiles_per_process">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Number of files per a process</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="dataScope" xsi:type="string">local_nfiles_per_process</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="notice" xsi:type="string" translate="true">No limit if you empty this field</item>
+                    <item name="source" xsi:type="string">general</item>
+                </item>
+            </argument>
+            <settings>
+                <!--
+                <imports>
+                    <link name="disabled">${ $.provider}:data.disabled_when_export</link>
+                </imports>
+                -->
+            </settings>
+        </field>
+
+
+        
+    </fieldset>
+
+    <fieldset name="cron" sortOrder="40">
+        <settings>
+            <label translate="true">Automatically Execution</label>
+        </settings>
+        <field name="enable_disable_cron">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Magento\Config\Model\Config\Source\Yesno</item>
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Enable Cron</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="formElement" xsi:type="string">select</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                    </item>
+                    <item name="source" xsi:type="string">general</item>
+                </item>
+            </argument>
+        </field>
+        <field name="code">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Cron job code</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="validation" xsi:type="array">
+                       
+                    </item>
+                    <item name="source" xsi:type="string">general</item>
+                </item>
+            </argument>
+        </field>
+
+        <field name="schedule">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Cron job schedule</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="validation" xsi:type="array">
+                       
+                    </item>
+                    <item name="source" xsi:type="string">general</item>
+                </item>
+            </argument>
+        </field>
+
+        <field name="run_model_cronjob">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Run Model CronJob</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="notice" xsi:type="string" translate="true">Default: Commercers\Profilers\Cron\Task::execute</item>
+                    <item name="validation" xsi:type="array">
+                        
+                    </item>
+
+                    <item name="source" xsi:type="string">general</item>
+                </item>
+            </argument>
+        </field>
+
+    </fieldset>
+
+    <fieldset name="mapping" sortOrder="40">
+        <settings>
+            <label translate="true">Import Settings</label>
+            <imports>
+                <link name="visible">${ $.provider }:data.hide-import</link>
+            </imports>
+        </settings>
+
+        <field name="file_prefix">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">File Prefix</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="source" xsi:type="string">general</item>
+                </item>
+            </argument>
+        </field>
+
+        <field name="delimiter">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Delimiter</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="formElement" xsi:type="string">input</item>
+
+                    <item name="source" xsi:type="string">general</item>
+                </item>
+            </argument>
+        </field>
+
+        <field name="format">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Commercers\Profilers\Model\Option\FormatType</item>
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Format</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="formElement" xsi:type="string">select</item>
+
+                    <item name="source" xsi:type="string">general</item>
+                </item>
+            </argument>
+        </field>
+
+        <fieldset name="mapping">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true"></item>
+                    <item name="collapsible" xsi:type="boolean">false</item>
+                    <item name="sortOrder" xsi:type="number">30</item>
+                    <item name="source" xsi:type="string">general</item>
+                </item>
+            </argument>
+
+            <container name="mapping_container" >
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="sortOrder" xsi:type="number">10</item>
+                    </item>
+                </argument>
+
+                <htmlContent name="html_content">
+                    <argument name="block" xsi:type="object">Commercers\Profilers\Block\Adminhtml\Form\Rule\Edit\Import\Mapping</argument>
+                </htmlContent>
+            </container>
+        </fieldset>
+
+    </fieldset>
+
+    <fieldset name="outputformat" sortOrder="50">
+        <settings>
+            <label translate="true">Export Settings</label>
+            <imports>
+                <link name="visible">${ $.provider }:data.hide-export</link>
+            </imports>
+        </settings>
+        <fieldset name="outputformat">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true"></item>
+                    <item name="collapsible" xsi:type="boolean">false</item>
+                    <item name="sortOrder" xsi:type="number">30</item>
+                    <item name="source" xsi:type="string">general</item>
+                </item>
+            </argument>
+
+            <container name="output_container" >
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="sortOrder" xsi:type="number">10</item>
+                    </item>
+                </argument>
+
+                <htmlContent name="html_content">
+                    <argument name="block" xsi:type="object">Commercers\Profilers\Block\Adminhtml\Form\Rule\Edit\Export\OutputFormat</argument>
+
+                </htmlContent>
+            </container>
+        </fieldset>
+
+    </fieldset>
+
+    <fieldset name="history" sortOrder="60">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="label" xsi:type="string" translate="true">History</item>
+                <item name="collapsible" xsi:type="boolean">false</item>
+                <item name="sortOrder" xsi:type="number">30</item>
+            </item>
+        </argument>
+        <!-- load grid -->
+        <insertListing>
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="autoRender" xsi:type="boolean">true</item>
+                    <item name="ns" xsi:type="string">profilers_history</item>
+                    <item name="source" xsi:type="string">general</item>
+                    <item name="filter_url_params" xsi:type="array">
+                        <!-- You can add as many as you want -->
+                        <item name="id" xsi:type="string">*</item>
+                    </item>
+                    <item name="storageConfig" xsi:type="array">
+                        <item name="indexField" xsi:type="string">id</item>
+                    </item>
+                </item>
+            </argument>
+        </insertListing>
+    </fieldset>
+
+
+
+
+
+</form>

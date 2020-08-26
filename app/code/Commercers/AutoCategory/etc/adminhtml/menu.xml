@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Commercers_AutoCategory::commercers_autocategory"
+             title="Auto Category" translate="title"
+             module="Commercers_AutoCategory"
+             parent="Magento_Catalog::catalog"
+             action="autocategory/rule/index"
+             sortOrder="0"
+             resource="Commercers_AutoCategory::commercers_autocategory"/>
+    </menu>
+</config>

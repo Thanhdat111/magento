@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Ui/etc/ui_configuration.xsd">
+     <argument name="data" xsi:type="array">
+          <item name="js_config" xsi:type="array">
+               <item name="provider" xsi:type="string">workshop_product.workshop_references_listing_data_source</item>
+               <item name="deps" xsi:type="string">workshop_product.workshop_references_listing_data_source</item>
+               <item name="component" xsi:type="string">Magento_Ui/js/form/provider</item>
+          </item>
+          <item name="spinner" xsi:type="string">workshop_columns</item>
+     </argument>
+     <dataSource name="workshop_references_listing_data_source" component="Magento_Ui/js/grid/provider">
+          <settings>
+               <storageConfig>
+                    <param name="indexField" xsi:type="string">pk_entity_id</param>
+               </storageConfig>
+               <!-- cai rule cua magento 2 -->
+               <updateUrl path="mui/index/render"/>
+          </settings>
+          
+          <aclResource>Commercers_Workshop::index</aclResource>
+          <dataProvider class="Commercers\Workshop\Ui\Component\Workshop\DataProviderProduct" name="workshop_references_listing_data_source">
+               <settings>
+                    <requestFieldName>pk_entity_id</requestFieldName>
+                    <primaryFieldName>pk_entity_id</primaryFieldName>
+               </settings>
+          </dataProvider>
+     </dataSource>
+     <listingToolbar name="listing_top">
+          <settings>
+               <sticky>true</sticky>
+          </settings>
+
+          <bookmark name="bookmarks"/>
+
+          <columnsControls name="columns_controls"/>
+
+          <exportButton name="export_button"/>
+
+          <filterSearch name="fulltext"/>
+
+          <paging name="listing_paging"/>
+
+          <filters name="listing_filters"/>
+
+     </listingToolbar>
+     <columns name="workshop_columns">
+          <column name="reference_id">
+               <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                         <item name="filter" xsi:type="string">main_table.reference_id</item>
+                         <item name="component" xsi:type="string">Magento_Ui/js/grid/columns/column</item>
+                         <item name="dataType" xsi:type="string">text</item>
+                         <item name="label" xsi:type="string" translate="true">ID</item>
+                         <item name="sortOrder" xsi:type="number">1</item>
+                    </item>
+               </argument>
+          </column>
+          <column name="name">
+               <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                         <item name="filter" xsi:type="string">cpe.sku</item>
+                         <item name="component" xsi:type="string">Magento_Ui/js/grid/columns/column</item>
+                         <item name="dataType" xsi:type="string">text</item>
+                         <item name="label" xsi:type="string" translate="true">Name</item>
+                         <item name="sortOrder" xsi:type="number">1</item>
+                    </item>
+               </argument>
+          </column>
+          <column name="sku">
+               <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                         <item name="filter" xsi:type="string">cpe.sku</item>
+                         <item name="component" xsi:type="string">Magento_Ui/js/grid/columns/column</item>
+                         <item name="dataType" xsi:type="string">text</item>
+                         <item name="label" xsi:type="string" translate="true">SKU</item>
+                         <item name="sortOrder" xsi:type="number">3</item>
+                    </item>
+               </argument>
+          </column>
+
+          <column name="comment">
+               <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                         <item name="filter" xsi:type="string">comment</item>
+                         <item name="component" xsi:type="string">Magento_Ui/js/grid/columns/column</item>
+                         <item name="dataType" xsi:type="string">text</item>
+                         <item name="label" xsi:type="string" translate="true">Comment</item>
+                         <item name="sortOrder" xsi:type="number">4</item>
+                    </item>
+               </argument>
+          </column>
+          <column name="activated/deactivated">
+               <argument name="data" xsi:type="array">
+                    <item name="options" xsi:type="object">Magento\Sales\Model\Config\Source\Order\Status</item>
+                    <item name="config" xsi:type="array">
+                         <item name="filter" xsi:type="string">cp.status</item>
+                         <item name="component" xsi:type="string">Magento_Ui/js/grid/columns/column</item>
+                         <item name="dataType" xsi:type="string">select</item>
+                         <item name="label" xsi:type="string" translate="true">Status</item>
+                         <item name="sortOrder" xsi:type="number">5</item>
+                    </item>
+               </argument>
+          </column>
+     </columns>
+</listing>
+

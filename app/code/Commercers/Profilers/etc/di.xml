@@ -1,0 +1,43 @@
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../lib/internal/Magento/Framework/ObjectManager/etc/config.xsd">
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="profilers_listing_data_source" xsi:type="string">Commercers\Profilers\Model\ResourceModel\Profilers\Collection</item>
+                <item name="profilers_form_data_source" xsi:type="string">Commercers\Profilers\Model\ResourceModel\Profilers\Collection</item>
+                <item name="profilers_history_data_source" xsi:type="string">Commercers\Profilers\Model\ResourceModel\ProfilersProcessLog\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+    <virtualType name="Commercers\Profilers\Model\ResourceModel\Profilers\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">profilers</argument>
+            <argument name="resourceModel" xsi:type="string">Commercers\Profilers\Model\ResourceModel\Profilers</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="Commercers\Profilers\Model\ResourceModel\ProfilersProcessLog\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">profiler_process_log</argument>
+            <argument name="resourceModel" xsi:type="string">Commercers\Profilers\Model\ResourceModel\ProfilersProcessLog</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\Pool">
+        <arguments>
+            <argument name="modifiers" xsi:type="array">
+                <item name="localfolder" xsi:type="array">
+                    <item name="class" xsi:type="string">Commercers\Profilers\Ui\FieldSub</item>
+                    <item name="sortOrder" xsi:type="number">10</item>
+                </item>
+            </argument>
+        </arguments>
+    </virtualType>
+    
+    
+    <type name="Commercers\Profilers\Service\Data\Process\Xml\Output" >
+        <arguments>
+            <argument name="processors" xsi:type="array">
+                <item name="edi" xsi:type="string">Commercers\Profilers\Service\Data\Process\Xml\Output\Edi</item>
+                <item name="csv" xsi:type="string">Commercers\Profilers\Service\Data\Process\Xml\Output\Csv</item>
+            </argument>
+        </arguments>
+    </type>
+</config>

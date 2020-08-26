@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <button name="custom_button">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="buttonClasses" xsi:type="string">custom-button-class</item>
+                <item name="actions" xsi:type="array">
+                    <item name="0" xsi:type="array">
+                        <item name="targetName" xsi:type="string">TARGET_NAME</item>
+                        <item name="actionName" xsi:type="string">ACTION_NAME</item>
+                        <item name="sortOrder" xsi:type="number">100</item>
+                    </item>
+                </item>
+            </item>
+        </argument>
+        <settings>
+            <displayAsLink>false</displayAsLink>
+            <title translate="true">Get Price</title>
+        </settings>
+    </button>
+    <fieldset name="magenest">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="label" xsi:type="string">Magenest Custom Fields</item>
+                <item name="collapsible" xsi:type="boolean">true</item>
+                <item name="dataScope" xsi:type="string">data.magenest</item>
+                <item name="sortOrder" xsi:type="number">10</item>
+            </item>
+        </argument>
+        <field name="status">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Status</item>
+                    <item name="dataScope" xsi:type="string">status</item>
+                    <item name="sortOrder" xsi:type="number">10</item>
+                    <item name="componentType" xsi:type="string">field</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="formElement" xsi:type="string">select</item>
+                    <item name="options" xsi:type="array">
+                        <item name="0" xsi:type="array">
+                            <item name="value" xsi:type="number">0</item>
+                            <item name="label" xsi:type="string">Inactive</item>
+                        </item>
+                        <item name="1" xsi:type="array">
+                            <item name="value" xsi:type="number">1</item>
+                            <item name="label" xsi:type="string">Active</item>
+                        </item>
+                    </item>
+                </item>
+            </argument>
+        </field>
+        <field name="textField">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Text Field</item>
+                    <item name="dataScope" xsi:type="string">textField</item>
+                    <item name="sortOrder" xsi:type="number">20</item>
+                    <item name="componentType" xsi:type="string">field</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                </item>
+            </argument>
+        </field>
+        <button name="custom_button">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="buttonClasses" xsi:type="string">custom-button-class</item>
+                <item name="actions" xsi:type="array">
+                    <item name="0" xsi:type="array">
+                        <item name="targetName" xsi:type="string">TARGET_NAME</item>
+                        <item name="actionName" xsi:type="string">ACTION_NAME</item>
+                    </item>
+                </item>
+            </item>
+        </argument>
+            <settings>
+                <displayAsLink>false</displayAsLink>
+                <title>Test Button</title>
+            </settings>
+        </button>
+    </fieldset>
+</form>

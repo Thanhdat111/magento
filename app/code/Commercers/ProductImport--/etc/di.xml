@@ -1,0 +1,28 @@
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../lib/internal/Magento/Framework/ObjectManager/etc/config.xsd">
+    
+    <type name="Commercers\Profilers\Service\DataSource\Import\Factory">
+        <arguments>
+            <argument name="dataSources" xsi:type="array">
+                <item name="product" xsi:type="string">Commercers\ProductImport\Service\DataSource</item>   
+                 <item name="stock_reset_excluded_items" xsi:type="string">Commercers\ProductImport\Service\Excluded\ResetDataSource</item>                 
+            </argument>
+
+        </arguments>
+        
+    </type>
+    
+    
+    <type name="Commercers\Profilers\Model\DataSource\Options">
+        <arguments>
+            <argument name="dataSources" xsi:type="array">
+                <item name="product" xsi:type="string">Product</item>
+                 <item name="stock_reset_excluded_items" xsi:type="string">Reset Stock of Excluded Items</item>
+            </argument>
+            
+        </arguments>
+    </type>
+
+    
+    
+    
+</config>

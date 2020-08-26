@@ -1,0 +1,152 @@
+<?php
+$productId = $this->getRequest()->getParam('id');
+$productLinkings = $block->getProductLinking($productId);
+$allWarehouses = $block->getAllWarehouse();
+$idRow = 1;
+?>
+    <button class="action-basic" type="button" id="open-slide-warehouse" >
+        <span>Warehouse Management</span>
+    </button>
+<div  id="slide-wahouse">
+<form id="form-warehouse" action="" method="post">
+<table class="admin__dynamic-rows admin__control-table" data-role="grid">
+    <thead>
+        <tr>
+            <th>Warehouse</th>
+            <th>Area</th>
+            <th>Rack Row</th>
+            <th>Rack Level</th>
+            <th>Quantity</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+
+    <tbody class="optionBox">
+    <input name="productId" type="hidden" value="<?php echo $productId?>">
+        <?php if($productLinkings):?>
+            <?php foreach ($productLinkings as $productLinking): ?>
+                <?php $warehouse = $block->getWarehouse($productLinking['warehouse_id']); ?>
+                <tr>
+                    <td>
+                        <select name="warehouse[]" class="admin__control-select select-warehouse" data-id="<?php echo $idRow ;?>" >
+                            <?php foreach ($allWarehouses as $allWarehouse): ?>
+                                <option <?php if($warehouse->getName() == $allWarehouse->getName()) echo "selected" ?>  value="<?php echo $allWarehouse->getId()?>"><?php echo $allWarehouse->getName()?></option>
+                            <?php endforeach;?>
+                        </select>
+                    </td>
+                    <td>
+                        <select name="area[]" class="admin__control-select <?php echo 'area-'.$idRow?>">
+                            <?php foreach ($block->getCellWarehouse($productLinking['warehouse_id']) as $cellWarehouse): ?>
+                            <option <?php if($productLinking['area'] == $cellWarehouse->getArea()) echo "selected" ?>  value="<?php echo $cellWarehouse->getArea().','.$cellWarehouse->getId()?>"><?php echo $cellWarehouse->getArea()?></option>
+                            <?php endforeach;?>
+                        </select>
+                    </td>
+                    <td><input name="rackRow[]" class="admin__control-text" value="<?php echo $productLinking['rack_row'] ?>"></td>
+                    <td><input name="rackLevel[]" class="admin__control-text" value="<?php echo $productLinking['rack_level'] ?>"></td>
+                     <td><input name="quantity[]" class="admin__control-text" value="<?php echo $productLinking['quantity'] ?>"></td>
+                    <td class="remove"><button type="button">Remove</button></td>
+                </tr>
+                <?php $idRow++;?>
+            <?php endforeach; ?>
+        <?php endif;?>
+        <tr class="block">
+            
+        </tr>
+        </div>
+
+        <tr>
+            <td colspan="6">
+                <button type="button" class="add" data-action="add_new_row">
+                    <span>Add</span>
+                </button>
+
+            </td>
+        </tr>
+    </tbody>
+
+</table>
+</form>
+</div>
+<script>
+    window.warehouseConfig = <?php echo $block->getWarehouseJsonFormConfig(); ?>;
+    window.selectWarehouse = <?php echo $block->getSelelctWarehouse();?>;
+    require(['jquery', 'jquery/ui','Magento_Ui/js/modal/modal'], function ($,ui,modal) {
+    var options = {
+        type: 'slide',
+        responsive: true,
+        innerScroll: true,
+        title: 'Modal Title',
+        modalClass: 'custom-modal',
+        buttons: [{
+            text: $.mage.__('close'),
+            class: '',
+            click: function () {
+                this.closeModal();
+            }
+        },
+        {
+            text: $.mage.__('Save'),
+            class: 'action-default primary',
+            click: function () {
+                var dataJson = $("#form-warehouse").serialize();
+               $.ajax(
+                    window.location.href.split('/catalog')[0] + '/backend/warehouse/savelinkingproduct',
+                    {
+                        type: "POST",
+                        dataType: "json",
+                        data: dataJson,
+                        showLoader: true,
+                        success: function (response) {
+                            alert(response.massage);
+                        }
+                    });
+            }
+        }
+        
+        ]
+    };
+    var popup = modal(options, $('#slide-wahouse'));
+            $("#open-slide-warehouse").on('click',function(){
+                $("#slide-wahouse").modal("openModal");
+            });
+ 
+
+        var count = <?php echo $idRow?>;
+        $('.add').click(function () {
+            console.log(count);
+            var html = '<tr><td><select name="warehouse[]" class="admin__control-select select-warehouse" data-id="'+count+'" required>';
+             html = html.concat('<option>--Please Select--</option>');
+            for (var i = 0; i < window.selectWarehouse.length; i++){
+                html = html.concat('<option value='+window.selectWarehouse[i].warehouse_id+'>'+window.selectWarehouse[i].warehouse_name+'</option>');
+                                    
+            }
+            html= html.concat('</select></td>');
+            html= html.concat('<td><select name="area[]" class="admin__control-select area-'+count+'" required></select></td> <td><input name="rackRow[]" class="admin__control-text"></td> <td><input name="rackLevel[]" class="admin__control-text"></td><td><input name="quantity[]" class="admin__control-text"></td><td class="remove"><button type="button">Remove</button></td></tr>');
+            $('.block:last').before(html);
+            count++;
+        });
+
+        $('.optionBox').on('click', '.remove', function () {
+            $(this).parent().remove();
+        });
+        $('.optionBox').on('change', '.select-area', function () {
+             var cellId = $(this).data("id");
+             console.log(cellId);
+        });
+        $('.optionBox').on('change', '.select-warehouse', function () {
+            var valueOption = $(this).val();
+            var rowField = $(this).data("id");
+            $.ajax(
+                    window.location.href.split('/catalog')[0] + '/backend/warehouse/selectarea',
+                    {
+                        type: "POST",
+                        dataType: "json",
+                        data: {valueOption: valueOption},
+                        showLoader: true,
+                        success: function (response) {
+                            $('.area-'+rowField).html(response.block);
+                        }
+                    });
+        });
+    });
+</script>

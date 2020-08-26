@@ -1,0 +1,21 @@
+<?php
+    $attributes = $block->getAttribute();
+?>
+<?php foreach($attributes as $key => $attribute): ?>
+<h2>Store: <?php echo $block->getLabelStore($key)?></h2>
+<div class="info-attribute attribute-tester">
+   <table width="100%">
+  <tr>
+    <th>Attribute Code</th>
+    <th>Result Attribute</th>
+  </tr>
+      <?php foreach($attribute as $keyAttr => $attr): ?>
+
+  <tr>
+    <td><?php echo  $keyAttr?></td>
+    <td><?php echo $attr ?></td>
+  </tr>
+ <?php endforeach; ?>
+</table>
+</div>
+<?php endforeach; ?>

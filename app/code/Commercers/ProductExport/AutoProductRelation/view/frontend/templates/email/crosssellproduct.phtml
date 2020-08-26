@@ -1,0 +1,15 @@
+<h2>Product Recommendation</h2>
+<table style="border:1px">
+	<tr>
+		<td>Name</td>
+		<td>Link</td>
+		<td>Get Coupon Code</td>
+	</tr>
+	<?php foreach($block->getItems() as $sku => $values): ?>
+		<tr>
+			<td><?=$values[0]?></td>
+			<td><a href="<?=$values[1]?>">Link Product</a></td>
+			<td><a href="<?=$values[2]?>">Get Coupon Code</a></td>
+		</tr>
+	<?php endforeach;?>
+</table>

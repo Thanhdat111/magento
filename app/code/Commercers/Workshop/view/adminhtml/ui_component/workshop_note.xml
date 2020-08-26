@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+     <argument name="data" xsi:type="array">
+          <item name="js_config" xsi:type="array">
+               <item name="provider" xsi:type="string">workshop_note.workshop_note_data_source</item>
+          </item>
+          <item name="buttons" xsi:type="array">
+               <item name="add" xsi:type="array">
+                    <item name="name" xsi:type="string">add</item>
+                    <item name="label" xsi:type="string" translate="true">Neue Notiz</item>
+                    <item name="class" xsi:type="string">primary</item>
+                    <item name="url" xsi:type="string">*/note/addnote</item>
+               </item>
+          </item>
+     </argument>
+     <settings>
+          <spinner>backend_columns</spinner>
+          <deps>
+               <dep>workshop_note.workshop_note_data_source</dep>
+          </deps>
+     </settings>
+     <listingToolbar name="listing_top">   
+     <bookmark name="bookmarks"/>
+          <columnsControls name="columns_controls"/>
+          <filters name="listing_filters" />
+          <paging name="listing_paging"/>
+          <exportButton name="export_button"/>
+     </listingToolbar>
+     <dataSource name="workshop_note_data_source" component="Magento_Ui/js/grid/provider">
+          <settings>
+               <storageConfig>
+                    <param name="indexField" xsi:type="string">pk_entity_id</param>
+               </storageConfig>
+               <!-- cai rule cua magento 2 -->
+               <updateUrl path="mui/index/render"/>
+               
+          </settings>
+          <aclResource>Commercers_Workshop::index</aclResource>
+          <dataProvider class="Commercers\Workshop\Ui\Component\Workshop\DataProviderNote" name="workshop_note_data_source">
+               <settings>
+                    <requestFieldName>pk_entity_id</requestFieldName>
+                    <primaryFieldName>pk_entity_id</primaryFieldName>
+               </settings>
+          </dataProvider>
+     </dataSource>
+     <columns name="backend_columns">
+
+          <column name="pk_entity_id">
+               <settings>
+                    <filter>textRange</filter>
+                    <label translate="true">ID</label>
+                    <sorting>desc</sorting>
+               </settings>
+          </column>
+
+          <column name="note">
+               <settings>
+                    <filter>textRange</filter>
+                    <label translate="true">Note text</label>
+                    <sorting>asc</sorting>
+               </settings>
+          </column>
+
+          <column name="fk_author_admin_id">
+               <settings>
+                    <filter>textRange</filter>
+                    <label translate="true">Author</label>
+                    <sorting>asc</sorting>
+               </settings>
+          </column>
+
+          <column name="fk_responsible_admin_id">
+               <settings>
+                    <filter>textRange</filter>
+                    <label translate="true">Responsible Admin</label>
+                    <sorting>asc</sorting>
+               </settings>
+          </column>
+
+          <column name="created_at"
+                    class="Magento\Ui\Component\Listing\Columns\Date" 
+                    component="Magento_Ui/js/grid/columns/date"
+                    sortOrder="4">
+               <settings>
+                    <filter>dateRange</filter>
+                    <dataType>date</dataType>
+                    <label translate="true">Created at</label>
+               </settings>
+          </column>
+
+          <column name="closed_at"
+                    class="Magento\Ui\Component\Listing\Columns\Date" 
+                    component="Magento_Ui/js/grid/columns/date"
+                    sortOrder="4">
+               <settings>
+                    <filter>dateRange</filter>
+                    <dataType>date</dataType>
+                    <label translate="true">closed at</label>
+               </settings>
+          </column>
+          <!-- button action edit -->
+          <actionsColumn name="actions" class="Commercers\Workshop\Ui\Component\Listing\Columns\Note\EditActions" sortOrder="12">
+               <settings>
+                    <indexField>pk_entity_id</indexField>
+               </settings>
+          </actionsColumn>
+          <!-- end button action edit -->
+     </columns>
+</listing>
+

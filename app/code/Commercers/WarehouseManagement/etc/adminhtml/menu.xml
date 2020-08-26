@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Commercers_WarehouseManagement::warehouse"
+             title="WareHouse" module="Commercers_WarehouseManagement"
+             sortOrder="51"
+             resource="Commercers_WarehouseManagement::warehouse"/>
+        
+        <add id="Commercers_WarehouseManagement::manager"
+             title="Warehouse Management" module="Commercers_WarehouseManagement"
+             sortOrder="10" action="backend/warehouse/index"
+             resource="Commercers_WarehouseManagement::manager"
+             parent="Commercers_WarehouseManagement::warehouse"/>
+        
+        <add id="Commercers_WarehouseManagement::warehouse_log"
+             title="Warehouse Log" module="Commercers_WarehouseManagement"
+             sortOrder="10" action="backend/warehouse/log"
+             resource="Commercers_WarehouseManagement::warehouse_log"
+             parent="Commercers_WarehouseManagement::warehouse"/>
+        
+        <add id="Commercers_WarehouseManagement::rebooking"
+             title="Re-Booking" module="Commercers_WarehouseManagement"
+             sortOrder="10" action="backend/warehouse/rebooking"
+             resource="Commercers_WarehouseManagement::order_log"
+             parent="Commercers_WarehouseManagement::warehouse"/>
+    </menu>
+</config>

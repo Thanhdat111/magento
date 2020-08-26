@@ -1,0 +1,359 @@
+<script>
+     window.urlAjaxSetTaskType = '<?php echo $block->getUrl("workshop/index/settasktype"); ?>';
+     window.urlAjaxNotNecessaryToAnswer = '<?php echo $block->getUrl("workshop/index/notnecessarytoanswer"); ?>';
+     window.idTask = '<?php echo $block->getCurrentId() ?>';
+</script>
+<?php 
+     $block->getOrderNumber() ;
+     $productId = $block->getTask()->getFkProductId();
+     if ($productId != null){
+          $product = $block->getProductById($productId);
+          $productName = $product->getName();
+     }
+     else{
+          $productName = $block->getTask()->getReferenceProductName();
+     }
+?>
+<div class="admin__fieldset">
+     <div class="admin__field">
+          <div class="admin__field-label">
+               <label style="float: left">
+                    <span>General Information</span>
+               </label>
+          </div>
+     </div>
+     <div class="admin__field">
+          <div class="admin__field-label">
+               <label>
+                    <span>Task from</span>
+               </label>
+          </div>
+          <div class="admin__field-control">
+               <div class="admin__control-text" style="border: none">
+                    <label>
+                         <a href="<?php echo $block->getUrlEditCustomer(); ?>"><?php echo $block->getFirstname() ." ". $block->getLastname(); ?></a>
+                    </label>
+               </div>
+          </div>
+     </div>
+     <div class="admin__field">
+          <div class="admin__field-label">
+               <label>
+                    <span>Type</span>
+               </label>
+          </div>
+          <div class="admin__field-control">
+               <div class="admin__control-text" style="border: none;display: inline-grid;width: unset">
+                    <label>
+                         <span><?php echo $block->getType()['label']; ?></span>
+                    </label> <br>
+                         <?php echo $block->getTypeButton() ?>
+                    </button>
+               </div>
+          </div>
+     </div>
+     <div class="admin__field">
+          <div class="admin__field-label">
+               <label>
+                    <span>Status</span>
+               </label>
+          </div>
+          <div class="admin__field-control">
+               <div class="admin__control-text" style="border: none">
+                    <label>
+                         <span><?php echo $block->getStatus()['label']; ?></span>
+                    </label>
+               </div>
+          </div>
+     </div>
+     <?php if($productId != null): ?>
+          <div class="admin__field">
+               <div class="admin__field-label">
+                    <label>
+                         <span>Product</span>
+                    </label>
+               </div>
+               <div class="admin__field-control">
+                    <div class="admin__control-text" style="border: none">
+                         <label>
+                              <span><p><a href = "<?php echo $product->getProductUrl() ?>"><?php echo $productName ?></a></span>
+                         </label>
+                    </div>
+               </div>
+          </div>
+     <?php elseif ($productName != null): ?>
+          <div class="admin__field">
+               <div class="admin__field-label">
+                    <label>
+                         <span>Product</span>
+                    </label>
+               </div>
+               <div class="admin__field-control">
+                    <div class="admin__control-text" style="border: none">
+                         <label>
+                              <span><p>Artikel existiert nicht mehr <br> (Ursprungsartikel: <?php echo $productName ?>)</p></span>
+                         </label>
+                    </div>
+               </div>
+          </div>
+     <?php else: ?>
+          <div class="admin__field">
+               <div class="admin__field-label">
+                    <label>
+                         <span>Manufacturer</span>
+                    </label>
+               </div>
+               <div class="admin__field-control">
+                    <div class="admin__control-text" style="border: none">
+                         <label>
+                              <span><?php echo $block->getTask()->getWeaponManufacturer(); ?></span>
+                         </label>
+                    </div>
+               </div>
+          </div>
+          <div class="admin__field">
+               <div class="admin__field-label">
+                    <label>
+                         <span>Weapon Description</span>
+                    </label>
+               </div>
+               <div class="admin__field-control">
+                    <div class="admin__control-text" style="border: none">
+                         <label>
+                              <span><?php echo $block->getTask()->getWeaponDescription(); ?></span>
+                         </label>
+                    </div>
+               </div>
+          </div>
+     <?php endif; ?>
+     <?php if($block->getTask()->getWeaponLimitation()): ?>
+          <div class="admin__field">
+               <div class="admin__field-label">
+                    <label>
+                         <span>Weapon Limitation</span>
+                    </label>
+               </div>
+               <div class="admin__field-control">
+                    <div class="admin__control-text" style="border: none">
+                         <label>
+                              <span><p><?php echo __('workshop-task-customer-desires-weapon-limitation')?></p></span>
+                         </label>
+                    </div>
+               </div>
+          </div>
+     <?php endif; ?>
+     <div class="admin__field">
+          <div class="admin__field-label">
+               <label>
+                    <span>order-number</span>
+               </label>
+          </div>
+          <div class="admin__field-control">
+               <div class="admin__control-text" style="border: none">
+                    <label>
+                         <span><?php echo $block->getOrderNumber(); ?></span>
+                    </label>
+               </div>
+          </div>
+     </div>
+     <?php if($this->getTask()->getOfferPrice() !== null): ?>
+          <div class="admin__field">
+               <div class="admin__field-label">
+                    <label>
+                         <span>Offer price</span>
+                    </label>
+               </div>
+               <div class="admin__field-control">
+                    <div class="admin__control-text" style="border: none">
+                         <label>
+                              <?php
+                                   if($productId != null){
+                                        if ((int) $block->getTask()->getType() === Commercers\Workshop\Model\Source\Options\Type::TYPE_NEW){
+                                             $costs = (float) $this->getTask()->getOfferPrice() + (float) $product->getPrice();
+                                        }else{
+                                             $costs = $this->getTask()->getOfferPrice();
+                                        }
+                                        ?>
+                                             <span><p><?php echo number_format($costs, 2, ',', ''); ?></p></span>
+                                        <?php
+                                   }  
+                              ?>
+                         </label>
+                    </div>
+               </div>
+          </div>
+     <?php endif; ?>
+     <?php if($this->getTask()->getChosenParcelService() !== null): ?>
+          <div class="admin__field">
+               <div class="admin__field-label">
+                    <label>
+                         <span>Lieferservice</span>
+                    </label>
+               </div>
+               <div class="admin__field-control">
+                    <div class="admin__control-text" style="border: none">
+                         <label>
+                              <span><?php echo $block->getChosenParcelService(); ?></span>
+                         </label>
+                    </div>
+               </div>
+          </div>
+     <?php endif; ?>
+     <?php if($this->getTask()->getAdditionalStatusTaskReadyForExecution()): ?>
+          <div class="admin__field">
+               <div class="admin__field-label">
+                    <label>
+                         <span>Zur Fortführung markiert</span>
+                    </label>
+               </div>
+               <div class="admin__field-control">
+                    <div class="admin__control-text" style="border: none">
+                         <label>
+                              <span><p><?php echo __('workshop-task-log-mark-ready-for-execution')?></p></span>
+                         </label>
+                    </div>
+               </div>
+          </div>
+     <?php endif; ?>
+     <?php if($this->getTask()->getAdditionalStatusTaskProcessed()): ?>
+          <div class="admin__field">
+               <div class="admin__field-label">
+                    <label>
+                         <span>Als Bearbeitet markiert</span>
+                    </label>
+               </div>
+               <div class="admin__field-control">
+                    <div class="admin__control-text" style="border: none">
+                         <label>
+                              <?php
+                                   if((int)$this->getTask()->getType() === Commercers\Workshop\Model\Source\Options\Type::TYPE_SPARE_PART_IMPORT){
+                                        $labelText = 'workshop-task-log-mark-processed-spare-part-import';
+                                   } else {
+                                        $labelText = 'workshop-task-log-mark-processed';
+                                   }
+                              ?>
+                              <span><p><?php echo __($labelText)?></p></span>
+                         </label>
+                    </div>
+               </div>
+          </div>
+     <?php endif; ?>
+     <?php if($this->getTask()->getAdditionalStatusWeaponReceived()): ?>
+          <div class="admin__field">
+               <div class="admin__field-label">
+                    <label>
+                         <span>Waffe erhalten</span>
+                    </label>
+               </div>
+               <div class="admin__field-control">
+                    <div class="admin__control-text" style="border: none">
+                         <label>
+                              <?php 
+                                   $date = date('Y-m-d H:i:s', strtotime($this->getTask()->getAdditionalStatusWeaponReceivedDate()));
+                              ?>
+                              <span><p> <?php echo 'workshop-task-log-mark-weapon-received '.  date('d.m.Y H:i:s',strtotime($date)) ?> Uhr</p></span>
+                         </label>
+                    </div>
+               </div>
+          </div>
+     <?php endif; ?>
+     <?php if($this->getTask()->getAdditionalStatusAskForWeaponMarkedEarly()): ?>
+          <div class="admin__field">
+               <div class="admin__field-label">
+                    <label>
+                         <span>ask_for_weapon_marked_early_label_heading</span>
+                    </label>
+               </div>
+               <div class="admin__field-control">
+                    <div class="admin__control-text" style="border: none">
+                         <label>
+                              <span><p><?php echo __('will_stay_in_budget_label')?></p></span>
+                         </label>
+                    </div>
+               </div>
+          </div>
+     <?php endif; ?>
+     <div class="admin__field">
+          <div class="admin__field-label">
+               <label>
+                    <span>begadi_intern_comment</span>
+               </label>
+          </div>
+          <div class="admin__field-control">
+               <div class="admin__control-text" style="border: none">
+                    <label>
+                         <span><?php echo $block->getTask()->getBegadiInternComment(); ?></span>
+                    </label>
+               </div>
+          </div>
+     </div>
+     <div class="admin__field">
+          <button id="save-not-necessary-to-answer" title="Save Config" type="button" style="float: right;" class="action-default scalable save primary ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" data-ui-id="page-actions-toolbar-save-button" role="button" aria-disabled="false">
+               <span class="ui-button-text">
+                    <span>not_necessary_to_answer</span>
+               </span>
+          </button>
+     </div>
+</div>
+
+<script>
+     require(['jquery', 'jquery/ui'],function($) {
+          jQuery("document").ready(function(){
+               jQuery('#workshop-task-type-switch-totype_repair_and_tuning').on('click',function(){
+                    var typeId = jQuery(this).data('typeid');
+                    var idTask = window.idTask;
+                    jQuery.ajax({
+                         url: window.urlAjaxSetTaskType,
+                         dataType: 'json',
+                         type : 'post',
+                         showLoader: true,
+                         data: {typeId : typeId,idTask:idTask},
+                         success: function(response){
+                              window.location.reload();
+                         }
+                    });
+               });
+               jQuery('#workshop-task-type-switch-totype_spare_part_order').on('click',function(){
+                    var typeId = jQuery(this).data('typeid');
+                    var idTask = window.idTask;
+                    jQuery.ajax({
+                         url: window.urlAjaxSetTaskType,
+                         dataType: 'json',
+                         type : 'post',
+                         showLoader: true,
+                         data: {typeId : typeId,idTask:idTask},
+                         success: function(response){
+                              window.location.reload();
+                         }
+                    });
+               });
+               jQuery('#workshop-task-type-switch-totype_spare_part_import').on('click',function(){
+                    var typeId = jQuery(this).data('typeid');
+                    var idTask = window.idTask;
+                    jQuery.ajax({
+                         url: window.urlAjaxSetTaskType,
+                         dataType: 'json',
+                         type : 'post',
+                         showLoader: true,
+                         data: {typeId : typeId,idTask:idTask},
+                         success: function(response){
+                              window.location.reload();
+                         }
+                    });
+               });
+               jQuery('#save-not-necessary-to-answer').on('click',function(){
+                    var idTask = window.idTask;
+                    jQuery.ajax({
+                         url: window.urlAjaxNotNecessaryToAnswer,
+                         dataType: 'json',
+                         type : 'post',
+                         showLoader: true,
+                         data: {idTask:idTask},
+                         success: function(response){
+                              window.location.reload();
+                         }
+                    });
+               });
+          });
+     });
+</script>

@@ -1,0 +1,7 @@
+<?php echo $block->getFrontName(); ?>
+<?php
+echo "12312312312";
+?>
+<?php foreach($block->getItems() as $item): ?>
+    <p><?php echo $item->getName(); ?> : <?php echo $item->getDescription(); ?></p>
+<?php endforeach; ?>

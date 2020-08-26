@@ -1,0 +1,142 @@
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <listingToolbar name="listing_top">   
+        <columnsControls name="columns_controls"/>
+       <filters name='listing_filters'>
+        </filters>
+        <paging name="listing_paging"/>
+        <exportButton name="export_button"/>
+    </listingToolbar>
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <!-- ten file . ten cua datasource -->
+            <item name="provider" xsi:type="string">crosssell_followupemail.crosssell_followupemail_data_source.crosssell_columns</item>
+        </item>
+    </argument>
+
+    <argument name="context" xsi:type="configurableObject">
+        <argument name="class" xsi:type="string">Magento\Framework\View\Element\UiComponent\Context</argument>
+        <argument name="namespace" xsi:type="string">crosssell_followupemail</argument>
+        <!-- this should be same as the file name or uicomponentname -->
+        <!-- ten file/namespace  -->
+    </argument>
+
+    <!-- Cai nay can thiet-->
+    <settings>
+
+        <spinner>crosssell_columns</spinner>
+        <deps>
+            <!-- ten file/namespace . ten cua datasource -->
+            <dep>crosssell_followupemail.crosssell_followupemail_data_source</dep>
+        </deps>
+    </settings>
+    <dataSource name="crosssell_followupemail_data_source" component="Magento_Ui/js/grid/provider">
+        <settings>
+            <storageConfig>
+                <param name="dataScope" xsi:type="string">filters.store_id</param>
+            </storageConfig>
+            <updateUrl path="mui/index/render"/>
+        </settings>
+        <aclResource>Commercers_AutoProductRelation::index</aclResource>
+        <dataProvider class="Commercers\AutoProductRelation\Ui\Component\Form\DataProvider" name="crosssell_followupemail_data_source">
+            <settings>
+                <requestFieldName>id</requestFieldName>
+                <primaryFieldName>entity_id</primaryFieldName>
+            </settings>
+        </dataProvider>
+    </dataSource>
+    <columns name="crosssell_columns">
+         <selectionsColumn name="ids">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="indexField" xsi:type="string">id</item>
+                    <item name="sortOrder" xsi:type="number">1</item>
+                </item>
+            </argument>
+         </selectionsColumn>
+        <column name="order_id"><!-- field code trong database -->
+            <settings>
+                <filter>text</filter>
+                <editor>
+                    <validation>
+                        <rule name="required-entry" xsi:type="boolean">true</rule>
+                    </validation>
+                    <editorType>text</editorType>
+                </editor>
+                <label translate="true">Order ID</label>
+            </settings>
+        </column>
+        <column name="customer_email"><!-- field code trong database -->
+            <settings>
+                <filter>text</filter>
+                <editor>
+                    <validation>
+                        <rule name="required-entry" xsi:type="boolean">true</rule>
+                    </validation>
+                    <editorType>text</editorType>
+                </editor>
+                <label translate="true">Custommer Email</label>
+            </settings>
+        </column>
+        <column name="promotion_code"><!-- field code trong database -->
+            <settings>
+                <filter>text</filter>
+                <editor>
+                    <validation>
+                        <rule name="required-entry" xsi:type="boolean">true</rule>
+                    </validation>
+                    <editorType>text</editorType>
+                </editor>
+                <label translate="true">Promotion Code</label>
+            </settings>
+        </column>
+         <column name="referral_code"><!-- field code trong database -->
+            <settings>
+                <filter>text</filter>
+                <editor>
+                    <validation>
+                        <rule name="required-entry" xsi:type="boolean">true</rule>
+                    </validation>
+                    <editorType>text</editorType>
+                </editor>
+                <label translate="true">Refenrral Code</label>
+            </settings>
+        </column>
+        <column name="created_at"><!-- field code trong database -->
+            <settings>
+                <filter>text</filter>
+                <editor>
+                    <validation>
+                        <rule name="required-entry" xsi:type="boolean">true</rule>
+                    </validation>
+                    <editorType>text</editorType>
+                </editor>
+                <label translate="true">Create AT</label>
+            </settings>
+        </column>
+        <column name="sent_at"><!-- field code trong database -->
+            <settings>
+                <filter>text</filter>
+                <editor>
+                    <validation>
+                        <rule name="required-entry" xsi:type="boolean">true</rule>
+                    </validation>
+                    <editorType>text</editorType>
+                </editor>
+                <label translate="true">Send AT</label>
+            </settings>
+        </column>
+        <column name="status"><!-- field code trong database -->
+            <settings>
+                <filter>text</filter>
+                <editor>
+                    <validation>
+                        <rule name="required-entry" xsi:type="boolean">true</rule>
+                    </validation>
+                    <editorType>text</editorType>
+                </editor>
+                <label translate="true">Status</label>
+            </settings>
+        </column>
+    </columns>
+
+</listing>

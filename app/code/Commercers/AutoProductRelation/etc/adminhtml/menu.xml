@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+
+        <add id="Commercers_AutoProductRelation::commercers"
+                 title="Commercers" translate="title"
+                 module="Commercers_AutoProductRelation"
+                 parent="Magento_Backend::marketing"
+                 sortOrder="10"
+                 resource="Commercers_AutoProductRelation::commercers"/>
+        <add id="Commercers_AutoProductRelation::crosssell_catalog"
+                 title="Auto Product Relation" translate="title"
+                 sortOrder="10"
+                 module="Commercers_AutoProductRelation"
+                 parent="Commercers_AutoProductRelation::commercers"
+                 action="backend/crosssell_rule/index" 
+                 dependsOnModule="Magento_Catalog"
+                 resource="Commercers_AutoProductRelation::crosssell_catalog"/>
+             
+        <add id="Commercers_AutoProductRelation::crosssell_followemail"
+                 title="CrossSell Followup Email"
+                 module="Commercers_AutoProductRelation"
+                 sortOrder="0"
+                 action="backend/crosssell/followupemail"
+                 parent="Commercers_AutoProductRelation::commercers"
+                 dependsOnModule="Magento_Catalog"
+                 resource="Commercers_AutoProductRelation::crosssell_followemail" /> 
+            
+        <add id="Commercers_AutoProductRelation::crosssell_log"
+                 title="CrossSell Process Log"
+                 module="Commercers_AutoProductRelation"
+                 sortOrder="0"
+                 action="backend/crosssell/processlog"
+                 parent="Commercers_AutoProductRelation::commercers"
+                 dependsOnModule="Magento_Catalog"
+                 resource="Commercers_AutoProductRelation::crosssell_log" />
+            
+<!--        <add id="Commercers_AutoProductRelation::backend_test"
+             title="Commercers ToanTester"
+             module="Commercers_AutoProductRelation"
+             sortOrder="0"
+             action="backend/index/toantester"
+             parent="Magento_Catalog::catalog"
+             resource="Commercers_AutoProductRelation::test" />-->
+    </menu>
+</config>

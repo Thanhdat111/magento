@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+     <argument name="data" xsi:type="array">
+          <item name="js_config" xsi:type="array">
+               <item name="provider" xsi:type="string">workshop_form.workshop_form_data_source</item>
+               <item name="deps" xsi:type="string">workshop_form.workshop_form_data_source</item>
+          </item>
+          <item name="label" xsi:type="string" translate="true">workshop_job_details</item>
+          <item name="layout" xsi:type="array">
+               <item name="type" xsi:type="string">tabs</item>
+               <item name="navContainerName" xsi:type="string">left</item>
+          </item>
+          
+          <item name="buttons" xsi:type="array">
+               <item name="back" xsi:type="string">Commercers\Workshop\Block\Adminhtml\Workshop\Button\Back</item>
+          </item>
+     </argument>
+
+     <dataSource name="workshop_form_data_source">
+          <!--  Core cua UI Component -->
+          <argument name="data" xsi:type="array">
+               <item name="js_config" xsi:type="array">
+                    <item name="component" xsi:type="string">Magento_Ui/js/form/provider</item>
+               </item>
+          </argument>
+          <!-- -->
+          <settings>
+               <submitUrl path="workshop/index/save"/>
+          </settings>
+
+          <dataProvider class="Commercers\Workshop\Ui\Component\Workshop\Form\DataProvider" name="workshop_form_data_source">
+               <settings>
+                    <requestFieldName>pk_entity_id</requestFieldName>
+                    <primaryFieldName>pk_entity_id</primaryFieldName>
+               </settings>
+          </dataProvider>
+     </dataSource>
+     
+     <fieldset name="general">
+          <settings>
+               <label translate="true">Allgemeine Information</label>
+          </settings>
+          <container name="general_information" >
+               <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                         <item name="label" xsi:type="string" translate="true">General Information</item>
+                         <item name="sortOrder" xsi:type="number">1</item>
+                    </item>
+               </argument>
+
+               <htmlContent name="html_content">
+                    <argument name="block" xsi:type="object">Commercers\Workshop\Block\Adminhtml\Workshop\General\Information</argument>
+               
+               </htmlContent>
+          </container>
+          <insertListing>
+               <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                         <item name="autoRender" xsi:type="boolean">true</item>
+                         <item name="ns" xsi:type="string">workshop_chat</item>
+                         <item name="source" xsi:type="string">general</item>
+                         <item name="sortOrder" xsi:type="number">2</item>
+                         <item name="filter_url_params" xsi:type="array">
+                              <item name="id" xsi:type="string">*</item>
+                         </item>
+                         <item name="storageConfig" xsi:type="array">
+                              <item name="indexField" xsi:type="string">pk_entity_id</item>
+                         </item>
+                    </item>
+               </argument>
+          </insertListing>
+          <container name="general_action" >
+               <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                         <item name="label" xsi:type="string" translate="true">Actions</item>
+                         <item name="sortOrder" xsi:type="number">3</item>
+                    </item>
+               </argument>
+
+               <htmlContent name="html_content">
+                    <argument name="block" xsi:type="object">Commercers\Workshop\Block\Adminhtml\Workshop\General\Action</argument>
+               
+               </htmlContent>
+          </container>
+     </fieldset>
+
+     <fieldset name="chat">
+          <settings>
+               <label translate="true">Chat</label>
+          </settings>   
+          <insertListing>
+               <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                         <item name="autoRender" xsi:type="boolean">true</item>
+                         <item name="ns" xsi:type="string">workshop_chat_2</item>
+                         <item name="source" xsi:type="string">chat</item>
+                         <item name="sortOrder" xsi:type="number">2</item>
+                         <item name="storageConfig" xsi:type="array">
+                              <item name="indexField" xsi:type="string">pk_entity_id</item>
+                         </item>
+                    </item>
+               </argument>
+          </insertListing>
+          <container name="chat_action" >
+               <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                         <item name="label" xsi:type="string" translate="true">Chat</item>
+                         <item name="sortOrder" xsi:type="number">3</item>
+                    </item>
+               </argument>
+
+               <htmlContent name="html_content" component="Commercers_Workshop/js/action/load-message">
+                    <argument name="block" xsi:type="object">Commercers\Workshop\Block\Adminhtml\Workshop\Chat\Action</argument>
+               
+               </htmlContent>
+          </container>
+     </fieldset>
+
+     <fieldset name="additionalClaims">
+          <settings>
+               <label translate="true">Nachforderungen</label>
+          </settings>   
+          <!-- load grid -->
+          <insertListing>
+               <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                         <item name="autoRender" xsi:type="boolean">true</item>
+                         <item name="ns" xsi:type="string">workshop_claim</item>
+                         <item name="source" xsi:type="string">general</item>
+                         <item name="filter_url_params" xsi:type="array">
+                              <!-- You can add as many as you want -->
+                              <item name="id" xsi:type="string">*</item>
+                         </item>
+                         <item name="storageConfig" xsi:type="array">
+                              <item name="indexField" xsi:type="string">pk_entity_id</item>
+                         </item>
+                    </item>
+               </argument>
+          </insertListing>
+     </fieldset>
+
+     <fieldset name="refunds">
+          <settings>
+               <label translate="true">Erstattungen</label>
+          </settings>   
+          <!-- load grid -->
+          <insertListing>
+               <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                         <item name="autoRender" xsi:type="boolean">true</item>
+                         <item name="ns" xsi:type="string">workshop_refund</item>
+                         <item name="source" xsi:type="string">general</item>
+                         <item name="filter_url_params" xsi:type="array">
+                              <!-- You can add as many as you want -->
+                              <item name="id" xsi:type="string">*</item>
+                         </item>
+                         <item name="storageConfig" xsi:type="array">
+                              <item name="indexField" xsi:type="string">pk_entity_id</item>
+                         </item>
+                    </item>
+               </argument>
+          </insertListing>
+     </fieldset>
+
+     <fieldset name="linkedProducts">
+          <settings>
+               <label translate="true">Verknüpfte Produkte</label>
+          </settings>   
+          <!-- load grid -->
+          <insertListing>
+               <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                         <item name="autoRender" xsi:type="boolean">true</item>
+                         <item name="ns" xsi:type="string">workshop_product</item>
+                         <item name="source" xsi:type="string">general</item>
+                         <item name="filter_url_params" xsi:type="array">
+                              <item name="id" xsi:type="string">*</item>
+                         </item>
+                         <item name="storageConfig" xsi:type="array">
+                              <item name="indexField" xsi:type="string">pk_entity_id</item>
+                         </item>
+                    </item>
+               </argument>
+          </insertListing>
+     </fieldset>
+
+     <fieldset name="linkedOrders">
+          <settings>
+               <label translate="true">Verknüpfte Bestellungen</label>
+          </settings>   
+          <insertListing>
+               <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                         <item name="autoRender" xsi:type="boolean">true</item>
+                         <item name="ns" xsi:type="string">workshop_order</item>
+                         <item name="source" xsi:type="string">general</item>
+                         <item name="filter_url_params" xsi:type="array">
+                              <item name="id" xsi:type="string">*</item>
+                         </item>
+                         <item name="storageConfig" xsi:type="array">
+                              <item name="indexField" xsi:type="string">pk_entity_id</item>
+                         </item>
+                    </item>
+               </argument>
+          </insertListing>
+     </fieldset>
+
+     <fieldset name="wdtInfo">
+          <settings>
+               <label translate="true">WDT-Infos</label>
+          </settings>   
+     
+     </fieldset>
+
+     <fieldset name="history">
+          <settings>
+               <label translate="true">Historie</label>
+          </settings>   
+          <insertListing>
+                    <argument name="data" xsi:type="array">
+                         <item name="config" xsi:type="array">
+                              <item name="autoRender" xsi:type="boolean">true</item>
+                              <item name="ns" xsi:type="string">workshop_log</item>
+                              <item name="source" xsi:type="string">general</item>
+                              <item name="filter_url_params" xsi:type="array">
+                                   <item name="id" xsi:type="string">*</item>
+                              </item>
+                              <item name="storageConfig" xsi:type="array">
+                                   <item name="indexField" xsi:type="string">pk_entity_id</item>
+                              </item>
+                         </item>
+                    </argument>
+               </insertListing>
+     </fieldset>
+
+</form>

@@ -1,0 +1,90 @@
+<textarea style="display: none;" name="mapping[import_input_template]" id="mapping" value="<?php echo htmlspecialchars($block->getMapping());?>"  data-form-part="profilers_form" class="admin__control-text"/>
+<div id="editorMapping"><?php echo htmlspecialchars($block->getMapping());?></div>
+
+<script>
+    var editor = ace.edit("editorMapping");
+	var textarea = jQuery('#mapping').hide();
+	
+	editor.getSession().on('change', function(){
+	  textarea.val(editor.getSession().getValue());
+	});
+	textarea.val(editor.getSession().getValue());
+	editor.setTheme("ace/theme/monokai");
+    editor.session.setMode("ace/mode/xml");
+</script>
+
+
+
+<div style="margin: 15px;">
+    <label><?php echo __("Give us a path of a check file from Var folder: ");?></label><br>
+    <input id="check_file_path" style="width: 500px;"></input>
+    <button type="button" class="show-fields-available action- scalable primary" onclick="checkImportFile()"><span><?php echo (__('Check File Structure')); ?></span></button>
+   
+    
+    
+</div>
+
+
+
+<?php 
+    $profiler = $this->getProfiler();
+    $ediCheckingUrl =  $block->getUrl("profilers/import_file/check", array('profiler_id' => $profiler->getId()));
+    $importTestingUrl =  $block->getUrl("profilers/import/test", array('profiler_id' => $profiler->getId()));
+?>
+<script>
+    function checkImportFile() {
+        
+        var FDI_CHECK_URL = '<?php echo $ediCheckingUrl ?>file_path/' + encodeURIComponent(document.getElementById('check_file_path').value);
+
+        
+        window.open(FDI_CHECK_URL, "Review Available Attributes", "width=600,height=800,left=-1840,top=0");
+        
+        
+    }
+</script>
+
+
+<div style="margin: 20px 0;">
+    <label><?php echo __("You can test xslt template here: ");?></label><br>
+        <button type="button" class="show-fields-available action- scalable primary" onclick="testImportXslTemplate()"><span><?php echo (__('Test Template')); ?></span></button>
+ 
+    <textarea name="testxsltemplate" id="test-xsl-template" value class="admin__control-text"/>
+</div>
+
+<div id="editorResult" style="height: 300px; width:  100%"></div>
+<script>
+    var resultEditor = ace.edit("editorResult");
+    
+    resultEditor.setTheme("ace/theme/monokai");
+    resultEditor.session.setMode("ace/mode/xml");
+    
+    var textareaResult = jQuery('#test-xsl-template').hide();
+    resultEditor.getSession().on('change', function () {
+        textareaResult.val(resultEditor.getSession().getValue());
+    });
+    
+function testImportXslTemplate() {
+        //var textarea = jQuery('textarea[name="mapping[mapping]"]')
+        var dataInTextarea = jQuery('#mapping').val();
+        console.log(jQuery('#mapping').val());
+        var filePath = document.getElementById('check_file_path').value;
+        
+        jQuery.ajax(
+            '<?php echo $importTestingUrl;?>',
+            {
+                type: 'post',
+                data: {xslt_template: dataInTextarea, file_path : filePath},
+                showLoader: true,
+                success: function (response) {
+                    
+                    jQuery('#editorResult').css({'height': '300px','margin': '20px 0'});
+                    if(response == false){
+                        resultEditor.getSession().setValue('Do not find anything for this ID.');
+                    }else{
+                        resultEditor.getSession().setValue(response);
+                    }
+                    
+                }
+        });
+    }
+</script>

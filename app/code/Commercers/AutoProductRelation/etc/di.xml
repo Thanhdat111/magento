@@ -1,0 +1,49 @@
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../lib/internal/Magento/Framework/ObjectManager/etc/config.xsd">
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="crosssell_listing_data_source" xsi:type="string">Commercers\AutoProductRelation\Model\ResourceModel\CrossSellFollow\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+    <virtualType name="Commercers\AutoProductRelation\Model\ResourceModel\CrossSellFollow\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">cv_crosssell_followup</argument>
+            <argument name="resourceModel" xsi:type="string">Commercers\AutoProductRelation\Model\ResourceModel\CrossSellFollow</argument>
+        </arguments>
+    </virtualType>
+  
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+          <arguments>
+              <argument name="collections" xsi:type="array">
+                  <item name="crosssell_process_listing_data_source" xsi:type="string">Commercers\AutoProductRelation\Model\ResourceModel\AutoRelationProcessLog\Collection</item>
+              </argument>
+          </arguments>
+      </type>
+    <virtualType name="Commercers\AutoProductRelation\Model\ResourceModel\AutoRelationProcessLog\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">cv_autorelation_process_log</argument>
+            <argument name="resourceModel" xsi:type="string">Commercers\AutoProductRelation\Model\ResourceModel\AutoRelationProcessLog</argument>
+        </arguments>
+    </virtualType>
+    <type name="Commercers\AutoProductRelation\Logger\Handler">
+        <arguments>
+            <argument name="filesystem" xsi:type="object">Magento\Framework\Filesystem\Driver\File</argument>
+        </arguments>
+    </type>
+    <type name="Commercers\AutoProductRelation\Logger\Logger">
+        <arguments>
+            <argument name="name" xsi:type="string">productRelationLog</argument>
+            <argument name="handlers"  xsi:type="array">
+                <item name="system" xsi:type="object">Commercers\AutoProductRelation\Logger\Handler</item>
+            </argument>
+        </arguments>
+    </type>
+<!--    <type name="Magento\SalesRule\Model\Utility">
+        <plugin name="Commercers_AutoProductRelation_Utility_Plugin" type="Commercers\AutoProductRelation\Plugin\Utility" sortOrder="10" disabled="false"  />
+    </type>-->
+    <type name="Magento\SalesRule\Model\Validator">
+        <plugin name="Commercers_AutoProductRelation_Plugin" type="Commercers\AutoProductRelation\Plugin\SalesRuleValidator" sortOrder="10" disabled="false"  />
+    </type>
+    
+</config>

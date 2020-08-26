@@ -1,0 +1,52 @@
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../lib/internal/Magento/Framework/ObjectManager/etc/config.xsd">
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="workshop_listing_data_source" xsi:type="string">Commercers\Workshop\Model\ResourceModel\WorkshopTask\Collection</item>
+                <item name="workshop_form_data_source" xsi:type="string">Commercers\Workshop\Model\ResourceModel\WorkshopTask\Collection</item>
+                <item name="workshop_chat_data_source" xsi:type="string">Commercers\Workshop\Model\ResourceModel\WorkshopChat\Collection</item>
+                <item name="workshop_claim_data_source" xsi:type="string">Commercers\Workshop\Model\ResourceModel\WorkshopClaims\Collection</item>
+                <item name="workshop_refund_data_source" xsi:type="string">Commercers\Workshop\Model\ResourceModel\WorkshopRefunds\Collection</item>
+                <item name="workshop_note_data_source" xsi:type="string">Commercers\Workshop\Model\ResourceModel\WorkshopNote\Collection</item>
+                <item name="workshop_log_listing_data_source" xsi:type="string">Commercers\Workshop\Model\ResourceModel\WorkshopLog\Collection</item>
+                <item name="workshop_completed_tasks_open_order_listing_data_source" xsi:type="string">Commercers\Workshop\Model\ResourceModel\WorkshopReferences\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+    <virtualType name="Commercers\Workshop\Model\ResourceModel\WorkshopTask\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">commercers_workshop_task</argument>
+            <argument name="resourceModel" xsi:type="string">Commercers\Workshop\Model\ResourceModel\WorkshopTask</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="Commercers\Workshop\Model\ResourceModel\WorkshopChat\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">commercers_workshop_chat</argument>
+            <argument name="resourceModel" xsi:type="string">Commercers\Workshop\Model\ResourceModel\WorkshopChat</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="Commercers\Workshop\Model\ResourceModel\WorkshopClaims\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">commercers_workshop_claims</argument>
+            <argument name="resourceModel" xsi:type="string">Commercers\Workshop\Model\ResourceModel\WorkshopClaims</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="Commercers\Workshop\Model\ResourceModel\WorkshopRefunds\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">commercers_workshop_refunds</argument>
+            <argument name="resourceModel" xsi:type="string">Commercers\Workshop\Model\ResourceModel\WorkshopRefunds</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="Commercers\Workshop\Model\ResourceModel\WorkshopNote\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">commercers_workshop_note</argument>
+            <argument name="resourceModel" xsi:type="string">Commercers\Workshop\Model\ResourceModel\WorkshopNote</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="Commercers\Workshop\Model\ResourceModel\WorkshopReferences\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">commercers_workshop_references</argument>
+            <argument name="resourceModel" xsi:type="string">Commercers\Workshop\Model\ResourceModel\WorkshopReferences</argument>
+        </arguments>
+    </virtualType>
+</config>

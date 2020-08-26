@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="commercers" translate="label" sortOrder="10">
+            <label>commercers</label>
+        </tab>
+        <section id="section_product_export" translate="label" sortOrder="135" showInDefault="1" showInWebsite="1" showInStore="1">
+            <class>separator-top</class>
+            <label>Product Export</label>
+            <tab>commercers</tab>
+            <resource>Commercers_ProductExport::product_config_export</resource>
+            <group id="group_product_export" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+                <label>Product Export</label>
+                <field id="enable_yesno_product_export" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Enable</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="error_notification_to_product_export" translate="label" type="text" sortOrder="6" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Error notification to</label>
+                    <depends>
+                        <field id="enable_yesno_product_export">1</field>
+                    </depends>
+                </field>
+                <field id="enable_profilers_from_xml_product_export" translate="label" type="select" sortOrder="7" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Load Profilers From Xml File</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="enable_yesno_product_export">1</field>
+                    </depends>
+                </field>
+                <field id="profilers_selected_xml_product_export" translate="label" type="multiselect" sortOrder="8" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Select Profilers From Xml</label>
+                    <source_model>Commercers\ProductExport\Model\Config\Source\SelectProfilersExport</source_model>
+                    <depends>
+                        <field id="enable_profilers_from_xml_product_export">1</field>
+                        <field id="enable_yesno_product_export">1</field>
+                    </depends>
+                </field>
+                <field id="folder_profilers_xml_product_export" translate="label" type="text" sortOrder="9" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Profilers Xml</label>
+                    <depends>
+                        <field id="enable_profilers_from_xml_product_export">1</field>
+                        <field id="enable_yesno_product_export">1</field>
+                    </depends>
+                </field>
+                <field id="profilers_selected_database_product_export" translate="label" type="multiselect" sortOrder="8" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Select Profilers From Database</label>
+                    <source_model>Commercers\ProductExport\Model\Config\Source\SelectProfilersExport</source_model>
+                    <depends>
+                        <field id="enable_profilers_from_xml_product_export">0</field>
+                        <field id="enable_yesno_product_export">1</field>
+                    </depends>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

@@ -1,0 +1,79 @@
+<?php
+$productLinkings = array();
+$productId = $this->getRequest()->getParam('id');
+if(!$productId)
+    return false;
+$productLinkings = $block->getProductLinking($productId);
+$allWarehouses = $block->getAllWarehouse();
+$idRow = 1;
+?>
+    <button class="action-basic" type="button" id="open-slide-warehouse" >
+        <span>Warehouse Management</span>
+    </button>
+<div  id="slide-wahouse">
+<form id="form-warehouse" action="" method="post">
+<table class="admin__dynamic-rows admin__control-table" data-role="grid">
+    <thead>
+        <tr>
+            <th>Warehouse</th>
+            <th>Area</th>
+            <th>Rack Row</th>
+            <th>Rack Level</th>
+            <th>Quantity</th>
+            <th>Priority</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+
+    <tbody class="optionBox">
+    <input name="productId" type="hidden" value="<?php echo $productId?>">
+        <?php if($productLinkings):?>
+            <?php foreach ($productLinkings as $productLinking): ?>
+                <?php $warehouse = $block->getWarehouse($productLinking['warehouse_id']); ?>
+                <tr>
+                    <td>
+                        <select name="warehouse[]" class="admin__control-select select-warehouse" data-id="<?php echo $idRow ;?>" >
+                            <?php foreach ($allWarehouses as $allWarehouse): ?>
+                                <option <?php if($warehouse->getName() == $allWarehouse->getName()) echo "selected" ?>  value="<?php echo $allWarehouse->getId()?>" ><?php echo $allWarehouse->getName()?></option>
+                                <?php endforeach;?>
+                        </select>
+                    </td>
+                    <td>
+                        <select name="area[]" class="admin__control-select <?php echo 'area-'.$idRow?>">
+                            <?php foreach ($block->getAreaWarehouse($productLinking['warehouse_id']) as $areaWarehouse): ?>
+                            <option <?php if($productLinking['area'] == $areaWarehouse->getArea()) echo "selected" ?>  value="<?php echo $areaWarehouse->getArea().','.$areaWarehouse->getId()?>"><?php echo $areaWarehouse->getArea()?></option>
+                            <?php endforeach;?>
+                        </select>
+                    </td>
+                    <td><input name="rackRow[]" class="admin__control-text" value="<?php echo $productLinking['rack_row'] ?>"></td>
+                    <td><input name="rackLevel[]" class="admin__control-text" value="<?php echo $productLinking['rack_level'] ?>"></td>
+                    <td><input name="quantity[]" class="admin__control-text" value="<?php echo $productLinking['quantity'] ?>"></td>
+                    <td><input name="priority[]" class="admin__control-text" value="<?php echo $productLinking['priority'] ?>"></td>
+                    <td class="remove" data-id="<?php echo $idRow?>"><button type="button">Remove</button></td>
+                </tr>
+                <?php $idRow++;?>
+            <?php endforeach; ?>
+        <?php endif;?>
+        <tr class="block">
+
+        </tr>
+        </div>
+
+        <tr>
+            <td colspan="7">
+                <button type="button" class="add" data-action="add_new_row">
+                    <span>Add</span>
+                </button>
+            </td>
+        </tr>
+    </tbody>
+    <input type="hidden" name="rowDelete" value="" id="row-delete">
+</table>
+</form>
+</div>
+<script>
+    window.warehouseUrl = <?php echo $block->getWarehouseUrl(); ?>;
+    window.selectWarehouse = <?php echo $block->getSelelctWarehouse();?>;
+    window.count = <?php echo $idRow?>;
+</script>
+<script type="text/javascript"  src="<?php echo $block->getJsWarehouseProductTab();?>"></script>

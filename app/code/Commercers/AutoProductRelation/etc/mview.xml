@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Mview/etc/mview.xsd">
+    <view id="commercers_autoproductrelation_indexer" class="Commercers\AutoProductRelation\Model\Indexer\RelationIndexer" group="indexer">
+        <subscriptions>
+            <table name="cv_autorelation_index" entity_column="entity_id" />
+        </subscriptions>
+    </view>
+</config>

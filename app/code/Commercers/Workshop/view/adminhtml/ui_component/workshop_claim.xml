@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+     <argument name="data" xsi:type="array">
+          <item name="js_config" xsi:type="array">
+               <item name="provider" xsi:type="string">workshop_claim.workshop_claim_data_source</item>
+          </item>
+          <item name="label" xsi:type="string" translate="true">Nachforderungen</item>
+     </argument>
+
+     <settings>
+          <spinner>backend_columns</spinner>
+          <deps>
+               <dep>workshop_claim.workshop_claim_data_source</dep>
+          </deps>
+     </settings>
+     <listingToolbar name="listing_top">   
+     <bookmark name="bookmarks"/>
+          <columnsControls name="columns_controls"/>
+          <filters name="listing_filters" />
+          <paging name="listing_paging"/>
+          <exportButton name="export_button"/>
+     </listingToolbar>
+     <dataSource name="workshop_claim_data_source" component="Magento_Ui/js/grid/provider">
+          <settings>
+               <storageConfig>
+                    <param name="indexField" xsi:type="string">pk_entity_id</param>
+               </storageConfig>
+               <!-- cai rule cua magento 2 -->
+               <updateUrl path="mui/index/render"/>
+               
+          </settings>
+          <aclResource>Commercers_Workshop::index</aclResource>
+          <dataProvider class="Commercers\Workshop\Ui\Component\Workshop\DataProviderClaim" name="workshop_claim_data_source">
+               <settings>
+                    <requestFieldName>pk_entity_id</requestFieldName>
+                    <primaryFieldName>pk_entity_id</primaryFieldName>
+               </settings>
+          </dataProvider>
+     </dataSource>
+     <columns name="backend_columns">
+
+          <column name="fk_customer_id">
+               <settings>
+                    <filter>textRange</filter>
+                    <label translate="true">ID</label>
+                    <sorting>asc</sorting>
+               </settings>
+          </column>
+
+          <column name="created_at"
+                    class="Magento\Ui\Component\Listing\Columns\Date" 
+                    component="Magento_Ui/js/grid/columns/date"
+                    sortOrder="4">
+               <settings>
+                    <filter>dateRange</filter>
+                    <dataType>date</dataType>
+                    <label translate="true">Datum</label>
+               </settings>
+          </column>
+
+          <column name="amount">
+               <settings>
+                    <filter>textRange</filter>
+                    <label translate="true">Preis</label>
+                    <sorting>asc</sorting>
+               </settings>
+          </column>
+
+          <column name="payed_status">
+               <settings>
+                    <filter>textRange</filter>
+                    <label translate="true">Bezahlt</label>
+                    <sorting>asc</sorting>
+               </settings>
+          </column>
+
+          <column name="comment">
+               <settings>
+                    <filter>textRange</filter>
+                    <label translate="true">Kommentar</label>
+                    <sorting>asc</sorting>
+               </settings>
+          </column>
+          
+     </columns>
+</listing>
+
